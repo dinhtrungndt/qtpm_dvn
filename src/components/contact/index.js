@@ -23,7 +23,7 @@ export default function ContactForm() {
   const canSubmit = email.includes('@') && agreed;
 
   return (
-    <div className="mt-6 bg-slate-800 p-4 md:p-6">
+    <div className="mt-6 bg-slate-800 p-6 md:p-8">
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-lg md:text-xl font-semibold mb-2 text-white">
           Đăng ký nhận tin

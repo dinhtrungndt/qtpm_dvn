@@ -6,6 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ContactForm from '../../components/contact';
 import CreativeMarketSection from '../../components/contact/CreativeMarketSection';
+import Footer from '../../components/footer';
 import HeaderPage from '../../components/header';
 import Outstanding from '../../components/products/outstanding';
 import RecentlyAdded from '../../components/products/recentlyAdded';
@@ -133,9 +134,11 @@ const HomePage = () => {
         </div>
         {/* hỗ trợ */}
         <ContactForm />
+        {/*  */}
       </div>
 
       {/* footer */}
+      <Footer />
     </div>
   );
 };
