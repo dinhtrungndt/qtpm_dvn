@@ -4,6 +4,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import ContactForm from '../../components/contact';
 import HeaderPage from '../../components/header';
 import Outstanding from '../../components/products/outstanding';
 import RecentlyAdded from '../../components/products/recentlyAdded';
@@ -125,6 +126,8 @@ const HomePage = () => {
           {/* Danh sách Sản phẩm */}
           <RecentlyAdded />
         </div>
+        {/* hỗ trợ */}
+        <ContactForm />
       </div>
 
       {/* footer */}
