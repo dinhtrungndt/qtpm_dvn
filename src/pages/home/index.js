@@ -5,6 +5,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ContactForm from '../../components/contact';
+import CreativeMarketSection from '../../components/contact/CreativeMarketSection';
 import HeaderPage from '../../components/header';
 import Outstanding from '../../components/products/outstanding';
 import RecentlyAdded from '../../components/products/recentlyAdded';
@@ -110,6 +111,10 @@ const HomePage = () => {
           {/* Danh sách Sản phẩm */}
           <Outstanding />
         </div>
+
+        {/* Bắt đầu mua */}
+        <CreativeMarketSection />
+
         {/* Sản phẩm thêm gần đây */}
         <div>
           {/* title */}
