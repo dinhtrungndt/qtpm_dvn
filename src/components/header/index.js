@@ -77,7 +77,7 @@ const HeaderPage = () => {
           </div>
         </>
         {/* center */}
-        <div className="flex-1 flex justify-center md:justify-start">
+        <div className="flex-1 flex justify-center">
           <Link to="/">
             <img src={logoHeader} alt="logo" className="w-16 h-auto md:hidden cursor-pointer" />
             <img src={logoHeader} alt="logo" className="hidden md:block md:w-24 h-auto cursor-pointer" />
