@@ -1,0 +1,166 @@
+/* ===== SWIPER CONTAINER ===== */
+.swiper {
+  width: 100%;
+  position: relative;
+}
+
+/* ===== NAVIGATION BUTTONS (Prev/Next) ===== */
+.custom-swiper-prev,
+.custom-swiper-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-swiper-prev {
+  left: 20px;
+}
+
+.custom-swiper-next {
+  right: 20px;
+}
+
+/* Hover effect cho navigation buttons */
+.custom-swiper-prev:hover,
+.custom-swiper-next:hover {
+  background: rgba(59, 130, 246, 0.95);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+}
+
+.custom-swiper-prev:hover svg,
+.custom-swiper-next:hover svg {
+  color: white;
+}
+
+/* Active state */
+.custom-swiper-prev:active,
+.custom-swiper-next:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Disabled state */
+.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== PAGINATION (Dots) ===== */
+.swiper-pagination {
+  bottom: 20px !important;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  width: 32px;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.swiper-pagination-bullet:hover {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* ===== SLIDE IMAGE ===== */
+.swiper-slide img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .swiper {
+    width: 100%;
+  }
+
+  .custom-swiper-prev,
+  .custom-swiper-next {
+    padding: 8px;
+  }
+
+  .custom-swiper-prev {
+    left: 10px;
+  }
+
+  .custom-swiper-next {
+    right: 10px;
+  }
+
+  .custom-swiper-prev svg,
+  .custom-swiper-next svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 24px;
+  }
+}
+
+/* ===== SMOOTH TRANSITION ===== */
+.swiper-slide {
+  transition: all 0.3s ease;
+}
+
+/* Optional: Add gradient overlay */
+.swiper-slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-slide:hover::after {
+  opacity: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.swiper-slide.loading {
+  background: linear-gradient(90deg,
+      #f0f0f0 25%,
+      #e0e0e0 50%,
+      #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}

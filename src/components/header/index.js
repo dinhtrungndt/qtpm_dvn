@@ -1,7 +1,7 @@
 import { Check, ChevronDown, Dot, Logs, Search, ShoppingBasket, SquareUser } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { logoHeader } from '../../config/images';
+import { logoHeader } from '../../constants/images';
 
 const HeaderPage = () => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -19,11 +19,11 @@ const HeaderPage = () => {
   return (
     <div>
       {/* main */}
-      <div className="main p-2 px-6 flex items-center justify-between border-b border-gray-200">
+      <div className="main p-2 pt-3 px-6 flex items-center justify-between border-b border-gray-200">
         {/* left */}
-        <div className="hidden md:flex items-center justify-center border border-transparent hover:border-gray-300 rounded-full px-4 py-2 gap-2">
+        <div className="hidden md:flex items-center justify-center border border-gray-300 rounded-full px-4 py-2 gap-2">
           <Search className="w-5 h-w-5 text-gray-400" />
-          <input type="text" placeholder={`Tìm kiếm ${categorySearch}`} className="w-72 focus:outline-none focus:ring-0 pl-4" />
+          <input type="text" placeholder={`Tìm kiếm ${categorySearch}`} className="w-72 focus:outline-none focus:ring-0 pl-4 bg-white" />
           <div className="border-l border-gray-300 mx-4 self-stretch" />
           {/* drop menu search */}
           <div className="relative w-24">

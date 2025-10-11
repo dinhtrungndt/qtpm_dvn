@@ -1,0 +1,147 @@
+export const products = [
+  // PHẦN MỀM
+  {
+    id: 1,
+    name: "Phần mềm quản lý bán hàng POS Pro",
+    category: "Phần mềm",
+    price: 2990000,
+    originalPrice: 4990000,
+    discount: "40%",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400",
+    rating: 4.8,
+    sold: 1250,
+    description: "Quản lý bán hàng, kho, nhân viên toàn diện. Hỗ trợ đa chi nhánh.",
+    features: ["Quản lý kho", "Báo cáo doanh thu", "App mobile", "Cloud backup"],
+    badge: "Bán chạy"
+  },
+  {
+    id: 2,
+    name: "Phần mềm kế toán MISA SME 2024",
+    category: "Phần mềm",
+    price: 3500000,
+    originalPrice: 5200000,
+    discount: "33%",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400",
+    rating: 4.9,
+    sold: 890,
+    description: "Giải pháp kế toán chuyên nghiệp cho doanh nghiệp vừa và nhỏ",
+    features: ["Báo cáo thuế", "Hóa đơn điện tử", "Quản lý công nợ", "Tích hợp ngân hàng"],
+    badge: "Khuyến mãi"
+  },
+  {
+    id: 3,
+    name: "Phần mềm thiết kế đồ họa Adobe Creative Cloud",
+    category: "Phần mềm",
+    price: 1290000,
+    originalPrice: null,
+    discount: null,
+    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400",
+    rating: 5.0,
+    sold: 2100,
+    description: "Bộ công cụ thiết kế chuyên nghiệp: Photoshop, Illustrator, Premiere",
+    features: ["Photoshop", "Illustrator", "Premiere Pro", "After Effects"],
+    badge: "Hot"
+  },
+
+  // PHẦN CỨNG
+  {
+    id: 4,
+    name: "Laptop Dell Inspiron 15 3520 i5-1235U",
+    category: "Phần cứng",
+    price: 12990000,
+    originalPrice: 15990000,
+    discount: "19%",
+    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400",
+    rating: 4.7,
+    sold: 456,
+    description: "Laptop văn phòng mỏng nhẹ, pin 8h, RAM 8GB, SSD 256GB",
+    features: ["Intel i5 Gen 12", "RAM 8GB", "SSD 256GB", "Windows 11"],
+    badge: "Trả góp 0%"
+  },
+  {
+    id: 5,
+    name: "Máy in Laser Brother HL-L2321D",
+    category: "Phần cứng",
+    price: 3290000,
+    originalPrice: 4100000,
+    discount: "20%",
+    image: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=400",
+    rating: 4.6,
+    sold: 720,
+    description: "Máy in laser đen trắng tốc độ cao, tiết kiệm mực",
+    features: ["In 2 mặt tự động", "30 trang/phút", "Hộp mực 1200 trang", "Kết nối USB"],
+    badge: null
+  },
+  {
+    id: 6,
+    name: "Camera An Ninh Ezviz C6N 2K+",
+    category: "Phần cứng",
+    price: 890000,
+    originalPrice: 1290000,
+    discount: "31%",
+    image: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=400",
+    rating: 4.8,
+    sold: 1580,
+    description: "Camera wifi xoay 360°, hồng ngoại ban đêm, AI phát hiện chuyển động",
+    features: ["2K+ HD", "Xoay 360°", "Đàm thoại 2 chiều", "Lưu trữ cloud/thẻ nhớ"],
+    badge: "Bán chạy"
+  },
+  {
+    id: 7,
+    name: "Ổ cứng SSD Samsung 980 Pro 1TB NVMe",
+    category: "Phần cứng",
+    price: 2590000,
+    originalPrice: 3490000,
+    discount: "26%",
+    image: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400",
+    rating: 5.0,
+    sold: 340,
+    description: "Tốc độ đọc 7000MB/s, lý tưởng cho gaming và render",
+    features: ["1TB NVMe Gen4", "Đọc 7000MB/s", "Ghi 5000MB/s", "Bảo hành 5 năm"],
+    badge: "Mới về"
+  },
+
+  // WEBSITE & DỊCH VỤ
+  {
+    id: 8,
+    name: "Gói Thiết kế Website Landing Page",
+    category: "Website",
+    price: 4990000,
+    originalPrice: 8990000,
+    discount: "44%",
+    image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400",
+    rating: 4.9,
+    sold: 89,
+    description: "Landing page chuyên nghiệp, tối ưu SEO, responsive mọi thiết bị",
+    features: ["Thiết kế riêng", "Tối ưu SEO", "Responsive", "Tặng hosting 1 năm"],
+    badge: "Khuyến mãi"
+  },
+  {
+    id: 9,
+    name: "Gói Website Thương mại điện tử Pro",
+    category: "Website",
+    price: 19990000,
+    originalPrice: 29990000,
+    discount: "33%",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",
+    rating: 4.8,
+    sold: 45,
+    description: "Website bán hàng đầy đủ: giỏ hàng, thanh toán, quản lý đơn hàng",
+    features: ["Giỏ hàng", "Thanh toán online", "Admin panel", "App mobile"],
+    badge: "Premium"
+  },
+  {
+    id: 10,
+    name: "Domain .COM + Hosting VPS 1 năm",
+    category: "Website",
+    price: 1290000,
+    originalPrice: 2190000,
+    discount: "41%",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400",
+    rating: 4.7,
+    sold: 670,
+    description: "Tên miền .COM quốc tế + Hosting VPS tốc độ cao, SSL miễn phí",
+    features: ["Domain .COM", "VPS 2GB RAM", "SSL miễn phí", "Hỗ trợ 24/7"],
+    badge: "Giá tốt"
+  }
+];
