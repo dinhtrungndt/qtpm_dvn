@@ -1,144 +1,58 @@
-import { SquareChevronLeft, SquareChevronRight } from 'lucide-react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import ContactForm from '../../components/contact';
-import CreativeMarketSection from '../../components/contact/CreativeMarketSection';
-import Footer from '../../components/footer';
-import HeaderPage from '../../components/header';
-import Outstanding from '../../components/products/outstanding';
-import RecentlyAdded from '../../components/products/recentlyAdded';
-import { slide1, slide2, slide3 } from '../../constants/images';
-import '../styles/slide.css';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setApiShowMessage } from '../../services/api';
+import { logout, setGlobalShowMessage } from '../../stores/redux/actions/userActions';
+import useNotification, { NotificationStyles } from '../../utils/notification';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { message, messageType, showMessage } = useNotification();
+
+  useEffect(() => {
+    setGlobalShowMessage(showMessage);
+    setApiShowMessage(showMessage);
+  }, [showMessage]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
-    <div>
-      {/* header */}
-      <HeaderPage />
-
-      {/* body */}
-      <div className="mt-4">
-        {/* Sản phẩm nổi bật */}
-        <div className="flex md:text-sm text-[10px] justify-center gap-6 py-2 mb-4 bg-gradient-to-r from-blue-50 via-white to-blue-50 border-y border-blue-200 shadow-sm">
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
-            Petro ITM
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
-            Lấy phiếu
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
-            Kiểm kê & Tài sản
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
-            QL Hàng chờ
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
-            Thông tin
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-5 font-sans">
+      <NotificationStyles />
+      {message && (
+        <div className={`fixed top-5 right-5 px-6 py-4 rounded-xl shadow-2xl z-50 font-medium text-white slide-in ${messageType === 'error' ? 'bg-red-500' : 'bg-green-500'}`}>
+          {message}
         </div>
-        {/* slide */}
-        <div className="relative">
-          {/* Custom Navigation Buttons */}
-          <div className="custom-swiper-prev hidden md:flex">
-            <SquareChevronLeft className="w-6 h-6 text-gray-700" />
-          </div>
-          <div className="custom-swiper-next hidden md:flex">
-            <SquareChevronRight className="w-6 h-6 text-gray-700" />
-          </div>
-          <Swiper
-            modules={[Navigation, Pagination]}
-            navigation={{
-              nextEl: '.custom-swiper-next',
-              prevEl: '.custom-swiper-prev',
-            }}
-            pagination={{
-              clickable: true,
-              dynamicBullets: true
-            }}
-            spaceBetween={30}
-            slidesPerView={1}
-            loop={true}
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            speed={600}
-            className="h-auto mx-auto shadow-lg overflow-hidden"
-          >
-            <SwiperSlide>
-              <img
-                src={slide1}
-                alt="slide1"
-                className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={slide2}
-                alt="slide2"
-                className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={slide3}
-                alt="slide3"
-                className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </SwiperSlide>
-          </Swiper>
+      )}
+      <div className="bg-white rounded-3xl shadow-2xl p-12 w-full max-w-lg text-center fade-in">
+        <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-5xl shadow-lg">
+          👤
         </div>
-        {/* Danh mục sản phẩm */}
-        <div>
-          {/* title */}
-          <div className="grid grid-cols-3 items-center px-4 mt-6 mb-2">
-            <div></div>
-            <p className="font-medium md:text-lg text-sm text-center">Nổi bật ✮</p>
-            <a href="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
-              Xem thêm {'>'}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Xin chào, {user?.username}! 👋</h2>
+        <p className="text-gray-500 text-sm mb-8">📧 {user?.email}</p>
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          <div className="p-5 bg-blue-50 rounded-2xl border-2 border-blue-200">
+            <div className="text-2xl mb-2">🔗</div>
+            <div className="text-xs text-blue-700 font-semibold">Đã kết nối</div>
           </div>
-          {/* content */}
-          <p className="px-4 md:text-sm text-[10px] text-gray-500 mb-2 text-center">Khám phá những sản phẩm công nghệ hàng đầu.</p>
-          {/* Danh sách Sản phẩm */}
-          <Outstanding />
-        </div>
-
-        {/* Bắt đầu mua */}
-        <CreativeMarketSection />
-
-        {/* Sản phẩm thêm gần đây */}
-        <div>
-          {/* title */}
-          <div className="grid grid-cols-3 items-center px-4 mt-6 mb-2">
-            <div></div>
-            <p className="font-medium md:text-lg text-sm text-center">Mới thêm gần đây 📥</p>
-            <a href="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
-              Xem thêm {'>'}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
+          <div className="p-5 bg-green-50 rounded-2xl border-2 border-green-200">
+            <div className="text-2xl mb-2">✅</div>
+            <div className="text-xs text-green-700 font-semibold">Đang hoạt động</div>
           </div>
-          {/* content */}
-          <p className="px-4 md:text-sm text-[10px] text-gray-500 mb-2 text-center">Gặp gỡ những người mới của chúng tôi! Các mẫu trang web mới nhất đã được tải lên thị trường.</p>
-          {/* Danh sách Sản phẩm */}
-          <RecentlyAdded />
         </div>
-        {/* hỗ trợ */}
-        <ContactForm />
-        {/*  */}
+        <button
+          onClick={handleLogout}
+          className="w-full py-4 text-base font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 border-none rounded-xl cursor-pointer transition-all shadow-lg btn-hover"
+        >
+          🚪 Đăng Xuất
+        </button>
+        <div className="mt-6 p-4 bg-gray-50 rounded-xl text-xs text-gray-600">
+          <div className="font-semibold mb-1 text-green-600">✓ WebSocket Connected</div>
+          Bạn sẽ tự động đăng xuất nếu đăng nhập từ thiết bị khác
+        </div>
       </div>
-
-      {/* footer */}
-      <Footer />
     </div>
   );
 };
