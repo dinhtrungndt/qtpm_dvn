@@ -1,6 +1,6 @@
 import { MESSAGES } from '../../../constants/notifications/messages';
 import authService from '../../../services/authService';
-import * as types from '../types/userTypes';
+import * as types from '../types/index';
 
 // Lưu trữ hàm showMessage toàn cục
 let globalShowMessage = null;

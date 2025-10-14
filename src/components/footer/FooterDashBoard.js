@@ -1,0 +1,38 @@
+import { Heart } from 'lucide-react';
+
+const FooterDashBoard = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-white border-t border-gray-300 p-2 md:p-2">
+      {/* Bottom Bar */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+        <p className="text-xs text-gray-500 text-center md:text-left">
+          © {currentYear} Dashboard System. All rights reserved.
+        </p>
+
+        <div className="flex items-center gap-1 text-xs text-gray-500">
+          <span>Made with</span>
+          <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 animate-pulse" />
+          <span>by Your Team</span>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <a href="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+            Điều khoản
+          </a>
+          <span className="text-gray-300">•</span>
+          <a href="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+            Bảo mật
+          </a>
+          <span className="text-gray-300">•</span>
+          <a href="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+            Cookies
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default FooterDashBoard;

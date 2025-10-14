@@ -1,5 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
+import FooterDashBoard from '../../components/footer/FooterDashBoard';
 import DashboardHeader from '../../components/header/Dashboard';
+import Chartjs from '../../components/layout/chartjs';
 import { statsData } from '../../stores/data/dashboard';
 
 const HomePage = () => {
@@ -64,7 +66,13 @@ const HomePage = () => {
             );
           })}
         </div>
+
+        {/* ChartJS */}
+        <Chartjs />
       </div>
+
+      {/* footer */}
+      <FooterDashBoard />
     </div>
   );
 };

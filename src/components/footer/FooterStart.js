@@ -1,5 +1,6 @@
-export default function Footer() {
-  const logoHeader = require('../../assets/image/logo.png');
+import { logoHeader } from '../../constants/images';
+
+export default function FooterStart() {
 
   return (
     <footer className="bg-white border-t border-gray-200">
