@@ -7,17 +7,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import ContactForm from '../../components/contact';
 import CreativeMarketSection from '../../components/contact/CreativeMarketSection';
 import Footer from '../../components/footer';
-import HeaderPage from '../../components/header';
+import HeaderPageStart from '../../components/header/StartPageHeader';
 import Outstanding from '../../components/products/outstanding';
 import RecentlyAdded from '../../components/products/recentlyAdded';
 import { slide1, slide2, slide3 } from '../../constants/images';
 import '../styles/slide.css';
 
-const HomePage_V1 = () => {
+const HomePageStart = () => {
+
   return (
     <div>
       {/* header */}
-      <HeaderPage />
+      <HeaderPageStart />
 
       {/* body */}
       <div className="mt-4">
@@ -143,4 +144,4 @@ const HomePage_V1 = () => {
   );
 };
 
-export default HomePage_V1;
+export default HomePageStart;

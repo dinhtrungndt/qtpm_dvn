@@ -1,12 +1,20 @@
 import { Check, ChevronDown, Dot, Logs, Search, ShoppingBasket, SquareUser } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { logoHeader } from '../../constants/images';
+import { logout } from '../../stores/redux/actions/userActions';
+import OpenUser from '../layout/OpenUser';
 
 const HeaderPageStart = () => {
+  const dispatch = useDispatch();
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [categorySearch, setCategorySearch] = useState('Tất cả');
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenUserMenu, setIsOpenUserMenu] = useState(false);
+  const userMenuRef = useRef(null);
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const categorySearchs = ['Tất cả', 'Phần mềm', 'Website', 'Phần cứng', 'Phụ kiện'];
   const memus = ['Phần mềm', 'Phần cứng', 'Website', 'Liên hệ'];
@@ -15,6 +23,26 @@ const HeaderPageStart = () => {
     setCategorySearch(category);
     setIsOpenSearch(false);
   };
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpenUserMenu(false);
+  };
+
+  useEffect(() => {
+    if (!isOpenUserMenu) return;
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsOpenUserMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpenUserMenu]);
 
   return (
     <div>
@@ -84,7 +112,7 @@ const HeaderPageStart = () => {
           </Link>
         </div>
         {/* right */}
-        <div className="hidden lg:flex items-center text-sm text-gray-700">
+        <div className="hidden lg:flex items-center text-sm text-gray-700 relative">
           <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần mềm</a>
           <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần cứng</a>
           <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Website</a>
@@ -92,11 +120,38 @@ const HeaderPageStart = () => {
           <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</a>
           <div className="border-l border-black mx-2 h-4" />
           {/* login */}
-          <button className="bg-blue-600 text-white px-3 py-1 mr-2 rounded-full text-sm font-semibold hover:bg-blue-700">
-            Đăng nhập
-          </button>
+          {
+            user ? (
+              <div className="flex items-center gap-2 border border-gray-300 px-2 py-0 rounded-full hover:bg-gray-50 transition-all hover:border-gray-400 cursor-pointer"
+                onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}>
+                <img
+                  src={user.avatar != null ? user.avatar : "https://dvntechnology.com/icons/Logo.png"}
+                  alt="Avatar"
+                  className="h-6 w-6 rounded-full object-cover"
+                />
+                <span className="text-sm text-gray-900">{user.username}</span>
+                <ChevronDown className="w-4 h-4" />
+              </div>
+            ) : (
+              <button className="bg-blue-600 text-white px-3 py-1 mr-2 rounded-full text-sm font-semibold hover:bg-blue-700" onClick={handleLogin}>
+                Đăng nhập
+              </button>
+            )
+          }
+          {/* Open User Menu with Animation */}
+          <div
+            className={`absolute z-10 -top-4 right-4 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
+              ? 'opacity-100 scale-100 translate-y-0'
+              : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+              }`}
+          >
+            <div ref={userMenuRef}>
+              <OpenUser handleLogout={handleLogout} />
+            </div>
+          </div>
+
           {/* cart */}
-          <div className="relative cursor-pointer ">
+          <div className="relative cursor-pointer pl-2">
             <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">3</span>
             <ShoppingBasket className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400" />
           </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import HomePage from '../pages/home';
+import HomePageStart from '../pages/home/index_v1';
 import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
 
@@ -22,7 +23,7 @@ const Routers = () => {
 
   React.useEffect(() => {
     if (isAuthenticated && (location.pathname === '/login' || location.pathname === '/signup')) {
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [isAuthenticated, location.pathname, navigate]);
 
@@ -30,16 +31,9 @@ const Routers = () => {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/" element={<HomePageStart />} />
       <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <HomePage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/home"
+        path="/dashboard"
         element={
           <PrivateRoute>
             <HomePage />
