@@ -4,9 +4,14 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
-import store from './stores/redux/store';
+import { setStore } from './stores/redux/actions/userActions';
+import store, { configureStore } from './stores/redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const configuredStore = configureStore();
+setStore(configuredStore);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

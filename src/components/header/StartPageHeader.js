@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { logoHeader } from '../../constants/images';
 
-const HeaderPage = () => {
+const HeaderPageStart = () => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [categorySearch, setCategorySearch] = useState('Tất cả');
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -114,4 +114,4 @@ const HeaderPage = () => {
   );
 };
 
-export default HeaderPage;
+export default HeaderPageStart;

@@ -6,7 +6,7 @@ import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
 
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const location = useLocation();
 
   if (!isAuthenticated && location.pathname !== '/login' && location.pathname !== '/signup') {
@@ -16,7 +16,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 const Routers = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const location = useLocation();
   const navigate = useNavigate();
 

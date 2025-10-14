@@ -58,6 +58,12 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
         error: null,
       };
+    case types.GET_CURRENT_USER_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

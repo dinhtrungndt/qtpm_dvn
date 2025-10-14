@@ -6,14 +6,14 @@ import { startIdleTimer } from './utils/sessionUtils';
 
 function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated, token } = useSelector((state) => state.auth);
+  const { user, token, isAuthenticated } = useSelector((state) => state.user);
 
   useEffect(() => {
     const savedToken = localStorage.getItem('access_token');
-    if (savedToken && !token) {
+    if (savedToken && !user) {
       dispatch(getCurrentUser());
     }
-  }, [dispatch, token]);
+  }, [dispatch, user]);
 
   useEffect(() => {
     let cleanup;

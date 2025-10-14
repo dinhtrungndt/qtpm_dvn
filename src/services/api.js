@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { MESSAGES } from '../constants/notifications/messages';
-import { logout, setGlobalShowMessage } from '../stores/redux/actions/userActions';
-import store from '../stores/redux/store';
+import { setGlobalShowMessage } from '../stores/redux/actions/userActions';
 
 // Biến cục bộ để lưu trữ hàm showMessage
 let showMessageHandler = null;
@@ -31,10 +30,10 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       if (error.response.data.detail === 'Đăng nhập tại nơi khác (session đã bị thay)') {
         showMessageHandler?.(MESSAGES.OTHER_LOGIN, 'error');
-        store.dispatch(logout());
+        // Không gọi store.dispatch trực tiếp, để authActions xử lý
       } else if (error.response.data.detail === 'Session hết hạn') {
         showMessageHandler?.(MESSAGES.SESSION_EXPIRED, 'error');
-        store.dispatch(logout());
+        // Không gọi store.dispatch trực tiếp
       }
     }
     return Promise.reject(error);
