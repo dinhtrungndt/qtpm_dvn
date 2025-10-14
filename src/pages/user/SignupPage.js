@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setApiShowMessage } from '../../services/api';
 import { register, setGlobalShowMessage } from '../../stores/redux/actions/userActions';
 import useNotification, { NotificationStyles } from '../../utils/notification';
@@ -38,107 +38,129 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-5 font-sans">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
       <NotificationStyles />
       {message && (
-        <div className={`fixed top-5 right-5 px-6 py-4 rounded-xl shadow-2xl z-50 font-medium text-white slide-in ${messageType === 'error' ? 'bg-red-500' : 'bg-green-500'}`}>
+        <div className={`fixed top-5 right-5 px-5 py-3 rounded-lg shadow-lg z-50 text-sm font-medium text-white slide-in ${messageType === 'error' ? 'bg-red-500' : 'bg-green-500'}`}>
           {message}
         </div>
       )}
-      <div className="bg-white rounded-3xl shadow-2xl p-12 w-full max-w-md fade-in">
-        <div className="text-center mb-10">
-          <div className="w-24 h-24 mx-auto mb-5 bg-white rounded-2xl flex items-center justify-center shadow-lg p-3">
-            <img
-              src="https://dvntechnology.com/icons/Logo.png"
-              alt="DVN Logo"
-              className="w-full h-full object-contain"
-            />
+
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 fade-in">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gray-900 rounded-xl flex items-center justify-center">
+              <img
+                src="https://dvntechnology.com/icons/Logo.png"
+                alt="DVN Logo"
+                className="w-10 h-10 object-contain"
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">
+              Tạo tài khoản
+            </h1>
+            <p className="text-gray-500 text-sm">Đăng ký để bắt đầu với DVN Technology</p>
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent mb-2">
-            DVN Technology
-          </h1>
-          <p className="text-gray-500 text-sm">Đăng ký để bắt đầu</p>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-6">
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-2 text-gray-700 text-sm font-semibold">Tên đăng nhập</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-400">👤</span>
-                <input
-                  type="text"
-                  placeholder="Nhập tên đăng nhập"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full py-3.5 pl-12 pr-4 text-sm border-2 border-gray-200 rounded-xl transition-all input-focus bg-white text-gray-800 disabled:bg-gray-50"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
+              <label className="block mb-2 text-gray-700 text-sm font-medium">
+                Tên đăng nhập
+              </label>
+              <input
+                type="text"
+                placeholder="Chọn tên đăng nhập"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white text-gray-900 placeholder-gray-400 disabled:bg-gray-50 disabled:text-gray-500"
+                required
+                disabled={isLoading}
+              />
             </div>
+
             <div>
-              <label className="block mb-2 text-gray-700 text-sm font-semibold">Email</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-400">📧</span>
-                <input
-                  type="email"
-                  placeholder="Nhập email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full py-3.5 pl-12 pr-4 text-sm border-2 border-gray-200 rounded-xl transition-all input-focus bg-white text-gray-800 disabled:bg-gray-50"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
+              <label className="block mb-2 text-gray-700 text-sm font-medium">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="your.email@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white text-gray-900 placeholder-gray-400 disabled:bg-gray-50 disabled:text-gray-500"
+                required
+                disabled={isLoading}
+              />
             </div>
+
             <div>
-              <label className="block mb-2 text-gray-700 text-sm font-semibold">Mật khẩu</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-400">🔒</span>
-                <input
-                  type="password"
-                  placeholder="Nhập mật khẩu"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full py-3.5 pl-12 pr-4 text-sm border-2 border-gray-200 rounded-xl transition-all input-focus bg-white text-gray-800 disabled:bg-gray-50"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
+              <label className="block mb-2 text-gray-700 text-sm font-medium">
+                Mật khẩu
+              </label>
+              <input
+                type="password"
+                placeholder="Tạo mật khẩu"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white text-gray-900 placeholder-gray-400 disabled:bg-gray-50 disabled:text-gray-500"
+                required
+                disabled={isLoading}
+              />
             </div>
+
             <div>
-              <label className="block mb-2 text-gray-700 text-sm font-semibold">Họ và tên</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-400">📝</span>
-                <input
-                  type="text"
-                  placeholder="Nhập họ và tên"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full py-3.5 pl-12 pr-4 text-sm border-2 border-gray-200 rounded-xl transition-all input-focus bg-white text-gray-800 disabled:bg-gray-50"
-                  disabled={isLoading}
-                />
-              </div>
+              <label className="block mb-2 text-gray-700 text-sm font-medium">
+                Họ và tên <span className="text-gray-400 font-normal">(không bắt buộc)</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Nguyễn Văn A"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white text-gray-900 placeholder-gray-400 disabled:bg-gray-50 disabled:text-gray-500"
+                disabled={isLoading}
+              />
             </div>
+
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 text-base font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 border-none rounded-xl cursor-pointer transition-all shadow-lg btn-hover disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 text-sm font-semibold text-white bg-gray-900 rounded-lg transition-all hover:bg-gray-800 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900 flex items-center justify-center gap-2 shadow-sm mt-6"
             >
               {isLoading ? (
                 <>
-                  <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full" style={{ animation: 'spin 0.8s linear infinite' }} />
+                  <div
+                    className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                    style={{ animation: 'spin 0.8s linear infinite' }}
+                  />
                   Đang đăng ký...
                 </>
               ) : (
-                'Đăng Ký'
+                'Tạo tài khoản'
               )}
             </button>
+          </form>
+
+          {/* Footer */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-600 text-sm">
+              Đã có tài khoản?{' '}
+              <Link
+                to="/login"
+                className="text-gray-900 font-semibold hover:underline transition-all"
+              >
+                Đăng nhập
+              </Link>
+            </p>
           </div>
-        </form>
-        <div className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-500 text-xs">
-          Bảo mật bởi WebSocket Authentication
         </div>
+
+        {/* Copyright */}
+        <p className="text-center text-gray-500 text-xs mt-6">
+          © 2024 DVN Technology. All rights reserved.
+        </p>
       </div>
     </div>
   );

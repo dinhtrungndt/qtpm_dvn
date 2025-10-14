@@ -12,7 +12,7 @@ export const setApiShowMessage = (showMessage) => {
 };
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:1111', // Cập nhật port
+  baseURL: 'http://127.0.0.1:1111',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000,
 });
