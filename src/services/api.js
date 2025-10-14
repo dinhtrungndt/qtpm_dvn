@@ -27,6 +27,13 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Kiểm tra lỗi kết nối hoặc timeout (backend không khả dụng)
+    if (!error.response) {
+      showMessageHandler?.(MESSAGES.SERVER_UNAVAILABLE, 'error');
+      // Dừng ứng dụng bằng cách ném lỗi hoặc redirect
+      throw new Error('Backend không khả dụng. Ứng dụng sẽ dừng.');
+    }
+
     if (error.response && error.response.status === 401) {
       if (error.response.data.detail === 'Đăng nhập tại nơi khác (session đã bị thay)') {
         showMessageHandler?.(MESSAGES.OTHER_LOGIN, 'error');

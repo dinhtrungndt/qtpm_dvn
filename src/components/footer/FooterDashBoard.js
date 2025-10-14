@@ -8,13 +8,13 @@ const FooterDashBoard = () => {
       {/* Bottom Bar */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-3">
         <p className="text-xs text-gray-500 text-center md:text-left">
-          © {currentYear} Dashboard System. All rights reserved.
+          © {currentYear} DVN Technology. All rights reserved.
         </p>
 
         <div className="flex items-center gap-1 text-xs text-gray-500">
-          <span>Made with</span>
+          <span>Nguồn</span>
           <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 animate-pulse" />
-          <span>by Your Team</span>
+          <span>DVN Technology</span>
         </div>
 
         <div className="flex items-center gap-4">

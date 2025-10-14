@@ -30,7 +30,7 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between p-4 border-b bg-white relative z-30">
+      <div className="flex items-center justify-between p-4 border-b bg-white relative z-30" style={{ minHeight: '64px' }}>
         {/* left */}
         <div className="flex items-center gap-4 text-gray-600">
           <button
@@ -47,9 +47,22 @@ const DashboardHeader = () => {
 
         {/* right */}
         <div className="flex items-center gap-4 text-gray-600">
-          <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setIsOpenSearch(!isOpenSearch)}>
-            <Search className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            {isOpenSearch && (
+              <input
+                type="text"
+                className="w-56 border border-gray-300 rounded-lg px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                placeholder="Tìm kiếm..."
+                autoFocus
+              />
+            )}
+            <button
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              onClick={() => setIsOpenSearch(!isOpenSearch)}
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </div>
 
           <button className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
             <span className="absolute top-1 right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full animate-pulse">3</span>
@@ -63,7 +76,8 @@ const DashboardHeader = () => {
 
           {user ? (
             <div className="flex items-center gap-2 border border-gray-300 px-2 py-0 rounded-full hover:bg-gray-50 transition-all hover:border-gray-400 cursor-pointer"
-              onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}>
+              onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}
+            >
               <img
                 src={user.avatar != null ? user.avatar : "https://dvntechnology.com/icons/Logo.png"}
                 alt="Avatar"
@@ -86,23 +100,6 @@ const DashboardHeader = () => {
         >
           <div ref={userMenuRef}>
             <OpenUser handleLogout={handleLogout} />
-          </div>
-        </div>
-
-        {/* Search Box */}
-        <div
-          className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-11/12 max-w-md bg-white border border-gray-300 rounded-lg shadow-lg transition-all duration-200 ease-out origin-top ${isOpenSearch
-            ? 'opacity-100 scale-100 translate-y-0'
-            : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-            }`}
-        >
-          <div className="p-2">
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Tìm kiếm..."
-              autoFocus
-            />
           </div>
         </div>
       </div>
