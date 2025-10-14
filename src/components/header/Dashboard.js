@@ -79,7 +79,7 @@ const DashboardHeader = () => {
 
         {/* Open User Menu with Animation */}
         <div
-          className={`absolute top-0 right-4 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
+          className={`absolute top-10 right-4 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
             ? 'opacity-100 scale-100 translate-y-0'
             : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
             }`}
