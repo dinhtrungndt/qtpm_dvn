@@ -1,19 +1,21 @@
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import FooterDashBoard from '../components/footer/FooterDashBoard';
 import DashboardHeader from '../components/header/Dashboard';
-import Dashboard_v1 from '../components/layout/dashboard/dashboard_v1';
-import Dashboard_v2 from '../components/layout/dashboard/dashboard_v2';
-import Dashboard_v3 from '../components/layout/dashboard/dashboard_v3';
+import DashboardV1 from '../components/layout/dashboard/dashboardV1';
+import DashboardV3 from '../components/layout/dashboard/dashboardV3';
 import ThemeGenerate from '../components/layout/themegenerate';
 import Cards from '../components/layout/widgets/Cards';
 import InforBox from '../components/layout/widgets/InforBox';
 import SmallBox from '../components/layout/widgets/SmallBox';
-import HomePageStart from '../pages/home/index_v1';
+import HomePageStart from '../pages/home/HomePageStart';
 import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
 import Unauthorized from '../utils/Unauthorized';
+
+// Lazy load components
+const DashboardV2 = lazy(() => import("../components/layout/dashboard/dashboardV2"));
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -32,7 +34,7 @@ const RoleRoute = ({ children, allowedRoles }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user || !allowedRoles.includes(user.role)) {
+  if (!user || !allowedRoles.includes(user.role?.toLowerCase())) {
     return <Navigate to="/unauthorized" replace />;
   }
 
@@ -69,9 +71,9 @@ const Routers = () => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        <Route path="/dashboard/v1" element={<PrivateRoute><Dashboard_v1 /></PrivateRoute>} />
-        <Route path="/dashboard/v2" element={<PrivateRoute><Dashboard_v2 /></PrivateRoute>} />
-        <Route path="/dashboard/v3" element={<PrivateRoute><Dashboard_v3 /></PrivateRoute>} />
+        <Route path="/dashboard/v1" element={<PrivateRoute><DashboardV1 /></PrivateRoute>} />
+        <Route path="/dashboard/v2" element={<PrivateRoute><DashboardV2 /></PrivateRoute>} />
+        <Route path="/dashboard/v3" element={<PrivateRoute><DashboardV3 /></PrivateRoute>} />
         {/* <Route path="/theme-generate" element={<PrivateRoute><ThemeGenerate /></PrivateRoute>} /> */}
         <Route path="/widgets/small-box" element={<PrivateRoute><SmallBox /></PrivateRoute>} />
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />

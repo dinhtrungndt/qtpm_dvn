@@ -4,7 +4,7 @@ import Chat from '../Chat/Chat';
 import SmallBox from '../widgets/SmallBox';
 
 
-const Dashboard_v1 = () => {
+const DashboardV1 = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       {/* title */}
@@ -29,4 +29,4 @@ const Dashboard_v1 = () => {
   );
 };
 
-export default Dashboard_v1;
+export default DashboardV1;

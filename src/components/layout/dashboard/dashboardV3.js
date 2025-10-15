@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 Chart.register(...registerables);
 
-const Dashboard_v3 = () => {
+const DashboardV3 = () => {
   const lineChartRef = useRef(null);
   const barChartRef = useRef(null);
   const lineChartInstance = useRef(null);
@@ -400,4 +400,4 @@ const Dashboard_v3 = () => {
   );
 };
 
-export default Dashboard_v3;
+export default DashboardV3;

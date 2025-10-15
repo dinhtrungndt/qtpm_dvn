@@ -1,5 +1,6 @@
 import { MESSAGES } from '../../../constants/notifications/messages';
 import authService from '../../../services/authService';
+import { encryptToken } from '../../../utils/cryptoUtils';
 import * as types from '../types/index';
 
 // Lưu trữ hàm showMessage toàn cục
@@ -20,7 +21,8 @@ export const login = (credentials) => async (dispatch) => {
     console.log('Sending login request with:', credentials);
     const data = await authService.login(credentials);
     console.log('Login response:', data);
-    localStorage.setItem('access_token', data.access_token);
+    const encryptedToken = encryptToken(data.access_token);
+    localStorage.setItem('access_token', encryptedToken);
     const user = await authService.getCurrentUser();
     console.log('Get current user response:', user);
     dispatch({ type: types.LOGIN_SUCCESS, payload: { user, token: data.access_token } });

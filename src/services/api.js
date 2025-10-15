@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { MESSAGES } from '../constants/notifications/messages';
 import { setGlobalShowMessage } from '../stores/redux/actions/userActions';
+import { decryptToken } from '../utils/cryptoUtils';
 
 // Biến cục bộ để lưu trữ hàm showMessage
 let showMessageHandler = null;
@@ -17,7 +18,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
+  const encryptedToken = localStorage.getItem('access_token');
+  const token = decryptToken(encryptedToken);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

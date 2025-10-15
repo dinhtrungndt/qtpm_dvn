@@ -1,9 +1,13 @@
+import { decryptToken } from '../../../utils/cryptoUtils';
 import * as types from '../types/index';
+
+const encryptedToken = localStorage.getItem('access_token');
+const decryptedToken = decryptToken(encryptedToken);
 
 const initialState = {
   user: null,
-  token: localStorage.getItem('access_token') || null,
-  isAuthenticated: !!localStorage.getItem('access_token'),
+  token: decryptedToken,
+  isAuthenticated: !!decryptedToken,
   isLoading: false,
   error: null,
 };

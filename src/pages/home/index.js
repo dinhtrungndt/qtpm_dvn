@@ -1,4 +1,4 @@
-import Dashboard_v1 from '../../components/layout/dashboard_v1';
+import DashboardV1 from '../../components/layout/dashboardV1';
 
 const HomePage = () => {
 
@@ -6,7 +6,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-gray-50">
       {/* body */}
       <div className="p-4">
-        <Dashboard_v1 />
+        <DashboardV1 />
       </div>
     </div>
   );

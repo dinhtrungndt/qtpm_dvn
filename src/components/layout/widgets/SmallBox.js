@@ -1,11 +1,11 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { statsData_v1 } from '../../../stores/data/dashboard';
+import { statsDataV1 } from '../../../stores/data/dashboard';
 
 const SmallBox = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-      {statsData_v1.map((stat) => {
+      {statsDataV1.map((stat) => {
         const Icon = stat.icon;
         return (
           <div

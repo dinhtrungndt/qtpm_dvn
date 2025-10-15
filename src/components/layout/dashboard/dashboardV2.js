@@ -422,7 +422,7 @@ const BottomWidgets2 = ({ animate }) => {
   );
 };
 
-const Dashboard_v2 = () => {
+const DashboardV2 = () => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   const [animate, setAnimate] = useState(false);
@@ -671,4 +671,4 @@ const Dashboard_v2 = () => {
   );
 };
 
-export default Dashboard_v2;
+export default DashboardV2;
