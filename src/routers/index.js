@@ -13,6 +13,7 @@ import SmallBox from '../components/layout/widgets/SmallBox';
 import HomePageStart from '../pages/home/index_v1';
 import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
+import Unauthorized from '../utils/Unauthorized';
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -24,6 +25,21 @@ const PrivateRoute = ({ children }) => {
   return children;
 };
 
+const RoleRoute = ({ children, allowedRoles }) => {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user || !allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  return children;
+};
+
+
 const Routers = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const location = useLocation();
@@ -31,7 +47,11 @@ const Routers = () => {
 
   useEffect(() => {
     if (isAuthenticated && (location.pathname === '/login' || location.pathname === '/signup')) {
-      navigate('/dashboard/v1', { replace: true });
+      if (isAuthenticated?.role === 'Admin') {
+        navigate('/theme-generate', { replace: true });
+      } else {
+        navigate('/dashboard/v1', { replace: true });
+      }
     }
   }, [isAuthenticated, location.pathname, navigate]);
 
@@ -44,17 +64,21 @@ const Routers = () => {
       {!shouldHideLayout && <DashboardHeader />}
 
       <Routes>
+        <Route path="/" element={<HomePageStart />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/" element={<HomePageStart />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         <Route path="/dashboard/v1" element={<PrivateRoute><Dashboard_v1 /></PrivateRoute>} />
         <Route path="/dashboard/v2" element={<PrivateRoute><Dashboard_v2 /></PrivateRoute>} />
         <Route path="/dashboard/v3" element={<PrivateRoute><Dashboard_v3 /></PrivateRoute>} />
-        <Route path="/theme-generate" element={<PrivateRoute><ThemeGenerate /></PrivateRoute>} />
+        {/* <Route path="/theme-generate" element={<PrivateRoute><ThemeGenerate /></PrivateRoute>} /> */}
         <Route path="/widgets/small-box" element={<PrivateRoute><SmallBox /></PrivateRoute>} />
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />
         <Route path="/widgets/card" element={<PrivateRoute><Cards /></PrivateRoute>} />
+
+        {/* Route chỉ dành cho Admin */}
+        <Route path="/theme-generate" element={<RoleRoute allowedRoles={['Admin']}><ThemeGenerate /></RoleRoute>} />
 
         <Route path="*" element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />} />
       </Routes>

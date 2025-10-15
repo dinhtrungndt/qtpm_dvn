@@ -1,9 +1,11 @@
 import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, Table, Users, X } from "lucide-react";
 import { useState } from "react";
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const DashboardMenu = ({ isOpen, onClose }) => {
   const [openMenus, setOpenMenus] = useState({});
+  const { user } = useSelector((state) => state.user);
 
   const toggleMenu = (menuId) => {
     setOpenMenus(prev => ({
@@ -224,10 +226,31 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                 </>
               )}
 
-              {/* ADMIN */}
+              {/* Orders */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                ADMIN
+                Management
               </div>
+              <Link to="/orders" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <FileText className="h-4 w-4" />
+                <span className="text-sm">Đơn hàng</span>
+              </Link>
+              {/* ADMIN */}
+
+              {user?.role === 'admin' && (
+                <>
+                  <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    ADMIN
+                  </div>
+                  <Link to="/users" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <Users className="h-4 w-4" />
+                    <span className="text-sm">Quản lý Users</span>
+                  </Link>
+                  <Link to="/products" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <Box className="h-4 w-4" />
+                    <span className="text-sm">Quản lý Products</span>
+                  </Link>
+                </>
+              )}
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">

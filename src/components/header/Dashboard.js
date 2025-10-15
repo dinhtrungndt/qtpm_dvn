@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Logs, MessageCircle, Search } from "lucide-react";
+import { Bell, ChevronDown, Dot, Logs, MessageCircle, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -68,10 +68,19 @@ const DashboardHeader = () => {
           >
             <Logs className="h-4 w-4" />
           </button>
-          <div className="hidden md:flex items-center gap-4">
-            <Link to="/" className="text-sm hover:text-gray-900 transition-colors">Trang chủ</Link>
-            <Link to="/dashboard/v1" className="text-sm hover:text-gray-900 transition-colors">Dashboard</Link>
-            <Link to="/contact" className="text-sm hover:text-gray-900 transition-colors">Liên hệ</Link>
+          <div className="hidden md:flex items-center">
+            <Link to="/" className="text-sm hover:text-gray-900 transition-colors mr-4">Trang chủ</Link>
+            <Link to="/dashboard/v1" className="text-sm hover:text-gray-900 transition-colors mr-4">Dashboard</Link>
+            <Link to="/contact" className="text-sm hover:text-gray-900 transition-colors mr-4">Liên hệ</Link>
+            <Link to="/orders" className="text-sm hover:text-gray-900 transition-colors">Đơn hàng</Link>
+            {/* admin */}
+            {user?.role === 'admin' && (
+              <>
+                <span className="flex items-center text-black"><Dot /></span>
+                <Link to="/users" className="text-sm hover:text-gray-900 transition-colors mr-4">Quản lý Users</Link>
+                <Link to="/products" className="text-sm hover:text-gray-900 transition-colors">Quản lý Products</Link>
+              </>
+            )}
           </div>
         </div>
 
