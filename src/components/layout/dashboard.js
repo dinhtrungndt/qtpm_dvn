@@ -74,10 +74,10 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </div>
 
               {/* Theme Generate */}
-              <a href="/theme" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/theme-generate" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <Palette className="h-4 w-4" />
                 <span className="text-sm">Theme Generate</span>
-              </a>
+              </Link>
 
               {/* Widgets with submenu */}
               <div>
@@ -92,18 +92,18 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['widgets'] ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-200 ${openMenus['widgets'] ? 'max-h-48' : 'max-h-0'}`}>
-                  <a href="/widgets/small" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  <Link to="/widgets/small-box" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Small Box
-                  </a>
-                  <a href="/widgets/info" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/widgets/info" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Info Box
-                  </a>
-                  <a href="/widgets/cards" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/widgets/card" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Cards
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -121,52 +121,52 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['layout'] ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-200 ${openMenus['layout'] ? 'max-h-80' : 'max-h-0'}`}>
-                  <a href="/layout/default" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  <Link to="/layout/default" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Default Sidebar
-                  </a>
-                  <a href="/layout/fixed-sidebar" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/layout/fixed-sidebar" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Fixed Sidebar
-                  </a>
-                  <a href="/layout/fixed-header" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/layout/fixed-header" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Fixed Header
-                  </a>
-                  <a href="/layout/fixed-footer" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/layout/fixed-footer" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Fixed Footer
-                  </a>
-                  <a href="/layout/complete" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/layout/complete" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Fixed Complete
-                  </a>
+                  </Link>
                 </div>
               </div>
 
               {/* UI Elements */}
-              <a href="/ui-elements" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/ui-elements" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <Layers className="h-4 w-4" />
                   <span className="text-sm">UI Elements</span>
                 </div>
-              </a>
+              </Link>
 
               {/* Forms */}
-              <a href="/forms" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/forms" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <FileText className="h-4 w-4" />
                   <span className="text-sm">Forms</span>
                 </div>
-              </a>
+              </Link>
 
               {/* Tables */}
-              <a href="/tables" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/tables" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <Table className="h-4 w-4" />
                   <span className="text-sm">Tables</span>
                 </div>
-              </a>
+              </Link>
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -174,12 +174,12 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </div>
 
               {/* Auth */}
-              <a href="/auth" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/auth" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <Lock className="h-4 w-4" />
                   <span className="text-sm">Auth</span>
                 </div>
-              </a>
+              </Link>
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -187,34 +187,34 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </div>
 
               {/* Documentation Items */}
-              <a href="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <Download className="h-4 w-4" />
                 <span className="text-sm">Installation</span>
-              </a>
-              <a href="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              </Link>
+              <Link to="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <BookOpen className="h-4 w-4" />
                 <span className="text-sm">Layout</span>
-              </a>
-              <a href="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              </Link>
+              <Link to="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <Code className="h-4 w-4" />
                 <span className="text-sm">Components</span>
-              </a>
-              <a href="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              </Link>
+              <Link to="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <Globe className="h-4 w-4" />
                 <span className="text-sm">Browser Support</span>
-              </a>
-              <a href="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              </Link>
+              <Link to="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <Users className="h-4 w-4" />
                 <span className="text-sm">How To Contribute</span>
-              </a>
-              <a href="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              </Link>
+              <Link to="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <HelpCircle className="h-4 w-4" />
                 <span className="text-sm">FAQ</span>
-              </a>
-              <a href="/docs/license" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              </Link>
+              <Link to="/docs/license" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <FileCheck className="h-4 w-4" />
                 <span className="text-sm">License</span>
-              </a>
+              </Link>
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">

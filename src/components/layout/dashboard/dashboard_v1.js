@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
-import { statsData_v1 } from '../../stores/data/dashboard';
-import Chartjs from './chartjs';
+import { statsData_v1 } from '../../../stores/data/dashboard';
+import Chartjs from '../chartjs';
 
 
 const Dashboard_v1 = () => {
