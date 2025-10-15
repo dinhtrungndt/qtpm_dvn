@@ -70,6 +70,7 @@ const DashboardHeader = () => {
           </button>
           <div className="hidden md:flex items-center gap-4">
             <Link to="/" className="text-sm hover:text-gray-900 transition-colors">Trang chủ</Link>
+            <Link to="/dashboard/v1" className="text-sm hover:text-gray-900 transition-colors">Dashboard</Link>
             <Link to="/contact" className="text-sm hover:text-gray-900 transition-colors">Liên hệ</Link>
           </div>
         </div>
