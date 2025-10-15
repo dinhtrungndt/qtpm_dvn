@@ -1,5 +1,6 @@
 import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, Table, Users, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const DashboardMenu = ({ isOpen, onClose }) => {
   const [openMenus, setOpenMenus] = useState({});
@@ -15,8 +16,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${isOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${isOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       />
 
@@ -58,18 +58,18 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['dashboard'] ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-200 ${openMenus['dashboard'] ? 'max-h-48' : 'max-h-0'}`}>
-                  <a href="/dashboard/v1" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  <Link to="/dashboard/v1" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Dashboard v1
-                  </a>
-                  <a href="/dashboard/v2" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/dashboard/v2" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Dashboard v2
-                  </a>
-                  <a href="/dashboard/v3" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  </Link>
+                  <Link to="/dashboard/v3" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     Dashboard v3
-                  </a>
+                  </Link>
                 </div>
               </div>
 

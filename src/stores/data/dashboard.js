@@ -1,6 +1,6 @@
 import { DollarSign, ShoppingBag, TrendingUp, Users } from 'lucide-react';
 
-export const statsData = [
+export const statsData_v1 = [
   {
     id: 1,
     number: '2,847',

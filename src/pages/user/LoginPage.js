@@ -27,7 +27,7 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       await dispatch(login({ username, password }));
-      navigate('/dashboard');
+      navigate('/dashboard/v1');
     } catch (error) {
       console.error('Login failed:', error.message);
     } finally {
