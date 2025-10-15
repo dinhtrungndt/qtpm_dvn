@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import { statsData_v1 } from '../../../stores/data/dashboard';
-import Chartjs from '../chartjs';
+import Chartjs from '../ChartJS/chartjs';
+import Chat from '../Chat/Chat';
 
 
 const Dashboard_v1 = () => {
@@ -62,6 +63,9 @@ const Dashboard_v1 = () => {
 
       {/* ChartJS */}
       <Chartjs />
+
+      {/* Chat */}
+      <Chat />
     </div>
   );
 };

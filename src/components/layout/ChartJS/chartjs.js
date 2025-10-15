@@ -1,8 +1,8 @@
 import { Chart, registerables } from 'chart.js';
-import { ChevronRight, Clock, Package, ShoppingCart, Users } from 'lucide-react';
+import { CheckCircle, Clock, FileText, Package, ShoppingCart, User, Users, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDashboardSales, getDashboardStats } from '../../stores/redux/actions/dashboardActions';
+import { getDashboardSales, getDashboardStats } from '../../../stores/redux/actions/dashboardActions';
 
 Chart.register(...registerables);
 
@@ -207,56 +207,97 @@ const Chartjs = () => {
         </div>
       </div>
 
-      {/* Recent Activities */}
-      <div className={`bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-500 ${animateCards ? 'animate-slide-in' : 'opacity-0'}`} style={{ animationDelay: '100ms' }}>
+
+      {/* Recent Activities - Right Side */}
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-          <h2 className="text-base font-semibold text-gray-900">Hoạt động gần đây</h2>
-          <p className="text-xs text-gray-500 mt-0.5">Theo dõi sự kiện hệ thống</p>
+        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white">
+          <div className="flex items-center gap-2">
+            <Clock className="w-5 h-5" />
+            <h3 className="font-semibold">Hoạt Động Gần Đây</h3>
+          </div>
+          <button className="p-1 hover:bg-white/20 rounded transition-colors">
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Activities List */}
-        <div className="p-4 max-h-96 overflow-y-auto scrollbar-thin">
-          {stats?.recent_activities?.length > 0 ? (
-            <div className="space-y-2">
-              {stats.recent_activities.map((activity, index) => (
-                <div
-                  key={index}
-                  className="group p-3 rounded-lg bg-gray-50 hover:bg-blue-50 border border-transparent hover:border-blue-200 transition-all duration-300 cursor-pointer animate-fade-in"
-                  style={{ animationDelay: `${index * 80}ms` }}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-gray-200 group-hover:border-blue-300 flex items-center justify-center transition-colors">
-                      <Clock className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 group-hover:text-blue-900 transition-colors">
-                        {activity.action}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-0.5">{activity.time}</p>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </div>
-                </div>
-              ))}
+        <div className="p-4 space-y-3 h-96 overflow-y-auto bg-gray-50">
+          <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <User className="w-5 h-5 text-blue-600" />
             </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="w-14 h-14 mb-3 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200">
-                <Clock className="w-7 h-7 text-gray-400" />
-              </div>
-              <p className="text-sm text-gray-600 font-medium">Không có hoạt động gần đây</p>
-              <p className="text-xs text-gray-400 mt-1">Hãy quay lại sau để xem cập nhật</p>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Người dùng mới đăng ký</p>
+              <p className="text-xs text-gray-500 mt-0.5">Trần Thị B vừa tạo tài khoản</p>
+              <p className="text-xs text-gray-400 mt-1">2 phút trước</p>
             </div>
-          )}
+          </div>
+
+          <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-emerald-300 transition-colors">
+            <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <ShoppingCart className="w-5 h-5 text-emerald-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Đơn hàng mới</p>
+              <p className="text-xs text-gray-500 mt-0.5">Đơn hàng #12345 đã được tạo</p>
+              <p className="text-xs text-gray-400 mt-1">15 phút trước</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-amber-300 transition-colors">
+            <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 text-amber-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Báo cáo được tạo</p>
+              <p className="text-xs text-gray-500 mt-0.5">Báo cáo doanh thu tháng 1</p>
+              <p className="text-xs text-gray-400 mt-1">1 giờ trước</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-green-300 transition-colors">
+            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Nhiệm vụ hoàn thành</p>
+              <p className="text-xs text-gray-500 mt-0.5">Cập nhật giao diện dashboard</p>
+              <p className="text-xs text-gray-400 mt-1">2 giờ trước</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
+            <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <User className="w-5 h-5 text-purple-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Cập nhật hồ sơ</p>
+              <p className="text-xs text-gray-500 mt-0.5">Nguyễn Văn A đã cập nhật ảnh đại diện</p>
+              <p className="text-xs text-gray-400 mt-1">3 giờ trước</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 transition-colors">
+            <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <ShoppingCart className="w-5 h-5 text-red-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Đơn hàng bị hủy</p>
+              <p className="text-xs text-gray-500 mt-0.5">Đơn hàng #12340 đã bị hủy bởi khách</p>
+              <p className="text-xs text-gray-400 mt-1">4 giờ trước</p>
+            </div>
+          </div>
         </div>
 
-        {/* Footer */}
-        <div className="px-5 py-3 border-t border-gray-100 bg-gray-50">
-          <button className="w-full flex items-center justify-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors group">
-            Xem tất cả hoạt động
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </button>
+        {/* View All Button */}
+        <div className="p-4 bg-white border-t border-gray-200">
+          <a
+            href="#"
+            className="block text-center py-2.5 text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors"
+          >
+            Xem tất cả hoạt động →
+          </a>
         </div>
       </div>
 
