@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ContactForm() {
   const [email, setEmail] = useState('');
@@ -62,9 +63,9 @@ export default function ContactForm() {
           />
           <label htmlFor="privacy" className="cursor-pointer text-left">
             Tôi đồng ý rằng dữ liệu của tôi sẽ được lưu trữ và xử lý theo{' '}
-            <a href="#" className="text-gray-300 hover:text-white underline">
+            <Link to="#" className="text-gray-300 hover:text-white underline">
               Chính sách Bảo mật
-            </a>
+            </Link>
           </label>
         </div>
       </div>

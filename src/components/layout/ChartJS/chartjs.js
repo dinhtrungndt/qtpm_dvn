@@ -2,6 +2,7 @@ import { Chart, registerables } from 'chart.js';
 import { CheckCircle, Clock, FileText, Package, ShoppingCart, User, Users, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getDashboardSales, getDashboardStats } from '../../../stores/redux/actions/dashboardActions';
 
 Chart.register(...registerables);
@@ -292,12 +293,12 @@ const Chartjs = () => {
 
         {/* View All Button */}
         <div className="p-4 bg-white border-t border-gray-200">
-          <a
-            href="#"
+          <Link
+            to="#"
             className="block text-center py-2.5 text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors"
           >
             Xem tất cả hoạt động →
-          </a>
+          </Link>
         </div>
       </div>
 

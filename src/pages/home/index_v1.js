@@ -1,4 +1,5 @@
 import { SquareChevronLeft, SquareChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -24,26 +25,26 @@ const HomePageStart = () => {
       <div className="mt-4">
         {/* Sản phẩm nổi bật */}
         <div className="flex md:text-sm text-[10px] justify-center gap-6 py-2 mb-4 bg-gradient-to-r from-blue-50 via-white to-blue-50 border-y border-blue-200 shadow-sm">
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Petro ITM
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </Link>
+          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Lấy phiếu
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </Link>
+          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Kiểm kê & Tài sản
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </Link>
+          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             QL Hàng chờ
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </Link>
+          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Thông tin
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </a>
+          </Link>
         </div>
         {/* slide */}
         <div className="relative">
@@ -103,10 +104,10 @@ const HomePageStart = () => {
           <div className="grid grid-cols-3 items-center px-4 mt-6 mb-2">
             <div></div>
             <p className="font-medium md:text-lg text-sm text-center">Nổi bật ✮</p>
-            <a href="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
+            <Link to="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
               Xem thêm {'>'}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
+            </Link>
           </div>
           {/* content */}
           <p className="px-4 md:text-sm text-[10px] text-gray-500 mb-2 text-center">Khám phá những sản phẩm công nghệ hàng đầu.</p>
@@ -123,10 +124,10 @@ const HomePageStart = () => {
           <div className="grid grid-cols-3 items-center px-4 mt-6 mb-2">
             <div></div>
             <p className="font-medium md:text-lg text-sm text-center">Mới thêm gần đây 📥</p>
-            <a href="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
+            <Link to="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
               Xem thêm {'>'}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
+            </Link>
           </div>
           {/* content */}
           <p className="px-4 md:text-sm text-[10px] text-gray-500 mb-2 text-center">Gặp gỡ những người mới của chúng tôi! Các mẫu trang web mới nhất đã được tải lên thị trường.</p>

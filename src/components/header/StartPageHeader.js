@@ -94,13 +94,13 @@ const HeaderPageStart = () => {
           <div className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 flex flex-col px-6 py-6 gap-4 transform transition-transform duration-300 ease-in-out ${isOpenMenu ? 'translate-x-0' : '-translate-x-full'
             }`}>
             {memus.map((item) => (
-              <a
+              <Link
                 key={item}
-                href="#"
+                to="#"
                 className="text-black font-semibold text-lg hover:text-blue-600 transition"
               >
                 {item}
-              </a>
+              </Link>
             ))}
           </div>
         </>
@@ -113,11 +113,11 @@ const HeaderPageStart = () => {
         </div>
         {/* right */}
         <div className="hidden lg:flex items-center text-sm text-gray-700 relative">
-          <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần mềm</a>
-          <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần cứng</a>
-          <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Website</a>
+          <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần mềm</Link>
+          <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần cứng</Link>
+          <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Website</Link>
           <span className="mx-2 flex items-center text-black"><Dot /></span>
-          <a href="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</a>
+          <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</Link>
           <div className="border-l border-black mx-2 h-4" />
           {/* login */}
           {

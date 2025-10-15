@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { statsData_v1 } from '../../../stores/data/dashboard';
 import Chartjs from '../ChartJS/chartjs';
 import Chat from '../Chat/Chat';
@@ -11,7 +12,7 @@ const Dashboard_v1 = () => {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
         <div className="flex items-center gap-2 text-xs">
-          <a href="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</a>
+          <Link to="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</Link>
           <span className="text-gray-400">/</span>
           <span className="text-gray-600">Dashboard</span>
         </div>
@@ -48,13 +49,13 @@ const Dashboard_v1 = () => {
 
               {/* Footer Link */}
               <div className="px-3 pb-3">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="inline-flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-gray-900 transition-colors group-hover:gap-1.5"
                 >
                   Xem chi tiết
                   <ArrowUpRight className="w-3 h-3" />
-                </a>
+                </Link>
               </div>
             </div>
           );

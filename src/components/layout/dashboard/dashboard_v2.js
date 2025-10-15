@@ -1,6 +1,7 @@
 import { Chart, registerables } from 'chart.js';
 import { Download, Heart, MessageCircle, MessageSquare, Minus, Settings, ShoppingCart, Tag, ThumbsUp, TrendingDown, TrendingUp, Users, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 Chart.register(...registerables);
 
@@ -151,9 +152,9 @@ const BottomWidgets = ({ animate }) => {
         </div>
 
         <div className="px-4 pb-4">
-          <a href="#" className="block text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+          <Link to="#" className="block text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
             View All Users
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -257,7 +258,7 @@ const BottomWidgets2 = ({ animate }) => {
                   style={{ transitionDelay: `${1200 + index * 50}ms` }}
                 >
                   <td className="px-4 py-3">
-                    <a href="#" className="text-sm font-medium text-blue-600 hover:text-blue-700">{order.id}</a>
+                    <Link to="#" className="text-sm font-medium text-blue-600 hover:text-blue-700">{order.id}</Link>
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-900">{order.item}</td>
                   <td className="px-4 py-3">
@@ -363,7 +364,7 @@ const BottomWidgets2 = ({ animate }) => {
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-lg">{country.flag}</span>
-                    <a href="#" className="text-blue-600 hover:text-blue-700 text-sm">{country.name}</a>
+                    <Link to="#" className="text-blue-600 hover:text-blue-700 text-sm">{country.name}</Link>
                   </div>
                   <span className={`font-semibold text-sm ${country.color}`}>{country.change}</span>
                 </div>
@@ -400,7 +401,7 @@ const BottomWidgets2 = ({ animate }) => {
               >
                 <img src={product.image} alt={product.name} className="w-14 h-14 rounded border border-gray-200" />
                 <div className="flex-1 min-w-0">
-                  <a href="#" className="text-sm font-medium text-blue-600 hover:text-blue-700">{product.name}</a>
+                  <Link to="#" className="text-sm font-medium text-blue-600 hover:text-blue-700">{product.name}</Link>
                   <p className="text-xs text-gray-500 mt-0.5 truncate">{product.desc}</p>
                 </div>
                 <span className={`${product.priceColor} text-white text-xs font-bold px-2.5 py-1 rounded flex-shrink-0`}>
@@ -411,9 +412,9 @@ const BottomWidgets2 = ({ animate }) => {
           </div>
 
           <div className="px-4 pb-4">
-            <a href="#" className="block text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+            <Link to="#" className="block text-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
               View All Products
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -543,7 +544,7 @@ const Dashboard_v2 = () => {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-semibold text-gray-900">Dashboard v2</h1>
         <div className="flex items-center gap-2 text-xs">
-          <a href="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</a>
+          <Link to="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</Link>
           <span className="text-gray-400">/</span>
           <span className="text-gray-600">Dashboard v2</span>
         </div>

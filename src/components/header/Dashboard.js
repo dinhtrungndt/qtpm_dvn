@@ -1,6 +1,7 @@
 import { Bell, ChevronDown, Logs, MessageCircle, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { logout } from '../../stores/redux/actions/userActions';
 import ChatNotification from '../layout/Chat/ChatNotification';
 import DashboardMenu from '../layout/dashboard';
@@ -68,8 +69,8 @@ const DashboardHeader = () => {
             <Logs className="h-4 w-4" />
           </button>
           <div className="hidden md:flex items-center gap-4">
-            <a href="/" className="text-sm hover:text-gray-900 transition-colors">Trang chủ</a>
-            <a href="/contact" className="text-sm hover:text-gray-900 transition-colors">Liên hệ</a>
+            <Link to="/" className="text-sm hover:text-gray-900 transition-colors">Trang chủ</Link>
+            <Link to="/contact" className="text-sm hover:text-gray-900 transition-colors">Liên hệ</Link>
           </div>
         </div>
 
@@ -115,7 +116,7 @@ const DashboardHeader = () => {
               <ChevronDown className="w-4 h-4" />
             </div>
           ) : (
-            <a href="/login" className="text-sm hover:text-gray-900 transition-colors">Đăng nhập</a>
+            <Link to="/login" className="text-sm hover:text-gray-900 transition-colors">Đăng nhập</Link>
           )}
         </div>
 

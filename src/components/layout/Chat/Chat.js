@@ -1,5 +1,6 @@
 import { Award, DollarSign, MessageCircle, Minus, Package, Send, ShoppingBag, Target, TrendingUp, Users, X, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
@@ -315,12 +316,12 @@ const Chat = () => {
           </div>
 
           <div className="px-4 pb-4">
-            <a
-              href="#"
+            <Link
+              to="#"
               className="block text-center py-2.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
             >
               Xem báo cáo chi tiết →
-            </a>
+            </Link>
           </div>
         </div>
       </div>

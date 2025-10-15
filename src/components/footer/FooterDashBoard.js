@@ -1,4 +1,5 @@
 import { Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const FooterDashBoard = () => {
   const currentYear = new Date().getFullYear();
@@ -18,17 +19,17 @@ const FooterDashBoard = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <a href="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+          <Link to="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
             Điều khoản
-          </a>
+          </Link>
           <span className="text-gray-300">•</span>
-          <a href="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+          <Link to="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
             Bảo mật
-          </a>
+          </Link>
           <span className="text-gray-300">•</span>
-          <a href="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+          <Link to="#" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
             Cookies
-          </a>
+          </Link>
         </div>
       </div>
     </footer>
