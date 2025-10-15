@@ -168,53 +168,66 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                 </div>
               </Link>
 
-              {/* Section Header */}
+              {/* Tạm ẩn */}
+              {false && (
+                <>
+
+                  {/* Section Header */}
+                  <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    Examples
+                  </div>
+
+                  {/* Auth */}
+                  <Link to="/auth" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Lock className="h-4 w-4" />
+                      <span className="text-sm">Auth</span>
+                    </div>
+                  </Link>
+
+                  {/* Section Header */}
+                  <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    Documentations
+                  </div>
+
+                  {/* Documentation Items */}
+                  <Link to="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <Download className="h-4 w-4" />
+                    <span className="text-sm">Installation</span>
+                  </Link>
+                  <Link to="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <BookOpen className="h-4 w-4" />
+                    <span className="text-sm">Layout</span>
+                  </Link>
+                  <Link to="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <Code className="h-4 w-4" />
+                    <span className="text-sm">Components</span>
+                  </Link>
+                  <Link to="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <Globe className="h-4 w-4" />
+                    <span className="text-sm">Browser Support</span>
+                  </Link>
+                  <Link to="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <Users className="h-4 w-4" />
+                    <span className="text-sm">How To Contribute</span>
+                  </Link>
+                  <Link to="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <HelpCircle className="h-4 w-4" />
+                    <span className="text-sm">FAQ</span>
+                  </Link>
+                  <Link to="/docs/license" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <FileCheck className="h-4 w-4" />
+                    <span className="text-sm">License</span>
+                  </Link>
+
+
+                </>
+              )}
+
+              {/* ADMIN */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Examples
+                ADMIN
               </div>
-
-              {/* Auth */}
-              <Link to="/auth" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <div className="flex items-center gap-3">
-                  <Lock className="h-4 w-4" />
-                  <span className="text-sm">Auth</span>
-                </div>
-              </Link>
-
-              {/* Section Header */}
-              <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Documentations
-              </div>
-
-              {/* Documentation Items */}
-              <Link to="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Download className="h-4 w-4" />
-                <span className="text-sm">Installation</span>
-              </Link>
-              <Link to="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <BookOpen className="h-4 w-4" />
-                <span className="text-sm">Layout</span>
-              </Link>
-              <Link to="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Code className="h-4 w-4" />
-                <span className="text-sm">Components</span>
-              </Link>
-              <Link to="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Globe className="h-4 w-4" />
-                <span className="text-sm">Browser Support</span>
-              </Link>
-              <Link to="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Users className="h-4 w-4" />
-                <span className="text-sm">How To Contribute</span>
-              </Link>
-              <Link to="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <HelpCircle className="h-4 w-4" />
-                <span className="text-sm">FAQ</span>
-              </Link>
-              <Link to="/docs/license" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <FileCheck className="h-4 w-4" />
-                <span className="text-sm">License</span>
-              </Link>
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -236,6 +249,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   <span className="text-gray-200">Informational</span>
                 </div>
               </div>
+
             </nav>
           </div>
         </div>
