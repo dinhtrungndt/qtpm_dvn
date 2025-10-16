@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import ContactForm from '../../components/contact';
+import ContactForm from '../../components/contact/ContactForm';
 import CreativeMarketSection from '../../components/contact/CreativeMarketSection';
 import FooterStart from '../../components/footer/FooterStart';
 import HeaderPageStart from '../../components/header/StartPageHeader';

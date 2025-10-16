@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 
-const SECRET_KEY = process.env.VITE_ENCRYPT_KEY || 'NZJKHCJHJHJ@$@$24@$@JKUAS12321323ASDAUHSD2!!!';
+const SECRET_KEY = process.env.REACT_APP_ENCRYPT_KEY;
 
 // 🟢 Mã hóa token
 export const encryptToken = (token) => {

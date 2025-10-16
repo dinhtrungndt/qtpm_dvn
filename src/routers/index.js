@@ -1,6 +1,7 @@
 import { lazy, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import ContactPage from '../components/contact/ContactPage';
 import FooterDashBoard from '../components/footer/FooterDashBoard';
 import DashboardHeader from '../components/header/Dashboard';
 import AccountAdmin from '../components/layout/admin/accountAdmin';
@@ -85,6 +86,7 @@ const Routers = () => {
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />
         <Route path="/widgets/card" element={<PrivateRoute><Cards /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
+        <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
 
