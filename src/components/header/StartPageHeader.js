@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoHeader } from '../../constants/images';
+import { fetchCart } from '../../stores/redux/actions/cartActions';
 import { logout } from '../../stores/redux/actions/userActions';
 import OpenUser from '../layout/OpenUser';
 
@@ -14,26 +15,21 @@ const HeaderPageStart = () => {
   const [isOpenUserMenu, setIsOpenUserMenu] = useState(false);
   const [isOpenCart, setIsOpenCart] = useState(false);
   const cart = useSelector((state) => state.cart.items || []);
-  const userMenuRef = useRef(null);
   const { user } = useSelector((state) => state.user);
+  const userMenuRef = useRef(null);
+  const cartRef = useRef(null);
   const navigate = useNavigate();
 
   const categorySearchs = ['Tất cả', 'Phần mềm', 'Website', 'Phần cứng', 'Phụ kiện'];
   const memus = ['Phần mềm', 'Phần cứng', 'Website', 'Liên hệ'];
 
-  const handleSelectCategory = (category) => {
-    setCategorySearch(category);
-    setIsOpenSearch(false);
-  };
+  console.log("cart", cart);
 
-  const handleLogin = () => {
-    navigate('/login');
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-    setIsOpenUserMenu(false);
-  };
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchCart());
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (!isOpenUserMenu) return;
@@ -46,8 +42,6 @@ const HeaderPageStart = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpenUserMenu]);
 
-  const cartRef = useRef(null);
-
   useEffect(() => {
     if (!isOpenCart) return;
     const handleClickOutside = (event) => {
@@ -58,6 +52,17 @@ const HeaderPageStart = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpenCart]);
+
+  const handleSelectCategory = (category) => {
+    setCategorySearch(category);
+    setIsOpenSearch(false);
+  };
+
+  const handleLogin = () => navigate('/login');
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpenUserMenu(false);
+  };
 
   return (
     <div>
@@ -184,13 +189,19 @@ const HeaderPageStart = () => {
                 {cart.length > 0 ? (
                   cart.map((item) => (
                     <div key={item.id} className="flex items-center gap-3 py-2 border-b border-gray-100">
-                      <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
+                      <img
+                        src={item.product?.image || "https://via.placeholder.com/80"}
+                        alt={item.product?.name || "Sản phẩm"}
+                        className="w-12 h-12 object-cover rounded-lg"
+                      />
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-gray-800">{item.name}</p>
+                        <p className="text-sm font-semibold text-gray-800">
+                          {item.product?.name || "Không rõ sản phẩm"}
+                        </p>
                         <p className="text-xs text-gray-500">Số lượng: {item.quantity}</p>
                       </div>
                       <p className="text-sm font-semibold text-blue-600">
-                        {(item.price * item.quantity).toLocaleString()}₫
+                        {(item.product?.price * item.quantity).toLocaleString()}₫
                       </p>
                     </div>
                   ))
@@ -198,15 +209,12 @@ const HeaderPageStart = () => {
                   <p className="text-center text-gray-500 text-sm py-4">Giỏ hàng trống</p>
                 )}
               </div>
-
               {cart.length > 0 && (
                 <div className="p-3 border-t border-gray-200">
                   <div className="flex justify-between text-sm font-semibold mb-2">
                     <span>Tổng cộng:</span>
                     <span>
-                      {cart
-                        .reduce((total, item) => total + item.price * item.quantity, 0)
-                        .toLocaleString()}₫
+                      {cart.reduce((total, item) => total + (item.product?.price || 0) * item.quantity, 0)}₫
                     </span>
                   </div>
                   <div className="flex gap-2">
@@ -289,15 +297,12 @@ const HeaderPageStart = () => {
                   <p className="text-center text-gray-500 text-sm py-4">Giỏ hàng trống</p>
                 )}
               </div>
-
               {cart.length > 0 && (
                 <div className="p-3 border-t border-gray-200">
                   <div className="flex justify-between text-sm font-semibold mb-2">
                     <span>Tổng cộng:</span>
                     <span>
-                      {cart
-                        .reduce((total, item) => total + item.price * item.quantity, 0)
-                        .toLocaleString()}₫
+                      {cart.reduce((total, item) => total + (item.product?.price || 0) * item.quantity, 0)}₫
                     </span>
                   </div>
                   <div className="flex gap-2">

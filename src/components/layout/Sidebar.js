@@ -1,4 +1,4 @@
-import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, Table, UserCog, Users, X } from "lucide-react";
+import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -244,6 +244,14 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   <Link to="/user" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                     <UserCog className="h-4 w-4" />
                     <span className="text-sm">Tài khoản</span>
+                  </Link>
+                )
+              }
+              {
+                user?.role === 'user' && (
+                  <Link to="/cart" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <ShoppingCart className="h-4 w-4" />
+                    <span className="text-sm">Giỏ hàng</span>
                   </Link>
                 )
               }

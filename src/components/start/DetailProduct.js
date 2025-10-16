@@ -61,7 +61,7 @@ const DetailProduct = () => {
 
       {/* Breadcrumb & Back Button */}
       <div className="bg-white shadow-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className=" mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <button
               onClick={() => navigate(-1)}
@@ -89,7 +89,7 @@ const DetailProduct = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className=" mx-auto px-8 py-8">
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Image Gallery */}
           <div className="space-y-4 animate-fade-in">

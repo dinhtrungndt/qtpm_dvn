@@ -1,6 +1,7 @@
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
+import cartReducer from './reducers/cartReducer';
 import dashboardReducer from './reducers/dashboardReducer';
 import orderReducer from './reducers/orderReducer';
 import productReducer from './reducers/productReducer';
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   dashboard: dashboardReducer,
   product: productReducer,
+  cart: cartReducer,
   order: orderReducer,
 });
 

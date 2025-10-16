@@ -13,6 +13,8 @@ import HistoryOrder from '../components/layout/orders/historyOrder';
 import Settings from '../components/layout/setting';
 import ThemeGenerate from '../components/layout/themegenerate';
 import AccountUser from '../components/layout/user/AccountUser';
+import CartPage from '../components/layout/user/cart';
+import Checkout from '../components/layout/user/checkout';
 import Cards from '../components/layout/widgets/Cards';
 import InforBox from '../components/layout/widgets/InforBox';
 import SmallBox from '../components/layout/widgets/SmallBox';
@@ -80,6 +82,8 @@ const Routers = () => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
+        <Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
+        <Route path="/checkout/:id" element={<PrivateRoute><Checkout /></PrivateRoute>} />
         <Route path="/dashboard/v1" element={<PrivateRoute><DashboardV1 /></PrivateRoute>} />
         <Route path="/dashboard/v2" element={<PrivateRoute><DashboardV2 /></PrivateRoute>} />
         <Route path="/dashboard/v3" element={<PrivateRoute><DashboardV3 /></PrivateRoute>} />
