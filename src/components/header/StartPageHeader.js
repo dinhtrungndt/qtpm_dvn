@@ -158,12 +158,40 @@ const HeaderPageStart = () => {
         </div>
         {/* mobile */}
         <div className="lg:hidden flex items-center gap-4">
-          <SquareUser className="w-6 h-6" />
-          <div className="relative cursor-pointer ">
-            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">3</span>
+          {user ? (
+            <>
+              <SquareUser
+                className="w-6 h-6 cursor-pointer"
+                onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}
+              />
+              <div
+                className={`absolute z-10 top-10 right-4 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
+                  ? "opacity-100 scale-100 translate-y-0"
+                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }`}
+              >
+                <div ref={userMenuRef}>
+                  <OpenUser handleLogout={handleLogout} />
+                </div>
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold hover:bg-blue-700"
+            >
+              Đăng nhập
+            </button>
+          )}
+
+          <div className="relative cursor-pointer">
+            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+              3
+            </span>
             <ShoppingBasket className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400" />
           </div>
         </div>
+
       </div>
     </div >
   );
