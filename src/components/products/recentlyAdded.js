@@ -1,10 +1,23 @@
 import { Eye, Heart, ShoppingCart, Star, Zap } from 'lucide-react';
-import { useState } from 'react';
-import { products } from '../../stores/data/products';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getAllProducts } from '../../stores/redux/actions/productActions';
+import Loading from '../../utils/loading';
 
 const RecentlyAdded = () => {
   const [likedItems, setLikedItems] = useState({});
   const [selectedFramework, setSelectedFramework] = useState(null);
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector(state => state.product);
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
+  if (loading) {
+    <Loading />;
+  }
 
   const toggleLike = (id) => {
     setLikedItems(prev => ({
@@ -82,7 +95,7 @@ const RecentlyAdded = () => {
 
                 {/* Overlay on hover - Compact buttons */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-2 left-2 right-2 flex gap-1.5">
+                  <Link to={`/detail/product/${product.id}`} className="absolute bottom-2 left-2 right-2 flex gap-1.5">
                     <button className="flex-1 bg-white text-gray-800 py-1.5 px-2 rounded-lg text-xs font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-1">
                       <Eye className="w-3 h-3" />
                       Xem
@@ -91,7 +104,7 @@ const RecentlyAdded = () => {
                       <ShoppingCart className="w-3 h-3" />
                       Mua
                     </button>
-                  </div>
+                  </Link>
                 </div>
               </div>
 

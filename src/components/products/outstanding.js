@@ -1,10 +1,14 @@
 import { Eye, Heart, ShoppingCart, Star, Zap } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { products } from '../../stores/data/products';
+import { getAllProducts } from '../../stores/redux/actions/productActions';
+import Loading from '../../utils/loading';
 
 const Outstanding = () => {
+  const dispatch = useDispatch();
   const [likedItems, setLikedItems] = useState({});
+  const { products, loading } = useSelector(state => state.product);
 
   const toggleLike = (id) => {
     setLikedItems(prev => ({
@@ -13,7 +17,15 @@ const Outstanding = () => {
     }));
   };
 
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
   const bestSeller = products.sort((a, b) => b.sold - a.sold).slice(0, 6);
+
+  if (loading) {
+    <Loading />;
+  }
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4">

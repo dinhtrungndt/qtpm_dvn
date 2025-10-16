@@ -15,6 +15,33 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 
+// lấy tất cả sản phẩm (không phân trang)
+export const getAllProducts = () => async (dispatch) => {
+  dispatch({ type: types.GET_PRODUCTS_ALL_REQUEST });
+  try {
+    const data = await productService.getListAll();
+    dispatch({ type: types.GET_PRODUCTS_ALL_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: types.GET_PRODUCTS_ALL_FAILURE,
+      payload: error.response?.data || error.message,
+    });
+  }
+};
+
+export const getProductById = (id) => async (dispatch) => {
+  dispatch({ type: types.GET_PRODUCT_DETAIL_REQUEST });
+  try {
+    const data = await productService.getDetail(id);
+    dispatch({ type: types.GET_PRODUCT_DETAIL_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: types.GET_PRODUCT_DETAIL_FAILURE,
+      payload: error.response?.data || error.message,
+    });
+  }
+};
+
 // Tạo sản phẩm
 export const createProduct = (productData) => async (dispatch) => {
   dispatch({ type: types.CREATE_PRODUCT_REQUEST });

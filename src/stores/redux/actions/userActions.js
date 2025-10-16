@@ -132,7 +132,8 @@ export const deleteUser = (userId) => async (dispatch) => {
 let ws = null;
 const connectWebSocket = (userId) => {
   if (ws) ws.close();
-  ws = new WebSocket(`ws://127.0.0.1:1111/auth/ws/${userId}`);
+  const port = process.env.REACT_APP_API_WEB_SOCKET;
+  ws = new WebSocket(`ws://${port}/auth/ws/${userId}`);
   window.ws = ws;
   ws.onopen = () =>//  console.log('WebSocket đã kết nối');
     ws.onmessage = (event) => {

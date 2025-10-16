@@ -15,8 +15,13 @@ const productService = {
     return res.data;
   },
 
-  getById: async (id) => {
-    const res = await api.get(`/products/${id}`, getAuthConfig());
+  getListAll: async () => {
+    const res = await api.get('/products/all', getAuthConfig());
+    return res.data;
+  },
+
+  getDetail: async (id) => {
+    const res = await api.get(`/products/${id}`);
     return res.data;
   },
 

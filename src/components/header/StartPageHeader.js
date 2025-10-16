@@ -12,6 +12,8 @@ const HeaderPageStart = () => {
   const [categorySearch, setCategorySearch] = useState('Tất cả');
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenUserMenu, setIsOpenUserMenu] = useState(false);
+  const [isOpenCart, setIsOpenCart] = useState(false);
+  const cart = useSelector((state) => state.cart.items || []);
   const userMenuRef = useRef(null);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -43,6 +45,19 @@ const HeaderPageStart = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpenUserMenu]);
+
+  const cartRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpenCart) return;
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setIsOpenCart(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpenCart]);
 
   return (
     <div>
@@ -151,10 +166,68 @@ const HeaderPageStart = () => {
           </div>
 
           {/* cart */}
-          <Link to="/history/orders" className="relative cursor-pointer pl-2">
-            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">3</span>
-            <ShoppingBasket className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400" />
-          </Link>
+          <div className="relative cursor-pointer pl-2" ref={cartRef}>
+            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+              {cart.length}
+            </span>
+            <ShoppingBasket
+              onClick={() => setIsOpenCart(!isOpenCart)}
+              className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400"
+            />
+
+            {/* Dropdown cart */}
+            <div
+              className={`absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-xl shadow-xl transition-all duration-200 ease-out origin-top-right z-50 ${isOpenCart ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                }`}
+            >
+              <div className="max-h-80 overflow-y-auto p-4">
+                {cart.length > 0 ? (
+                  cart.map((item) => (
+                    <div key={item.id} className="flex items-center gap-3 py-2 border-b border-gray-100">
+                      <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-gray-800">{item.name}</p>
+                        <p className="text-xs text-gray-500">Số lượng: {item.quantity}</p>
+                      </div>
+                      <p className="text-sm font-semibold text-blue-600">
+                        {(item.price * item.quantity).toLocaleString()}₫
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500 text-sm py-4">Giỏ hàng trống</p>
+                )}
+              </div>
+
+              {cart.length > 0 && (
+                <div className="p-3 border-t border-gray-200">
+                  <div className="flex justify-between text-sm font-semibold mb-2">
+                    <span>Tổng cộng:</span>
+                    <span>
+                      {cart
+                        .reduce((total, item) => total + item.price * item.quantity, 0)
+                        .toLocaleString()}₫
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => navigate("/cart")}
+                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg py-1 text-sm font-semibold"
+                    >
+                      Xem giỏ hàng
+                    </button>
+                    <button
+                      onClick={() => navigate("/checkout")}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-1 text-sm font-semibold"
+                    >
+                      Thanh toán
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
         {/* mobile */}
         <div className="lg:hidden flex items-center gap-4">
@@ -184,12 +257,67 @@ const HeaderPageStart = () => {
             </button>
           )}
 
-          <Link to="/history/orders" className="relative cursor-pointer">
+          <div className="relative cursor-pointer pl-2" ref={cartRef}>
             <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-              3
+              {cart.length}
             </span>
-            <ShoppingBasket className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400" />
-          </Link>
+            <ShoppingBasket
+              onClick={() => setIsOpenCart(!isOpenCart)}
+              className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400"
+            />
+
+            {/* Dropdown cart */}
+            <div
+              className={`absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-xl shadow-xl transition-all duration-200 ease-out origin-top-right z-50 ${isOpenCart ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                }`}
+            >
+              <div className="max-h-80 overflow-y-auto p-4">
+                {cart.length > 0 ? (
+                  cart.map((item) => (
+                    <div key={item.id} className="flex items-center gap-3 py-2 border-b border-gray-100">
+                      <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-gray-800">{item.name}</p>
+                        <p className="text-xs text-gray-500">Số lượng: {item.quantity}</p>
+                      </div>
+                      <p className="text-sm font-semibold text-blue-600">
+                        {(item.price * item.quantity).toLocaleString()}₫
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500 text-sm py-4">Giỏ hàng trống</p>
+                )}
+              </div>
+
+              {cart.length > 0 && (
+                <div className="p-3 border-t border-gray-200">
+                  <div className="flex justify-between text-sm font-semibold mb-2">
+                    <span>Tổng cộng:</span>
+                    <span>
+                      {cart
+                        .reduce((total, item) => total + item.price * item.quantity, 0)
+                        .toLocaleString()}₫
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => navigate("/cart")}
+                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg py-1 text-sm font-semibold"
+                    >
+                      Xem giỏ hàng
+                    </button>
+                    <button
+                      onClick={() => navigate("/checkout")}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-1 text-sm font-semibold"
+                    >
+                      Thanh toán
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
       </div>

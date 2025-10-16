@@ -2,15 +2,17 @@ import {
   ArrowLeft, Check, ChevronRight, Eye, Heart, Package, Share2, Shield, ShoppingCart, Star, TrendingUp, Zap
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-// Import data products (giả sử bạn đã có)
-import { products } from '../../stores/data/products';
+import { getProductById } from '../../stores/redux/actions/productActions';
 
 const DetailProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
+  const dispatch = useDispatch();
+
+  const { products, productDetail, isLoading } = useSelector((state) => state.product);
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
@@ -18,13 +20,10 @@ const DetailProduct = () => {
   const [showAddedToCart, setShowAddedToCart] = useState(false);
 
   useEffect(() => {
-    const foundProduct = products.find(p => p.id === parseInt(id));
-    if (foundProduct) {
-      setProduct(foundProduct);
-    }
-  }, [id]);
+    if (id) dispatch(getProductById(id));
+  }, [id, dispatch]);
 
-  if (!product) {
+  if (isLoading || !productDetail) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -35,20 +34,21 @@ const DetailProduct = () => {
     );
   }
 
+  const product = productDetail;
+
   const handleAddToCart = () => {
     setShowAddedToCart(true);
     setTimeout(() => setShowAddedToCart(false), 3000);
   };
 
   const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
+    ? products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
+    : [];
 
-  // Giả sử mỗi sản phẩm có nhiều ảnh (ở đây dùng ảnh chính)
   const images = [product.image, product.image, product.image];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Success Toast */}
       {showAddedToCart && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in-right">

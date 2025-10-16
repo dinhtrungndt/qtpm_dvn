@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getDashboardSales, getDashboardStats } from '../../../stores/redux/actions/dashboardActions';
+import Loading from '../../../utils/loading';
 
 Chart.register(...registerables);
 
@@ -165,12 +166,7 @@ const Chartjs = () => {
         {/* Chart Content */}
         <div className="p-5">
           {loading && (
-            <div className="flex items-center justify-center h-64">
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-10 h-10 border-3 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
-                <p className="text-sm text-gray-500 font-medium">Đang tải dữ liệu...</p>
-              </div>
-            </div>
+            <Loading />
           )}
           {error && (
             <div className="flex items-center justify-center h-64">
