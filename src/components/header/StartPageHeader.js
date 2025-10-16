@@ -151,10 +151,10 @@ const HeaderPageStart = () => {
           </div>
 
           {/* cart */}
-          <div className="relative cursor-pointer pl-2">
+          <Link to="/history/orders" className="relative cursor-pointer pl-2">
             <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">3</span>
             <ShoppingBasket className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400" />
-          </div>
+          </Link>
         </div>
         {/* mobile */}
         <div className="lg:hidden flex items-center gap-4">
@@ -184,12 +184,12 @@ const HeaderPageStart = () => {
             </button>
           )}
 
-          <div className="relative cursor-pointer">
+          <Link to="/history/orders" className="relative cursor-pointer">
             <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
               3
             </span>
             <ShoppingBasket className="bg-blue-500 rounded-full p-1 text-white hover:bg-blue-400" />
-          </div>
+          </Link>
         </div>
 
       </div>

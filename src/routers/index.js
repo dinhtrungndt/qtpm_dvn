@@ -8,6 +8,7 @@ import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
+import HistoryOrder from '../components/layout/orders/historyOrder';
 import Settings from '../components/layout/setting';
 import ThemeGenerate from '../components/layout/themegenerate';
 import AccountUser from '../components/layout/user/AccountUser';
@@ -83,6 +84,7 @@ const Routers = () => {
         <Route path="/widgets/small-box" element={<PrivateRoute><SmallBox /></PrivateRoute>} />
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />
         <Route path="/widgets/card" element={<PrivateRoute><Cards /></PrivateRoute>} />
+        <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
 

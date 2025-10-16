@@ -72,7 +72,7 @@ const DashboardHeader = () => {
             <Link to="/" className="text-sm hover:text-gray-900 transition-colors mr-4">Trang chủ</Link>
             <Link to="/dashboard/v1" className="text-sm hover:text-gray-900 transition-colors mr-4">Dashboard</Link>
             <Link to="/contact" className="text-sm hover:text-gray-900 transition-colors mr-4">Liên hệ</Link>
-            <Link to="/orders" className="text-sm hover:text-gray-900 transition-colors">Đơn hàng</Link>
+            <Link to="/history/orders" className="text-sm hover:text-gray-900 transition-colors">Đơn hàng</Link>
             {/* admin */}
             {user?.role === 'admin' && (
               <>

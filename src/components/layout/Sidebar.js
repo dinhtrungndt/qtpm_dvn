@@ -247,7 +247,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   </Link>
                 )
               }
-              <Link to="/orders" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/history/orders" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <FileText className="h-4 w-4" />
                 <span className="text-sm">Đơn hàng</span>
               </Link>
