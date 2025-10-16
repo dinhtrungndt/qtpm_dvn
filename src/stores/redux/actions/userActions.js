@@ -1,5 +1,6 @@
 import { MESSAGES } from '../../../constants/notifications/messages';
 import authService from '../../../services/authService';
+import userService from '../../../services/userServices';
 import { encryptToken } from '../../../utils/cryptoUtils';
 import * as types from '../types/index';
 
@@ -78,11 +79,53 @@ export const getCurrentUser = () => async (dispatch) => {
 export const getListUsers = () => async (dispatch) => {
   dispatch({ type: types.GET_LIST_USERS_REQUEST });
   try {
-    const users = await authService.getListUsers();
+    const users = await userService.getListUsers();
     dispatch({ type: types.GET_LIST_USERS_SUCCESS, payload: users });
   } catch (error) {
     console.error('Get list users error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.GET_LIST_USERS_FAILURE, payload: error });
+  }
+};
+
+export const createUser = (userData) => async (dispatch) => {
+  dispatch({ type: types.CREATE_USER_REQUEST });
+  try {
+    const newUser = await userService.createUser(userData);
+    dispatch({ type: types.CREATE_USER_SUCCESS, payload: newUser });
+    globalShowMessage?.('Tạo người dùng thành công!', 'success');
+    dispatch(getListUsers()); // refresh list
+  } catch (error) {
+    console.error('Create user error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.CREATE_USER_FAILURE, payload: error });
+    globalShowMessage?.('Tạo người dùng thất bại: ' + (error.response?.data?.detail || error.message), 'error');
+  }
+};
+
+export const updateUser = (userId, userData) => async (dispatch) => {
+  dispatch({ type: types.UPDATE_USER_REQUEST });
+  try {
+    const updatedUser = await userService.updateUser(userId, userData);
+    dispatch({ type: types.UPDATE_USER_SUCCESS, payload: updatedUser });
+    globalShowMessage?.('Cập nhật người dùng thành công!', 'success');
+    dispatch(getListUsers());
+  } catch (error) {
+    console.error('Update user error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.UPDATE_USER_FAILURE, payload: error });
+    globalShowMessage?.('Cập nhật thất bại: ' + (error.response?.data?.detail || error.message), 'error');
+  }
+};
+
+export const deleteUser = (userId) => async (dispatch) => {
+  dispatch({ type: types.DELETE_USER_REQUEST });
+  try {
+    await userService.deleteUser(userId);
+    dispatch({ type: types.DELETE_USER_SUCCESS, payload: userId });
+    globalShowMessage?.('Xoá người dùng thành công!', 'success');
+    dispatch(getListUsers());
+  } catch (error) {
+    console.error('Delete user error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.DELETE_USER_FAILURE, payload: error });
+    globalShowMessage?.('Xoá người dùng thất bại: ' + (error.response?.data?.detail || error.message), 'error');
   }
 };
 

@@ -73,6 +73,23 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
+    case types.GET_LIST_USERS_REQUEST:
+    case types.CREATE_USER_REQUEST:
+    case types.UPDATE_USER_REQUEST:
+    case types.DELETE_USER_REQUEST:
+      return { ...state, isLoading: true, error: null, message: null };
+
+    case types.CREATE_USER_SUCCESS:
+      return { ...state, isLoading: false, message: 'Tạo user thành công' };
+    case types.UPDATE_USER_SUCCESS:
+      return { ...state, isLoading: false, message: 'Cập nhật user thành công' };
+    case types.DELETE_USER_SUCCESS:
+      return { ...state, isLoading: false, message: 'Xóa user thành công' };
+
+    case types.CREATE_USER_FAILURE:
+    case types.UPDATE_USER_FAILURE:
+    case types.DELETE_USER_FAILURE:
+      return { ...state, isLoading: false, error: action.payload };
     case types.LOGOUT:
       return {
         ...state,

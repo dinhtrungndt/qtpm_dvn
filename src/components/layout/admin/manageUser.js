@@ -1,96 +1,72 @@
-import { Edit2, Loader, Plus, Search, Trash2 } from 'lucide-react';
+import { Check, Edit2, Loader, Plus, Search, Trash2, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import api from '../../../services/api';
-import { getListUsers } from '../../../stores/redux/actions/userActions';
+import { createUser, deleteUser, getListUsers, updateUser } from '../../../stores/redux/actions/userActions';
 
 const ManageUser = () => {
   const dispatch = useDispatch();
-  const { listUsers, isLoading, error } = useSelector((state) => state.user);
+  const { listUsers, isLoading, error, message } = useSelector(
+    (state) => state.user
+  );
 
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ username: '', email: '', password: '', full_name: '', role: 'user' });
   const [editingId, setEditingId] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [notification, setNotification] = useState('');
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    full_name: '',
-    password: '',
-    role: 'user',
-  });
 
   useEffect(() => {
-    // Fetch users khi component mount
     dispatch(getListUsers());
   }, [dispatch]);
 
-  const showNotification = (msg, type) => {
-    setNotification({ msg, type });
-    setTimeout(() => setNotification(''), 3000);
-  };
+  useEffect(() => {
+    if (message) {
+      setNotification({ msg: message, type: 'success' });
+      setTimeout(() => setNotification(''), 3000);
+    }
+    if (error) {
+      setNotification({ msg: error, type: 'error' });
+      setTimeout(() => setNotification(''), 3000);
+    }
+  }, [message, error]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email) {
-      showNotification('Vui lòng điền đầy đủ thông tin', 'error');
+      setNotification({ msg: 'Vui lòng nhập đầy đủ thông tin', type: 'error' });
       return;
     }
 
-    setLoading(true);
-    try {
-      if (editingId) {
-        await api.put(`/users/${editingId}`, formData);
-        showNotification('Cập nhật user thành công', 'success');
-      } else {
-        await api.post('/users/', formData);
-        showNotification('Tạo user thành công', 'success');
-      }
-      resetForm();
-      getListUsers();
-    } catch (error) {
-      showNotification('Lỗi: ' + (error.response?.data?.detail || 'Không xác định'), 'error');
-    } finally {
-      setLoading(false);
+    if (editingId) {
+      dispatch(updateUser(editingId, formData));
+    } else {
+      dispatch(createUser(formData));
     }
+    setFormData({ username: '', email: '', password: '', full_name: '', role: 'user' });
+    setEditingId(null);
+    setShowForm(false);
   };
 
   const handleEdit = (user) => {
     setFormData({
       username: user.username,
       email: user.email,
-      full_name: user.full_name || '',
-      role: user.role || 'user',
       password: '',
+      full_name: user.full_name || '',
+      role: user.role || 'user'
     });
     setEditingId(user.id);
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Bạn chắc chắn muốn xóa user này?')) return;
-
-    setLoading(true);
-    try {
-      await api.delete(`/users/${id}`);
-      showNotification('Xóa user thành công', 'success');
-      getListUsers();
-    } catch (error) {
-      showNotification('Lỗi: ' + (error.response?.data?.detail || 'Không xác định'), 'error');
-    } finally {
-      setLoading(false);
+  const handleDelete = (id) => {
+    if (window.confirm('Bạn chắc chắn muốn xóa user này?')) {
+      dispatch(deleteUser(id));
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      username: '',
-      email: '',
-      full_name: '',
-      password: '',
-      role: 'user',
-    });
+  const handleCancel = () => {
+    setFormData({ username: '', email: '', password: '', full_name: '', role: 'user' });
     setEditingId(null);
     setShowForm(false);
   };
@@ -104,10 +80,11 @@ const ManageUser = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8">
       {/* Notification */}
       {notification && (
-        <div className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg animate-slide-in ${notification.type === 'success'
+        <div className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg animate-slide-in z-50 flex items-center gap-2 ${notification.type === 'success'
           ? 'bg-green-500 text-white'
           : 'bg-red-500 text-white'
           }`}>
+          {notification.type === 'success' ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
           {notification.msg}
         </div>
       )}
@@ -143,61 +120,71 @@ const ManageUser = () => {
         {/* Form */}
         {showForm && (
           <div className="bg-slate-700 rounded-xl border border-slate-600 p-6 mb-8 animate-slide-down shadow-xl">
-            <h2 className="text-xl font-bold text-white mb-4">
-              {editingId ? 'Chỉnh Sửa User' : 'Tạo User Mới'}
-            </h2>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Username"
-                value={formData.username}
-                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                disabled={editingId}
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-              />
-              <input
-                type="text"
-                placeholder="Họ tên"
-                value={formData.full_name}
-                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-              />
-              <input
-                type="password"
-                placeholder="Mật khẩu"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-              />
-              <select
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-white">
+                {editingId ? 'Chỉnh Sửa User' : 'Tạo User Mới'}
+              </h2>
+              <button
+                onClick={handleCancel}
+                className="text-slate-400 hover:text-white transition-colors"
               >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
-              <div className="flex gap-2">
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all hover:shadow-lg disabled:opacity-50 transform hover:scale-105"
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={formData.username}
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                  disabled={editingId}
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                />
+                <input
+                  type="text"
+                  placeholder="Họ tên"
+                  value={formData.full_name}
+                  onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                />
+                <input
+                  type="password"
+                  placeholder="Mật khẩu"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                />
+                <select
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                 >
-                  {loading ? 'Đang xử lý...' : 'Lưu'}
-                </button>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div className="flex gap-2 justify-end pt-2">
                 <button
                   type="button"
-                  onClick={resetForm}
-                  className="flex-1 px-4 py-2 bg-slate-600 hover:bg-slate-500 text-white rounded-lg font-medium transition-all"
+                  onClick={handleCancel}
+                  className="px-6 py-2 bg-slate-600 hover:bg-slate-500 text-white rounded-lg font-medium transition-all"
                 >
                   Hủy
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all hover:shadow-lg disabled:opacity-50 transform hover:scale-105"
+                >
+                  {isLoading ? 'Đang xử lý...' : editingId ? 'Cập nhật' : 'Tạo mới'}
                 </button>
               </div>
             </form>
@@ -206,7 +193,7 @@ const ManageUser = () => {
 
         {/* Users Table */}
         <div className="bg-slate-700 rounded-xl border border-slate-600 overflow-hidden shadow-xl animate-fade-in" style={{ animationDelay: '200ms' }}>
-          {isLoading && (
+          {isLoading && !showForm && (
             <div className="flex items-center justify-center py-12">
               <Loader className="w-8 h-8 text-blue-500 animate-spin" />
             </div>
@@ -214,7 +201,7 @@ const ManageUser = () => {
 
           {!isLoading && filteredUsers.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-slate-400">Không có user nào</p>
+              <p className="text-slate-400 text-lg">Không có user nào</p>
             </div>
           ) : (
             <>
@@ -223,11 +210,11 @@ const ManageUser = () => {
                 <table className="w-full">
                   <thead>
                     <tr className="bg-slate-800 border-b border-slate-600">
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">ID</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Username</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Email</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Họ Tên</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Role</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Trạng Thái</th>
                       <th className="px-6 py-4 text-right text-sm font-semibold text-slate-300">Hành Động</th>
                     </tr>
                   </thead>
@@ -238,6 +225,7 @@ const ManageUser = () => {
                         className="border-b border-slate-600 hover:bg-slate-600/50 transition-colors animate-fade-in"
                         style={{ animationDelay: `${idx * 50}ms` }}
                       >
+                        <td className="px-6 py-4 text-slate-300 text-sm">{user.id}</td>
                         <td className="px-6 py-4 text-white font-medium">{user.username}</td>
                         <td className="px-6 py-4 text-slate-300">{user.email}</td>
                         <td className="px-6 py-4 text-slate-300">{user.full_name || '-'}</td>
@@ -249,25 +237,19 @@ const ManageUser = () => {
                             {user.role}
                           </span>
                         </td>
-                        <td className="px-6 py-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${user.is_active
-                            ? 'bg-green-500/20 text-green-300'
-                            : 'bg-red-500/20 text-red-300'
-                            }`}>
-                            {user.is_active ? 'Hoạt động' : 'Vô hiệu'}
-                          </span>
-                        </td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex justify-end gap-2">
                             <button
                               onClick={() => handleEdit(user)}
                               className="p-2 hover:bg-blue-600 text-blue-400 rounded-lg transition-all transform hover:scale-110"
+                              title="Sửa"
                             >
                               <Edit2 className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => handleDelete(user.id)}
                               className="p-2 hover:bg-red-600 text-red-400 rounded-lg transition-all transform hover:scale-110"
+                              title="Xóa"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -287,25 +269,20 @@ const ManageUser = () => {
                     className="bg-slate-600 p-4 rounded-lg border border-slate-500 space-y-2 animate-fade-in"
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
-                    <div className="flex justify-between items-start">
-                      <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex-1">
                         <p className="font-semibold text-white">{user.username}</p>
                         <p className="text-slate-400 text-sm">{user.email}</p>
                       </div>
+                      <span className="text-xs text-slate-400">ID: {user.id}</span>
+                    </div>
+                    <p className="text-slate-400 text-sm">{user.full_name || '-'}</p>
+                    <div className="flex justify-between items-center pt-2 border-t border-slate-500">
                       <span className={`px-2 py-1 rounded text-xs font-medium ${user.role === 'admin'
                         ? 'bg-purple-500/20 text-purple-300'
                         : 'bg-blue-500/20 text-blue-300'
                         }`}>
                         {user.role}
-                      </span>
-                    </div>
-                    <p className="text-slate-400 text-sm">{user.full_name || '-'}</p>
-                    <div className="flex justify-between items-center pt-2 border-t border-slate-500">
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${user.is_active
-                        ? 'bg-green-500/20 text-green-300'
-                        : 'bg-red-500/20 text-red-300'
-                        }`}>
-                        {user.is_active ? 'Hoạt động' : 'Vô hiệu'}
                       </span>
                       <div className="flex gap-2">
                         <button

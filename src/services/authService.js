@@ -1,4 +1,3 @@
-import { decryptToken } from '../utils/cryptoUtils';
 import api from './api';
 
 const authService = {
@@ -23,18 +22,6 @@ const authService = {
   getCurrentUser: async () => {
     // console.log('Fetching current user from: /users/me');
     const response = await api.get('/users/me');
-    return response.data;
-  },
-
-  getListUsers: async () => {
-    const encryptedToken = localStorage.getItem('access_token');
-    const token = encryptedToken ? decryptToken(encryptedToken) : null;
-
-    const response = await api.get('/users', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
     return response.data;
   },
 };

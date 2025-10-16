@@ -77,8 +77,8 @@ const DashboardHeader = () => {
             {user?.role === 'admin' && (
               <>
                 <span className="flex items-center text-black"><Dot /></span>
-                <Link to="/users" className="text-sm hover:text-gray-900 transition-colors mr-4">Quản lý Users</Link>
-                <Link to="/products" className="text-sm hover:text-gray-900 transition-colors">Quản lý Products</Link>
+                <Link to="/manage/users" className="text-sm hover:text-gray-900 transition-colors mr-4">Quản lý Users</Link>
+                <Link to="/manage/products" className="text-sm hover:text-gray-900 transition-colors">Quản lý Products</Link>
               </>
             )}
           </div>
