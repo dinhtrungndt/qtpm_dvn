@@ -25,7 +25,7 @@ const OpenUser = ({ userMenuRef, handleLogout }) => {
         </Link>
 
         <Link
-          to="/profile"
+          to="/user"
           className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <User className="w-4 h-4 text-gray-500" />

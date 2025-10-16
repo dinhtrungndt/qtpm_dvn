@@ -3,9 +3,14 @@ import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import FooterDashBoard from '../components/footer/FooterDashBoard';
 import DashboardHeader from '../components/header/Dashboard';
+import AccountAdmin from '../components/layout/admin/accountAdmin';
+import ManageProduct from '../components/layout/admin/manageProduct';
+import ManageUser from '../components/layout/admin/manageUser';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
+import Settings from '../components/layout/setting';
 import ThemeGenerate from '../components/layout/themegenerate';
+import AccountUser from '../components/layout/user/AccountUser';
 import Cards from '../components/layout/widgets/Cards';
 import InforBox from '../components/layout/widgets/InforBox';
 import SmallBox from '../components/layout/widgets/SmallBox';
@@ -78,9 +83,14 @@ const Routers = () => {
         <Route path="/widgets/small-box" element={<PrivateRoute><SmallBox /></PrivateRoute>} />
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />
         <Route path="/widgets/card" element={<PrivateRoute><Cards /></PrivateRoute>} />
+        <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
+        <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
 
         {/* Route chỉ dành cho Admin */}
-        <Route path="/theme-generate" element={<RoleRoute allowedRoles={['Admin']}><ThemeGenerate /></RoleRoute>} />
+        <Route path="/theme-generate" element={<RoleRoute allowedRoles={['admin']}><ThemeGenerate /></RoleRoute>} />
+        <Route path="/admin" element={<RoleRoute allowedRoles={['admin']}><AccountAdmin /></RoleRoute>} />
+        <Route path="/manage/users" element={<RoleRoute allowedRoles={['admin']}><ManageUser /></RoleRoute>} />
+        <Route path="/manage/products" element={<RoleRoute allowedRoles={['admin']}><ManageProduct /></RoleRoute>} />
 
         <Route path="*" element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />} />
       </Routes>

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../stores/redux/actions/userActions';
 import ChatNotification from '../layout/Chat/ChatNotification';
-import DashboardMenu from '../layout/dashboard';
 import NotificationPanel from '../layout/Notifications/NotificationPanel';
 import OpenUser from '../layout/OpenUser';
+import DashboardMenu from '../layout/Sidebar';
 
 const DashboardHeader = () => {
   const dispatch = useDispatch();

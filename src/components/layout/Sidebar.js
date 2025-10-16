@@ -1,4 +1,4 @@
-import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, Table, Users, X } from "lucide-react";
+import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, Table, UserCog, Users, X } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -230,6 +230,23 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 Management
               </div>
+
+              {
+                user?.role === 'admin' && (
+                  <Link to="/admin" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <UserCog className="h-4 w-4" />
+                    <span className="text-sm">Tài khoản</span>
+                  </Link>
+                )
+              }
+              {
+                user?.role === 'user' && (
+                  <Link to="/user" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <UserCog className="h-4 w-4" />
+                    <span className="text-sm">Tài khoản</span>
+                  </Link>
+                )
+              }
               <Link to="/orders" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <FileText className="h-4 w-4" />
                 <span className="text-sm">Đơn hàng</span>
@@ -241,11 +258,11 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                     ADMIN
                   </div>
-                  <Link to="/users" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                  <Link to="/manage/users" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                     <Users className="h-4 w-4" />
                     <span className="text-sm">Quản lý Users</span>
                   </Link>
-                  <Link to="/products" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                  <Link to="/manage/products" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                     <Box className="h-4 w-4" />
                     <span className="text-sm">Quản lý Products</span>
                   </Link>
