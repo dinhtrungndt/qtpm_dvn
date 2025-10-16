@@ -1,5 +1,6 @@
 import { Eye, Heart, ShoppingCart, Star, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { products } from '../../stores/data/products';
 
 const Outstanding = () => {
@@ -57,10 +58,10 @@ const Outstanding = () => {
                 {/* Overlay on hover - Compact buttons */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-2 left-2 right-2 flex gap-1.5">
-                    <button className="flex-1 bg-white text-gray-800 py-1.5 px-2 rounded-lg text-xs font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-1">
+                    <Link to={`/detail/product/${product.id}`} className="flex-1 bg-white text-gray-800 py-1.5 px-2 rounded-lg text-xs font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-1">
                       <Eye className="w-3 h-3" />
                       Xem
-                    </button>
+                    </Link>
                     <button className="flex-1 bg-blue-500 text-white py-1.5 px-2 rounded-lg text-xs font-semibold hover:bg-blue-600 transition-colors flex items-center justify-center gap-1">
                       <ShoppingCart className="w-3 h-3" />
                       Mua

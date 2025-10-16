@@ -16,6 +16,7 @@ import AccountUser from '../components/layout/user/AccountUser';
 import Cards from '../components/layout/widgets/Cards';
 import InforBox from '../components/layout/widgets/InforBox';
 import SmallBox from '../components/layout/widgets/SmallBox';
+import DetailProduct from '../components/start/DetailProduct';
 import HomePageStart from '../pages/home/HomePageStart';
 import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
@@ -74,6 +75,7 @@ const Routers = () => {
 
       <Routes>
         <Route path="/" element={<HomePageStart />} />
+        <Route path="/detail/product/:id" element={<DetailProduct />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
