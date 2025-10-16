@@ -10,6 +10,7 @@ const initialState = {
   isAuthenticated: !!decryptedToken,
   isLoading: false,
   error: null,
+  listUsers: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -45,15 +46,6 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
-    case types.LOGOUT:
-      return {
-        ...state,
-        user: null,
-        token: null,
-        isAuthenticated: false,
-        isLoading: false,
-        error: null,
-      };
     case types.GET_CURRENT_USER:
       return {
         ...state,
@@ -67,6 +59,29 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case types.GET_LIST_USERS_SUCCESS:
+      return {
+        ...state,
+        listUsers: action.payload,
+        isLoading: false,
+        error: null,
+      };
+    case types.GET_LIST_USERS_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case types.LOGOUT:
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+        listUsers: [],
       };
     default:
       return state;

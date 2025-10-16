@@ -75,6 +75,17 @@ export const getCurrentUser = () => async (dispatch) => {
   }
 };
 
+export const getListUsers = () => async (dispatch) => {
+  dispatch({ type: types.GET_LIST_USERS_REQUEST });
+  try {
+    const users = await authService.getListUsers();
+    dispatch({ type: types.GET_LIST_USERS_SUCCESS, payload: users });
+  } catch (error) {
+    console.error('Get list users error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.GET_LIST_USERS_FAILURE, payload: error });
+  }
+};
+
 let ws = null;
 const connectWebSocket = (userId) => {
   if (ws) ws.close();
