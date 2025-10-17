@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoHeader } from '../../constants/images';
+import useClickOutside from '../../hooks/useClickOutside';
 import { fetchCart } from '../../stores/redux/actions/cartActions';
 import { logout } from '../../stores/redux/actions/userActions';
 import OpenUser from '../layout/OpenUser';
@@ -16,42 +17,21 @@ const HeaderPageStart = () => {
   const [isOpenCart, setIsOpenCart] = useState(false);
   const cart = useSelector((state) => state.cart.items || []);
   const { user } = useSelector((state) => state.user);
-  const userMenuRef = useRef(null);
   const cartRef = useRef(null);
   const navigate = useNavigate();
+  const userMenuRefDesktop = useRef(null);
+  const userMenuRefMobile = useRef(null);
 
   const categorySearchs = ['Tất cả', 'Phần mềm', 'Website', 'Phần cứng', 'Phụ kiện'];
   const memus = ['Phần mềm', 'Phần cứng', 'Website', 'Liên hệ'];
 
-  console.log("cart", cart);
+  useClickOutside(cartRef, () => setIsOpenCart(false), isOpenCart);
 
   useEffect(() => {
     if (user) {
       dispatch(fetchCart());
     }
   }, [dispatch, user]);
-
-  useEffect(() => {
-    if (!isOpenUserMenu) return;
-    const handleClickOutside = (event) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-        setIsOpenUserMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpenUserMenu]);
-
-  useEffect(() => {
-    if (!isOpenCart) return;
-    const handleClickOutside = (event) => {
-      if (cartRef.current && !cartRef.current.contains(event.target)) {
-        setIsOpenCart(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpenCart]);
 
   const handleSelectCategory = (category) => {
     setCategorySearch(category);
@@ -63,6 +43,20 @@ const HeaderPageStart = () => {
     dispatch(logout());
     setIsOpenUserMenu(false);
   };
+
+  useEffect(() => {
+    if (!isOpenUserMenu) return;
+    const handleClickOutside = (event) => {
+      const target = event.target;
+      const clickedInsideDesktop = userMenuRefDesktop.current && userMenuRefDesktop.current.contains(target);
+      const clickedInsideMobile = userMenuRefMobile.current && userMenuRefMobile.current.contains(target);
+      if (!clickedInsideDesktop && !clickedInsideMobile) {
+        setIsOpenUserMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpenUserMenu]);
 
   return (
     <div>
@@ -160,14 +154,13 @@ const HeaderPageStart = () => {
           }
           {/* Open User Menu with Animation */}
           <div
-            className={`absolute z-10 top-5 right-8 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
-              ? 'opacity-100 scale-100 translate-y-0'
+            ref={userMenuRefDesktop}
+            className={`absolute z-50 top-5 right-8 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
+              ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
               : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
               }`}
           >
-            <div ref={userMenuRef}>
-              <OpenUser handleLogout={handleLogout} />
-            </div>
+            <OpenUser handleLogout={handleLogout} />
           </div>
 
           {/* cart */}
@@ -246,14 +239,13 @@ const HeaderPageStart = () => {
                 onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}
               />
               <div
-                className={`absolute z-10 top-10 right-4 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
-                  ? "opacity-100 scale-100 translate-y-0"
-                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                ref={userMenuRefMobile}
+                className={`absolute z-10 top-5 right-8 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
+                  ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
                   }`}
               >
-                <div ref={userMenuRef}>
-                  <OpenUser handleLogout={handleLogout} />
-                </div>
+                <OpenUser handleLogout={handleLogout} />
               </div>
             </>
           ) : (

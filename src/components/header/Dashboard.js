@@ -1,7 +1,8 @@
 import { Bell, ChevronDown, Dot, Logs, MessageCircle, Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useClickOutside from '../../hooks/useClickOutside';
 import { logout } from '../../stores/redux/actions/userActions';
 import ChatNotification from '../layout/Chat/ChatNotification';
 import NotificationPanel from '../layout/Notifications/NotificationPanel';
@@ -24,38 +25,9 @@ const DashboardHeader = () => {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    if (!isOpenUserMenu) return;
-    const handleClickOutside = (event) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-        setIsOpenUserMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpenUserMenu]);
-
-  useEffect(() => {
-    if (!isOpenChat) return;
-    const handleClickOutside = (event) => {
-      if (chatRef.current && !chatRef.current.contains(event.target)) {
-        setIsOpenChat(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpenChat]);
-
-  useEffect(() => {
-    if (!isOpenNotification) return;
-    const handleClickOutside = (event) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setIsOpenNotification(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpenNotification]);
+  useClickOutside(userMenuRef, () => setIsOpenUserMenu(false), isOpenUserMenu);
+  useClickOutside(chatRef, () => setIsOpenChat(false), isOpenChat);
+  useClickOutside(notificationRef, () => setIsOpenNotification(false), isOpenNotification);
 
   return (
     <>
