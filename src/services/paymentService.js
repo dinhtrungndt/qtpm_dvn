@@ -24,6 +24,11 @@ const paymentService = {
     const res = await api.get('/payments', getAuthConfig());
     return res.data;
   },
+
+  cancelOrder: async (orderId) => {
+    const res = await api.post(`/payments/cancel-order/${orderId}`, {}, getAuthConfig());
+    return res.data;
+  },
 };
 
 export default paymentService;

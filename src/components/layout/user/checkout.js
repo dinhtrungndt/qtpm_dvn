@@ -3,18 +3,36 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchCart, removeFromCart, updateCartItem } from '../../../stores/redux/actions/cartActions';
-import { buyAll } from '../../../stores/redux/actions/paymentActions';
+import { buyAll, cancelOrder } from '../../../stores/redux/actions/paymentActions';
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items: cart, loading, error } = useSelector((state) => state.cart);
+  const { order } = useSelector((state) => state.payments);
   const [processing, setProcessing] = useState(false);
   const [showPaymentMethods, setShowPaymentMethods] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (order?.id && order?.status === "pending") {
+        dispatch(cancelOrder(order.id));
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+
+      if (order?.id && order?.status === "pending") {
+        dispatch(cancelOrder(order.id));
+      }
+    };
+  }, [dispatch, order]);
 
   const handleIncrease = (item) => {
     dispatch(updateCartItem(item.id, item.quantity + 1));
@@ -41,8 +59,6 @@ const Checkout = () => {
 
   const handlePayment = (method) => {
     setProcessing(true);
-
-    // Dispatch Redux buyAll với payment method
     dispatch(buyAll(method))
       .finally(() => {
         setProcessing(false);
@@ -50,29 +66,39 @@ const Checkout = () => {
       });
   };
 
-  if (loading) return (
-    <div className="flex justify-center items-center h-80 text-gray-600 text-sm">
-      Đang tải giỏ hàng...
-    </div>
-  );
+  const handleCancelPayment = () => {
+    if (order?.id && order?.status === "pending") {
+      dispatch(cancelOrder(order.id));
+    }
+    setShowPaymentMethods(false);
+  };
 
-  if (error) return (
-    <div className="text-center text-red-500 py-10">
-      Lỗi tải giỏ hàng: {error}
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-80 text-gray-600 text-sm">
+        Đang tải giỏ hàng...
+      </div>
+    );
 
-  if (!cart || cart.length === 0) return (
-    <div className="flex flex-col justify-center items-center h-96 text-gray-600">
-      <p>🛒 Giỏ hàng của bạn đang trống.</p>
-      <button
-        onClick={() => navigate("/")}
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-      >
-        Tiếp tục mua sắm
-      </button>
-    </div>
-  );
+  if (error)
+    return (
+      <div className="text-center text-red-500 py-10">
+        Lỗi tải giỏ hàng: {error}
+      </div>
+    );
+
+  if (!cart || cart.length === 0)
+    return (
+      <div className="flex flex-col justify-center items-center h-96 text-gray-600">
+        <p>🛒 Giỏ hàng của bạn đang trống.</p>
+        <button
+          onClick={() => navigate("/")}
+          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Tiếp tục mua sắm
+        </button>
+      </div>
+    );
 
   return (
     <div className="bg-gray-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
@@ -81,7 +107,12 @@ const Checkout = () => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Thanh toán</h2>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              if (order?.id && order?.status === "pending") {
+                dispatch(cancelOrder(order.id));
+              }
+              navigate(-1);
+            }}
             className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-700"
           >
             <ArrowLeft className="w-4 h-4" /> Quay lại
@@ -189,7 +220,7 @@ const Checkout = () => {
                   Ngân hàng
                 </button>
                 <button
-                  onClick={() => setShowPaymentMethods(false)}
+                  onClick={handleCancelPayment} // 🆕 dùng hàm hủy
                   className="mt-2 text-gray-600 hover:text-gray-800"
                 >
                   Hủy

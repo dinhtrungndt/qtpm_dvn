@@ -47,3 +47,16 @@ export const fetchUserPayments = () => async (dispatch) => {
     });
   }
 };
+
+export const cancelOrder = (orderId) => async (dispatch) => {
+  dispatch({ type: types.CANCEL_ORDER_REQUEST });
+  try {
+    const data = await paymentService.cancelOrder(orderId);
+    dispatch({ type: types.CANCEL_ORDER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: types.CANCEL_ORDER_FAILURE,
+      payload: error.response?.data?.detail || error.message,
+    });
+  }
+};

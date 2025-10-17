@@ -13,6 +13,7 @@ const paymentsReducer = (state = initialState, action) => {
     case types.CREATE_PAYMENT_REQUEST:
     case types.GET_PAYMENTS_REQUEST:
     case types.CREATE_ALL_PAYMENTS_REQUEST:
+    case types.CANCEL_ORDER_REQUEST:
       return { ...state, isLoading: true, error: null, message: null };
 
     case types.CREATE_PAYMENT_SUCCESS:
@@ -34,9 +35,18 @@ const paymentsReducer = (state = initialState, action) => {
     case types.GET_PAYMENTS_SUCCESS:
       return { ...state, isLoading: false, payments: action.payload };
 
+    case types.CANCEL_ORDER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        message: action.payload.message,
+        order: action.payload.order,
+      };
+
     case types.CREATE_PAYMENT_FAILURE:
     case types.GET_PAYMENTS_FAILURE:
     case types.CREATE_ALL_PAYMENTS_FAILURE:
+    case types.CANCEL_ORDER_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
 
     default:
