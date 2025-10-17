@@ -10,6 +10,11 @@ const getAuthConfig = () => {
 };
 
 const paymentService = {
+  buyAll: async () => {
+    const res = await api.post(`/payments/buy-all-momo`, {}, getAuthConfig());
+    return res.data;
+  },
+
   buyNow: async (productId) => {
     const res = await api.post(`/payments/buy-now-momo/${productId}`, {}, getAuthConfig());
     return res.data; // { payUrl, order_id, payment_id }

@@ -150,7 +150,16 @@ const HistoryOrder = () => {
                             </span>
                           </td>
                         )}
-                        <td className="px-6 py-4 text-slate-300">{order.product_id}</td>
+                        {
+                          console.log(">>>>>>>>>>>>", order)
+                        }
+                        {
+                          order.product_id == null ? (
+                            <td className="px-6 py-4 text-slate-300 font-medium">{order.product_ids}</td>
+                          ) : (
+                            <td className="px-6 py-4 text-slate-300 font-medium">{order.product_id}</td>
+                          )
+                        }
                         <td className="px-6 py-4 text-slate-300 font-medium">{order.quantity} x</td>
                         <td className="px-6 py-4 text-green-400 font-bold">
                           {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.total_price)}

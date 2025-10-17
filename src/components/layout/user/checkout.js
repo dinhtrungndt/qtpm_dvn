@@ -2,13 +2,15 @@ import { ArrowLeft, Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearCart, fetchCart, removeFromCart, updateCartItem } from '../../../stores/redux/actions/cartActions';
+import { fetchCart, removeFromCart, updateCartItem } from '../../../stores/redux/actions/cartActions';
+import { buyAll } from '../../../stores/redux/actions/paymentActions';
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items: cart, loading, error } = useSelector((state) => state.cart);
   const [processing, setProcessing] = useState(false);
+  const [showPaymentMethods, setShowPaymentMethods] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -30,52 +32,51 @@ const Checkout = () => {
     dispatch(removeFromCart(item.id));
   };
 
-  const handlePlaceOrder = () => {
-    if (cart.length === 0) return;
-    setProcessing(true);
-
-    setTimeout(() => {
-      setProcessing(false);
-      dispatch(clearCart());
-      navigate("/success");
-    }, 1000);
-  };
-
   const total = cart?.reduce((sum, i) => sum + i.product.price * i.quantity, 0) || 0;
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-80 text-gray-600 text-sm">
-        Đang tải giỏ hàng...
-      </div>
-    );
-  }
+  const handlePlaceOrder = () => {
+    if (cart.length === 0) return;
+    setShowPaymentMethods(true);
+  };
 
-  if (error) {
-    return (
-      <div className="text-center text-red-500 py-10">
-        Lỗi tải giỏ hàng: {error}
-      </div>
-    );
-  }
+  const handlePayment = (method) => {
+    setProcessing(true);
 
-  if (!cart || cart.length === 0) {
-    return (
-      <div className="flex flex-col justify-center items-center h-96 text-gray-600">
-        <p>🛒 Giỏ hàng của bạn đang trống.</p>
-        <button
-          onClick={() => navigate("/")}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-        >
-          Tiếp tục mua sắm
-        </button>
-      </div>
-    );
-  }
+    // Dispatch Redux buyAll với payment method
+    dispatch(buyAll(method))
+      .finally(() => {
+        setProcessing(false);
+        setShowPaymentMethods(false);
+      });
+  };
+
+  if (loading) return (
+    <div className="flex justify-center items-center h-80 text-gray-600 text-sm">
+      Đang tải giỏ hàng...
+    </div>
+  );
+
+  if (error) return (
+    <div className="text-center text-red-500 py-10">
+      Lỗi tải giỏ hàng: {error}
+    </div>
+  );
+
+  if (!cart || cart.length === 0) return (
+    <div className="flex flex-col justify-center items-center h-96 text-gray-600">
+      <p>🛒 Giỏ hàng của bạn đang trống.</p>
+      <button
+        onClick={() => navigate("/")}
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      >
+        Tiếp tục mua sắm
+      </button>
+    </div>
+  );
 
   return (
     <div className="bg-gray-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6">
+      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-6 relative">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Thanh toán</h2>
@@ -157,12 +158,46 @@ const Checkout = () => {
           <button
             onClick={handlePlaceOrder}
             disabled={processing}
-            className={`mt-4 sm:mt-0 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all ${processing && "opacity-70 cursor-not-allowed"
-              }`}
+            className={`mt-4 sm:mt-0 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all ${processing && "opacity-70 cursor-not-allowed"}`}
           >
             {processing ? "Đang xử lý..." : "Đặt hàng ngay"}
           </button>
         </div>
+
+        {/* Payment Method Modal */}
+        {showPaymentMethods && (
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+            <div className="bg-white rounded-xl p-6 w-80 shadow-lg">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800">Chọn phương thức thanh toán</h3>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => handlePayment("momo")}
+                  className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold transition-all"
+                >
+                  MoMo
+                </button>
+                <button
+                  onClick={() => handlePayment("zalopay")}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-all"
+                >
+                  ZaloPay
+                </button>
+                <button
+                  onClick={() => handlePayment("bank")}
+                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-all"
+                >
+                  Ngân hàng
+                </button>
+                <button
+                  onClick={() => setShowPaymentMethods(false)}
+                  className="mt-2 text-gray-600 hover:text-gray-800"
+                >
+                  Hủy
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

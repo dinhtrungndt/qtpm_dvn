@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, LogOut, Settings, User } from 'lucide-react';
+import { FileText, Home, LayoutDashboard, LogOut, Settings, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const OpenUser = ({ userMenuRef, handleLogout }) => {
@@ -22,6 +22,14 @@ const OpenUser = ({ userMenuRef, handleLogout }) => {
         >
           <LayoutDashboard className="w-4 h-4 text-gray-500" />
           <span>Dashboard</span>
+        </Link>
+
+        <Link
+          to="/history/orders"
+          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+        >
+          <FileText className="h-4 w-4" />
+          <span>Đơn hàng</span>
         </Link>
 
         <Link

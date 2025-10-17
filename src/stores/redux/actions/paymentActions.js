@@ -20,6 +20,20 @@ export const buyNow = (productId) => async (dispatch) => {
   }
 };
 
+export const buyAll = () => async (dispatch) => {
+  dispatch({ type: types.CREATE_ALL_PAYMENTS_REQUEST });
+  try {
+    const data = await paymentService.buyAll();
+    dispatch({ type: types.CREATE_ALL_PAYMENTS_SUCCESS, payload: data });
+    if (data.payUrl) window.location.href = data.payUrl;
+  } catch (error) {
+    dispatch({
+      type: types.CREATE_ALL_PAYMENTS_FAILURE,
+      payload: error.response?.data?.detail || error.message,
+    });
+  }
+};
+
 // Lấy lịch sử thanh toán
 export const fetchUserPayments = () => async (dispatch) => {
   dispatch({ type: types.GET_PAYMENTS_REQUEST });
