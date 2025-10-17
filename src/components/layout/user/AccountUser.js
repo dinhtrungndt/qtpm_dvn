@@ -23,7 +23,7 @@ const AccountUser = () => {
         username: user.username || '',
         email: user.email || '',
         full_name: user.full_name || '',
-        avatar: user.avatar || '',
+        avatar: user.avatar || 'https://dvntechnology.com/icons/Logo.png',
       });
     }
   }, [user]);
@@ -51,7 +51,7 @@ const AccountUser = () => {
         username: user.username || '',
         email: user.email || '',
         full_name: user.full_name || '',
-        avatar: user.avatar || '',
+        avatar: user.avatar || 'https://dvntechnology.com/icons/Logo.png',
       });
     }
   };

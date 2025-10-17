@@ -4,6 +4,7 @@ import { thunk } from 'redux-thunk';
 import cartReducer from './reducers/cartReducer';
 import dashboardReducer from './reducers/dashboardReducer';
 import orderReducer from './reducers/orderReducer';
+import paymentsReducer from './reducers/paymentsReducer';
 import productReducer from './reducers/productReducer';
 import userReducer from './reducers/userReducer';
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   product: productReducer,
   cart: cartReducer,
   order: orderReducer,
+  payments: paymentsReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

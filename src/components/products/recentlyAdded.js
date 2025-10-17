@@ -37,7 +37,7 @@ const RecentlyAdded = () => {
 
   const handleBuyNow = (productId) => {
     dispatch(addToCart(productId, 1));
-    navigate('/checkout/' + productId);
+    navigate('/buynow/' + productId);
   };
 
   const getQuantity = (productId) => {
