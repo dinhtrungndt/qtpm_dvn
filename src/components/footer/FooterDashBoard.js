@@ -1,11 +1,16 @@
 import { Heart } from 'lucide-react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const FooterDashBoard = () => {
   const currentYear = new Date().getFullYear();
+  const { footer } = useSelector((state) => state.theme);
 
   return (
-    <footer className="bg-white border-t border-gray-300 p-2 md:p-2">
+    <footer
+      className={`${footer.color || 'bg-white'} border-t border-gray-300 p-2 md:p-2`}
+      data-bs-theme={footer.theme?.toLowerCase() || 'light'}
+    >
       {/* Bottom Bar */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-3">
         <p className="text-xs text-gray-500 text-center md:text-left">

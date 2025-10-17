@@ -89,7 +89,7 @@ const Routers = () => {
         <Route path="/dashboard/v1" element={<PrivateRoute><DashboardV1 /></PrivateRoute>} />
         <Route path="/dashboard/v2" element={<PrivateRoute><DashboardV2 /></PrivateRoute>} />
         <Route path="/dashboard/v3" element={<PrivateRoute><DashboardV3 /></PrivateRoute>} />
-        {/* <Route path="/theme-generate" element={<PrivateRoute><ThemeGenerate /></PrivateRoute>} /> */}
+        <Route path="/theme-generate" element={<PrivateRoute><ThemeGenerate /></PrivateRoute>} />
         <Route path="/widgets/small-box" element={<PrivateRoute><SmallBox /></PrivateRoute>} />
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />
         <Route path="/widgets/card" element={<PrivateRoute><Cards /></PrivateRoute>} />

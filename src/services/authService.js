@@ -20,7 +20,7 @@ const authService = {
   },
 
   getCurrentUser: async () => {
-    ////  console.log('Fetching current user from: /users/me');
+    //  console.log('Fetching current user from: /users/me');
     const response = await api.get('/users/me');
     return response.data;
   },

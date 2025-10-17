@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const DashboardMenu = ({ isOpen, onClose }) => {
   const [openMenus, setOpenMenus] = useState({});
   const { user } = useSelector((state) => state.user);
+  const { sidebar } = useSelector((state) => state.theme);
 
   const toggleMenu = (menuId) => {
     setOpenMenus(prev => ({
@@ -24,8 +25,9 @@ const DashboardMenu = ({ isOpen, onClose }) => {
 
       {/* Sidebar Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-800 shadow-2xl z-50 transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 left-0 h-full w-64 ${sidebar.color || 'bg-gray-800'} shadow-2xl z-50 transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
+        data-bs-theme={sidebar.theme?.toLowerCase() || 'light'}
       >
         <div className="flex flex-col h-full">
           {/* Header */}

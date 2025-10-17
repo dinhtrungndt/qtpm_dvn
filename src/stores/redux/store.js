@@ -6,9 +6,11 @@ import dashboardReducer from './reducers/dashboardReducer';
 import orderReducer from './reducers/orderReducer';
 import paymentsReducer from './reducers/paymentsReducer';
 import productReducer from './reducers/productReducer';
+import themeReducer from './reducers/themeReducer';
 import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
+  theme: themeReducer,
   user: userReducer,
   dashboard: dashboardReducer,
   product: productReducer,

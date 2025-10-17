@@ -17,6 +17,7 @@ const DashboardHeader = () => {
   const [isOpenDashboardMenu, setIsOpenDashboardMenu] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
   const [isOpenNotification, setIsOpenNotification] = useState(false);
+  const { navbar } = useSelector((state) => state.theme);
   const userMenuRef = useRef(null);
   const chatRef = useRef(null);
   const notificationRef = useRef(null);
@@ -31,7 +32,11 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between p-4 border-b bg-white relative z-30" style={{ minHeight: '64px' }}>
+      <div
+        className={`flex items-center justify-between p-4 border-b ${navbar.color || 'bg-white'} relative z-30`}
+        style={{ minHeight: '64px' }}
+        data-bs-theme={navbar.theme?.toLowerCase() || 'light'}
+      >
         {/* left */}
         <div className="flex items-center gap-4 text-gray-600">
           <button
