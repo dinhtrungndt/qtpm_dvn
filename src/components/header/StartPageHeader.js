@@ -21,11 +21,14 @@ const HeaderPageStart = () => {
   const navigate = useNavigate();
   const userMenuRefDesktop = useRef(null);
   const userMenuRefMobile = useRef(null);
+  const cartRefDesktop = useRef(null);
+  const cartRefMobile = useRef(null);
 
   const categorySearchs = ['Tất cả', 'Phần mềm', 'Website', 'Phần cứng', 'Phụ kiện'];
   const memus = ['Phần mềm', 'Phần cứng', 'Website', 'Liên hệ'];
 
-  useClickOutside(cartRef, () => setIsOpenCart(false), isOpenCart);
+  useClickOutside(cartRefDesktop, () => setIsOpenCart(false), isOpenCart);
+  useClickOutside(cartRefMobile, () => setIsOpenCart(false), isOpenCart);
 
   useEffect(() => {
     if (user) {
@@ -275,13 +278,19 @@ const HeaderPageStart = () => {
                 {cart.length > 0 ? (
                   cart.map((item) => (
                     <div key={item.id} className="flex items-center gap-3 py-2 border-b border-gray-100">
-                      <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
+                      <img
+                        src={item.product?.image || "https://via.placeholder.com/80"}
+                        alt={item.product?.name || "Sản phẩm"}
+                        className="w-12 h-12 object-cover rounded-lg"
+                      />
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-gray-800">{item.name}</p>
+                        <p className="text-sm font-semibold text-gray-800">
+                          {item.product?.name || "Không rõ sản phẩm"}
+                        </p>
                         <p className="text-xs text-gray-500">Số lượng: {item.quantity}</p>
                       </div>
                       <p className="text-sm font-semibold text-blue-600">
-                        {(item.price * item.quantity).toLocaleString()}₫
+                        {(item.product?.price * item.quantity).toLocaleString()}₫
                       </p>
                     </div>
                   ))

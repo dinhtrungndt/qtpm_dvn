@@ -1,12 +1,13 @@
-import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
-import { useEffect } from "react";
+import { AlertTriangle, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, fetchCart, removeFromCart, updateCartItem } from '../../../stores/redux/actions/cartActions';
-import Loading from '../../../utils/loading';
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const { items: cart, loading, error } = useSelector((state) => state.cart);
+  const [showClearModal, setShowClearModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -27,7 +28,14 @@ const CartPage = () => {
   };
 
   const handleClearCart = () => {
+    setShowClearModal(true);
+  };
+
+  const confirmClearCart = () => {
     dispatch(clearCart());
+    setShowClearModal(false);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   const totalAmount = cart.reduce(
@@ -36,7 +44,14 @@ const CartPage = () => {
   );
 
   if (loading) {
-    <Loading />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex justify-center items-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 font-medium">Đang tải giỏ hàng...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error)
@@ -54,17 +69,31 @@ const CartPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <div className="container mx-auto px-4 py-8 lg:py-12 max-w-7xl">
-        {/* Header */}
+        {/* Header with Clear All Button */}
         <div className="mb-8 lg:mb-12 animate-fade-in">
-          <div className="flex items-center gap-3 mb-2">
-            <ShoppingBag className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-              Giỏ hàng của bạn
-            </h1>
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <ShoppingBag className="w-8 h-8 text-blue-600" />
+                <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+                  Giỏ hàng của bạn
+                </h1>
+              </div>
+              <p className="text-gray-500 ml-11">
+                {cart.length} sản phẩm trong giỏ hàng
+              </p>
+            </div>
+
+            {cart.length > 0 && (
+              <button
+                onClick={handleClearCart}
+                className="flex items-center gap-2 bg-white hover:bg-red-50 text-red-500 font-semibold px-4 py-2.5 rounded-xl transition-all duration-300 border-2 border-red-200 hover:border-red-300 shadow-sm hover:shadow-md active:scale-95"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Xóa tất cả</span>
+              </button>
+            )}
           </div>
-          <p className="text-gray-500 ml-11">
-            {cart.length} sản phẩm trong giỏ hàng
-          </p>
         </div>
 
         {cart.length === 0 ? (
@@ -179,13 +208,6 @@ const CartPage = () => {
                   Thanh toán
                 </button>
 
-                <button
-                  onClick={handleClearCart}
-                  className="w-full bg-white hover:bg-red-50 text-red-500 font-semibold py-3 rounded-xl transition-all duration-300 border-2 border-red-200 hover:border-red-300 active:scale-98"
-                >
-                  Xóa giỏ hàng
-                </button>
-
                 {/* Trust Badges */}
                 <div className="mt-6 pt-6 border-t border-gray-200 space-y-2 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
@@ -213,6 +235,52 @@ const CartPage = () => {
         )}
       </div>
 
+      {/* Clear Cart Confirmation Modal */}
+      {showClearModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-scale-in">
+            <div className="flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mx-auto mb-4">
+              <AlertTriangle className="w-8 h-8 text-red-500" />
+            </div>
+
+            <h3 className="text-xl font-bold text-gray-800 text-center mb-2">
+              Xóa toàn bộ giỏ hàng?
+            </h3>
+            <p className="text-gray-600 text-center mb-6">
+              Bạn có chắc chắn muốn xóa tất cả {cart.length} sản phẩm trong giỏ hàng? Hành động này không thể hoàn tác.
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowClearModal(false)}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-all active:scale-95"
+              >
+                Hủy
+              </button>
+              <button
+                onClick={confirmClearCart}
+                className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-95"
+              >
+                Xóa tất cả
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slide-in-right z-50">
+          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+          </div>
+          <div>
+            <p className="font-semibold">Thành công!</p>
+            <p className="text-sm text-green-50">Đã xóa toàn bộ giỏ hàng</p>
+          </div>
+        </div>
+      )}
+
       <style>{`
         @keyframes fade-in {
           from {
@@ -234,12 +302,42 @@ const CartPage = () => {
           }
         }
 
+        @keyframes scale-in {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes slide-in-right {
+          from {
+            opacity: 0;
+            transform: translateX(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
         .animate-fade-in {
           animation: fade-in 0.6s ease-out;
         }
 
         .animate-slide-up {
           animation: slide-up 0.6s ease-out backwards;
+        }
+
+        .animate-scale-in {
+          animation: scale-in 0.3s ease-out;
+        }
+
+        .animate-slide-in-right {
+          animation: slide-in-right 0.4s ease-out;
         }
 
         .line-clamp-2 {

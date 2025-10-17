@@ -64,6 +64,7 @@ export const clearCart = () => async (dispatch) => {
     dispatch({ type: CLEAR_CART_REQUEST });
     await cartService.clearCart();
     dispatch({ type: CLEAR_CART_SUCCESS });
+    dispatch(fetchCart());
   } catch (error) {
     dispatch({ type: CLEAR_CART_FAILURE, payload: error.message });
   }
