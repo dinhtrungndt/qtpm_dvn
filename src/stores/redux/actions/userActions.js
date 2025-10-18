@@ -133,7 +133,9 @@ let ws = null;
 const connectWebSocket = (userId) => {
   if (ws) ws.close();
   const port = process.env.REACT_APP_API_WEB_SOCKET;
-  ws = new WebSocket(`ws://${port}/auth/ws/${userId}`);
+  const isHttps = window.location.protocol === 'https:';
+  const wsProtocol = isHttps ? 'wss' : 'ws';
+  ws = new WebSocket(`${wsProtocol}://${port}/auth/ws/${userId}`);
   window.ws = ws;
   ws.onopen = () =>//  console.log('WebSocket đã kết nối');
     ws.onmessage = (event) => {

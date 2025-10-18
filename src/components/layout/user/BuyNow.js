@@ -22,8 +22,10 @@ const BuyNow = () => {
 
   useEffect(() => {
     if (!user?.id) return;
+    const isHttps = window.location.protocol === 'https:';
+    const wsProtocol = isHttps ? 'wss' : 'ws';
 
-    const ws = new WebSocket(`ws://127.0.0.1:1111/notifications/ws/${user.id}`);
+    const ws = new WebSocket(`${wsProtocol}://127.0.0.1:1111/notifications/ws/${user.id}`);
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
