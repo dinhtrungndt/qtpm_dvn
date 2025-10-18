@@ -1,10 +1,12 @@
 import { AlertTriangle, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { clearCart, fetchCart, removeFromCart, updateCartItem } from '../../../stores/redux/actions/cartActions';
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { items: cart, loading, error } = useSelector((state) => state.cart);
   const [showClearModal, setShowClearModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -42,6 +44,10 @@ const CartPage = () => {
     (sum, item) => sum + (item.product?.price || 0) * item.quantity,
     0
   );
+
+  const handleCheckOut = () => {
+    navigate('/checkout');
+  };
 
   if (loading) {
     return (
@@ -204,7 +210,7 @@ const CartPage = () => {
                   </div>
                 </div>
 
-                <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 lg:py-4 rounded-xl mb-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                <button onClick={handleCheckOut} className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 lg:py-4 rounded-xl mb-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
                   Thanh toán
                 </button>
 

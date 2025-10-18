@@ -10,6 +10,7 @@ import OpenUser from '../layout/OpenUser';
 
 const HeaderPageStart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [categorySearch, setCategorySearch] = useState('Tất cả');
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -18,7 +19,6 @@ const HeaderPageStart = () => {
   const cart = useSelector((state) => state.cart.items || []);
   const { user } = useSelector((state) => state.user);
   const cartRef = useRef(null);
-  const navigate = useNavigate();
   const userMenuRefDesktop = useRef(null);
   const userMenuRefMobile = useRef(null);
   const cartRefDesktop = useRef(null);
@@ -134,7 +134,7 @@ const HeaderPageStart = () => {
           <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần cứng</Link>
           <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Website</Link>
           <span className="mx-2 flex items-center text-black"><Dot /></span>
-          <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</Link>
+          <Link to="/contact" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</Link>
           <div className="border-l border-black mx-2 h-4" />
           {/* login */}
           {
