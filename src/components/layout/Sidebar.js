@@ -111,45 +111,48 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* Layout Options with badge and submenu */}
-              <div>
-                <button
-                  onClick={() => toggleMenu('layout')}
-                  className="w-full flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <Settings className="h-4 w-4" />
-                    <span className="text-sm">Layout Options</span>
-                    <span className="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded">6</span>
+              {false && (
+                <>
+                  {/* Layout Options with badge and submenu */}
+                  <div>
+                    <button
+                      onClick={() => toggleMenu('layout')}
+                      className="w-full flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Settings className="h-4 w-4" />
+                        <span className="text-sm">Layout Options</span>
+                        <span className="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded">6</span>
+                      </div>
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['layout'] ? 'rotate-180' : ''}`} />
+                    </button>
+                    <div className={`overflow-hidden transition-all duration-200 ${openMenus['layout'] ? 'max-h-80' : 'max-h-0'}`}>
+                      <Link to="/layout/default" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                        <Circle className="h-2 w-2" />
+                        Default Sidebar
+                      </Link>
+                      <Link to="/layout/fixed-sidebar" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                        <Circle className="h-2 w-2" />
+                        Fixed Sidebar
+                      </Link>
+                      <Link to="/layout/fixed-header" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                        <Circle className="h-2 w-2" />
+                        Fixed Header
+                      </Link>
+                      <Link to="/layout/fixed-footer" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                        <Circle className="h-2 w-2" />
+                        Fixed Footer
+                      </Link>
+                      <Link to="/layout/complete" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                        <Circle className="h-2 w-2" />
+                        Fixed Complete
+                      </Link>
+                    </div>
                   </div>
-                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['layout'] ? 'rotate-180' : ''}`} />
-                </button>
-                <div className={`overflow-hidden transition-all duration-200 ${openMenus['layout'] ? 'max-h-80' : 'max-h-0'}`}>
-                  <Link to="/layout/default" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
-                    <Circle className="h-2 w-2" />
-                    Default Sidebar
-                  </Link>
-                  <Link to="/layout/fixed-sidebar" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
-                    <Circle className="h-2 w-2" />
-                    Fixed Sidebar
-                  </Link>
-                  <Link to="/layout/fixed-header" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
-                    <Circle className="h-2 w-2" />
-                    Fixed Header
-                  </Link>
-                  <Link to="/layout/fixed-footer" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
-                    <Circle className="h-2 w-2" />
-                    Fixed Footer
-                  </Link>
-                  <Link to="/layout/complete" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
-                    <Circle className="h-2 w-2" />
-                    Fixed Complete
-                  </Link>
-                </div>
-              </div>
-
+                </>
+              )}
               {/* UI Elements */}
-              <Link to="/ui-elements" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/updating" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <Layers className="h-4 w-4" />
                   <span className="text-sm">UI Elements</span>
@@ -157,7 +160,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </Link>
 
               {/* Forms */}
-              <Link to="/forms" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/updating" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <FileText className="h-4 w-4" />
                   <span className="text-sm">Forms</span>
@@ -165,7 +168,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </Link>
 
               {/* Tables */}
-              <Link to="/tables" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/updating" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <Table className="h-4 w-4" />
                   <span className="text-sm">Tables</span>

@@ -24,6 +24,7 @@ import HomePageStart from '../pages/home/HomePageStart';
 import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
 import Unauthorized from '../utils/Unauthorized';
+import Updating from '../utils/updating';
 
 // Lazy load components
 const DashboardV2 = lazy(() => import("../components/layout/dashboard/dashboardV2"));
@@ -97,6 +98,7 @@ const Routers = () => {
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+        <Route path="/updating" element={<PrivateRoute><Updating /></PrivateRoute>} />
 
         {/* Route chỉ dành cho Admin */}
         <Route path="/theme-generate" element={<RoleRoute allowedRoles={['admin']}><ThemeGenerate /></RoleRoute>} />
