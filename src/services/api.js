@@ -3,10 +3,9 @@ import { MESSAGES } from '../constants/notifications/messages';
 import { setGlobalShowMessage } from '../stores/redux/actions/userActions';
 import { decryptToken } from '../utils/cryptoUtils';
 
-// Biến cục bộ để lưu trữ hàm showMessage
 let showMessageHandler = null;
 
-export const setApiShowMessage = (showMessage) => {
+export const setApiShowMessage = showMessage => {
   showMessageHandler = showMessage;
   setGlobalShowMessage(showMessage);
 };
@@ -15,12 +14,12 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'any-value'
+    'ngrok-skip-browser-warning': 'any-value',
   },
   timeout: 15000,
 });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(config => {
   const encryptedToken = localStorage.getItem('access_token');
   const token = decryptToken(encryptedToken);
   if (token) {
@@ -30,8 +29,8 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     // Kiểm tra lỗi kết nối hoặc timeout (backend không khả dụng)
     if (!error.response) {
       showMessageHandler?.(MESSAGES.SERVER_UNAVAILABLE, 'error');

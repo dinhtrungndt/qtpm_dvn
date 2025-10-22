@@ -1,44 +1,51 @@
-import { ArrowLeft, Minus, Plus, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { fetchCart, removeFromCart, updateCartItem } from '../../../stores/redux/actions/cartActions';
+import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import {
+  fetchCart,
+  removeFromCart,
+  updateCartItem,
+} from '../../../stores/redux/actions/cartActions';
 import { buyAll, cancelOrder } from '../../../stores/redux/actions/paymentActions';
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { items: cart, loading, error } = useSelector((state) => state.cart);
-  const { order } = useSelector((state) => state.payments);
+  const { items: cart, loading, error } = useSelector(state => state.cart);
+  const { isAuthenticated } = useSelector(state => state.user);
+  const { order } = useSelector(state => state.payments);
   const [processing, setProcessing] = useState(false);
   const [showPaymentMethods, setShowPaymentMethods] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchCart());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchCart());
+    }
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      if (order?.id && order?.status === "pending") {
+      if (order?.id && order?.status === 'pending') {
         dispatch(cancelOrder(order.id));
       }
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
 
-      if (order?.id && order?.status === "pending") {
+      if (order?.id && order?.status === 'pending') {
         dispatch(cancelOrder(order.id));
       }
     };
   }, [dispatch, order]);
 
-  const handleIncrease = (item) => {
+  const handleIncrease = item => {
     dispatch(updateCartItem(item.id, item.quantity + 1));
   };
 
-  const handleDecrease = (item) => {
+  const handleDecrease = item => {
     if (item.quantity > 1) {
       dispatch(updateCartItem(item.id, item.quantity - 1));
     } else {
@@ -46,7 +53,7 @@ const Checkout = () => {
     }
   };
 
-  const handleRemove = (item) => {
+  const handleRemove = item => {
     dispatch(removeFromCart(item.id));
   };
 
@@ -57,17 +64,16 @@ const Checkout = () => {
     setShowPaymentMethods(true);
   };
 
-  const handlePayment = (method) => {
+  const handlePayment = method => {
     setProcessing(true);
-    dispatch(buyAll(method))
-      .finally(() => {
-        setProcessing(false);
-        setShowPaymentMethods(false);
-      });
+    dispatch(buyAll(method)).finally(() => {
+      setProcessing(false);
+      setShowPaymentMethods(false);
+    });
   };
 
   const handleCancelPayment = () => {
-    if (order?.id && order?.status === "pending") {
+    if (order?.id && order?.status === 'pending') {
       dispatch(cancelOrder(order.id));
     }
     setShowPaymentMethods(false);
@@ -80,19 +86,14 @@ const Checkout = () => {
       </div>
     );
 
-  if (error)
-    return (
-      <div className="text-center text-red-500 py-10">
-        Lỗi tải giỏ hàng: {error}
-      </div>
-    );
+  if (error) return <div className="text-center text-red-500 py-10">Lỗi tải giỏ hàng: {error}</div>;
 
   if (!cart || cart.length === 0)
     return (
       <div className="flex flex-col justify-center items-center h-96 text-gray-600">
         <p>🛒 Giỏ hàng của bạn đang trống.</p>
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate('/')}
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
         >
           Tiếp tục mua sắm
@@ -108,7 +109,7 @@ const Checkout = () => {
           <h2 className="text-2xl font-bold text-gray-800">Thanh toán</h2>
           <button
             onClick={() => {
-              if (order?.id && order?.status === "pending") {
+              if (order?.id && order?.status === 'pending') {
                 dispatch(cancelOrder(order.id));
               }
               navigate(-1);
@@ -121,7 +122,7 @@ const Checkout = () => {
 
         {/* Cart Items */}
         <div className="space-y-4">
-          {cart.map((item) => (
+          {cart.map(item => (
             <div
               key={item.id}
               className="flex items-center justify-between border rounded-lg p-4 hover:shadow-sm transition-all"
@@ -133,9 +134,7 @@ const Checkout = () => {
                   className="w-16 h-16 rounded-md object-cover"
                 />
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-800">
-                    {item.product.name}
-                  </h3>
+                  <h3 className="text-sm font-semibold text-gray-800">{item.product.name}</h3>
                   <p className="text-xs text-gray-500 mt-1">
                     {(item.product.price / 1000).toFixed(0)}K / sản phẩm
                   </p>
@@ -162,7 +161,7 @@ const Checkout = () => {
               {/* Price + Remove */}
               <div className="flex items-center gap-3">
                 <span className="font-semibold text-gray-800 text-sm">
-                  {(item.product.price * item.quantity / 1000).toFixed(0)}K
+                  {((item.product.price * item.quantity) / 1000).toFixed(0)}K
                 </span>
                 <button
                   onClick={() => handleRemove(item)}
@@ -178,7 +177,7 @@ const Checkout = () => {
         {/* Summary */}
         <div className="border-t mt-6 pt-4 flex flex-col sm:flex-row justify-between items-center">
           <div className="text-gray-600 text-sm">
-            Tổng cộng:{" "}
+            Tổng cộng:{' '}
             <span className="text-xl font-bold text-red-500">
               {total >= 1000000
                 ? `${(total / 1000000).toFixed(1)}M`
@@ -189,9 +188,11 @@ const Checkout = () => {
           <button
             onClick={handlePlaceOrder}
             disabled={processing}
-            className={`mt-4 sm:mt-0 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all ${processing && "opacity-70 cursor-not-allowed"}`}
+            className={`mt-4 sm:mt-0 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all ${
+              processing && 'opacity-70 cursor-not-allowed'
+            }`}
           >
-            {processing ? "Đang xử lý..." : "Đặt hàng ngay"}
+            {processing ? 'Đang xử lý...' : 'Đặt hàng ngay'}
           </button>
         </div>
 
@@ -199,22 +200,24 @@ const Checkout = () => {
         {showPaymentMethods && (
           <div className="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
             <div className="bg-white rounded-xl p-6 w-80 shadow-lg">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Chọn phương thức thanh toán</h3>
+              <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                Chọn phương thức thanh toán
+              </h3>
               <div className="flex flex-col gap-3">
                 <button
-                  onClick={() => handlePayment("momo")}
+                  onClick={() => handlePayment('momo')}
                   className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold transition-all"
                 >
                   MoMo
                 </button>
                 <button
-                  onClick={() => handlePayment("zalopay")}
+                  onClick={() => handlePayment('zalopay')}
                   className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-all"
                 >
                   ZaloPay
                 </button>
                 <button
-                  onClick={() => handlePayment("bank")}
+                  onClick={() => handlePayment('bank')}
                   className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-all"
                 >
                   Ngân hàng

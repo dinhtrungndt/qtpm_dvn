@@ -17,6 +17,9 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.LOGIN_REQUEST:
     case types.REGISTER_REQUEST:
+    case types.UPDATE_PROFILE_REQUEST:
+    case types.CHANGE_PASSWORD_REQUEST:
+    case types.DELETE_ACCOUNT_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -41,6 +44,9 @@ const userReducer = (state = initialState, action) => {
       };
     case types.LOGIN_FAILURE:
     case types.REGISTER_FAILURE:
+    case types.UPDATE_PROFILE_FAILURE:
+    case types.CHANGE_PASSWORD_FAILURE:
+    case types.DELETE_ACCOUNT_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -90,6 +96,32 @@ const userReducer = (state = initialState, action) => {
     case types.UPDATE_USER_FAILURE:
     case types.DELETE_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
+
+    case types.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        isLoading: false,
+        error: null,
+        message: 'Cập nhật thông tin thành công',
+      };
+    case types.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        message: 'Đổi mật khẩu thành công',
+      };
+    case types.DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+        message: 'Tài khoản đã bị xóa',
+      };
     case types.LOGOUT:
       return {
         ...state,

@@ -1,14 +1,32 @@
-import { Activity, Calendar, Camera, Check, Edit2, Lock, Mail, Save, Settings, Shield, Trash2, User, UserCheck, Users, UserX, X } from 'lucide-react';
+import {
+  Activity,
+  Calendar,
+  Camera,
+  Edit2,
+  Lock,
+  Mail,
+  Save,
+  Settings,
+  Shield,
+  Trash2,
+  User,
+  UserCheck,
+  Users,
+  UserX,
+  X,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Notification from '../../../constants/notifications/notifi';
+import useNotification from '../../../hooks/useNotification';
 
 const AccountAdmin = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector(state => state.user);
   const [isEditing, setIsEditing] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const { message, messageType, showMessage } = useNotification();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -38,15 +56,15 @@ const AccountAdmin = () => {
     }
   }, [user]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = e => {
     const { name, value } = e.target;
     setPasswordData(prev => ({ ...prev, [name]: value }));
   };
@@ -59,8 +77,7 @@ const AccountAdmin = () => {
       setTimeout(() => {
         setIsSaving(false);
         setIsEditing(false);
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 3000);
+        showMessage('Cập nhật thông tin thành công!', 'success');
       }, 1500);
     } catch (error) {
       setIsSaving(false);
@@ -78,8 +95,7 @@ const AccountAdmin = () => {
       // await dispatch(changePassword(passwordData));
       setShowPasswordModal(false);
       setPasswordData({ current_password: '', new_password: '', confirm_password: '' });
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
+      showMessage('Đổi mật khẩu thành công!', 'success');
     } catch (error) {
       console.error('Password change failed:', error);
     }
@@ -99,10 +115,31 @@ const AccountAdmin = () => {
   };
 
   const adminStats = [
-    { id: 1, label: 'Tổng người dùng', value: '156', icon: Users, color: 'bg-blue-500', change: '+12%' },
-    { id: 2, label: 'Hoạt động', value: '142', icon: UserCheck, color: 'bg-emerald-500', change: '+8%' },
+    {
+      id: 1,
+      label: 'Tổng người dùng',
+      value: '156',
+      icon: Users,
+      color: 'bg-blue-500',
+      change: '+12%',
+    },
+    {
+      id: 2,
+      label: 'Hoạt động',
+      value: '142',
+      icon: UserCheck,
+      color: 'bg-emerald-500',
+      change: '+8%',
+    },
     { id: 3, label: 'Bị khóa', value: '14', icon: UserX, color: 'bg-red-500', change: '-3%' },
-    { id: 4, label: 'Đang online', value: '48', icon: Activity, color: 'bg-purple-500', change: '+15%' },
+    {
+      id: 4,
+      label: 'Đang online',
+      value: '48',
+      icon: Activity,
+      color: 'bg-purple-500',
+      change: '+15%',
+    },
   ];
 
   const recentActivities = [
@@ -116,14 +153,7 @@ const AccountAdmin = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="p-4 mx-auto">
         {/* Success Message */}
-        {showSuccess && (
-          <div className="fixed top-20 right-6 z-50 animate-slide-in">
-            <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2">
-              <Check className="w-5 h-5" />
-              <span className="font-medium">Cập nhật thành công!</span>
-            </div>
-          </div>
-        )}
+        <Notification message={message} messageType={messageType} />
 
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -132,7 +162,9 @@ const AccountAdmin = () => {
             <p className="text-sm text-gray-500 mt-1">Quản lý thông tin và quyền hạn của bạn</p>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <a href="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</a>
+            <a href="/" className="text-blue-600 hover:text-blue-700 transition-colors">
+              Trang chủ
+            </a>
             <span className="text-gray-400">/</span>
             <span className="text-gray-600">Tài khoản Admin</span>
           </div>
@@ -141,8 +173,9 @@ const AccountAdmin = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Profile Card */}
           <div
-            className={`lg:col-span-1 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+            className={`lg:col-span-1 transition-all duration-700 ${
+              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
           >
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
               {/* Cover with Admin Badge */}
@@ -172,13 +205,17 @@ const AccountAdmin = () => {
                     </div>
                   </div>
 
-                  <h2 className="mt-6 text-xl font-bold text-gray-900">{formData.full_name || formData.username}</h2>
+                  <h2 className="mt-6 text-xl font-bold text-gray-900">
+                    {formData.full_name || formData.username}
+                  </h2>
                   <p className="text-sm text-gray-500">@{formData.username}</p>
 
                   <div className="mt-4 flex items-center gap-2">
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 border border-purple-200 rounded-full">
                       <Shield className="w-4 h-4 text-purple-600" />
-                      <span className="text-sm font-medium text-purple-700 capitalize">{formData.role}</span>
+                      <span className="text-sm font-medium text-purple-700 capitalize">
+                        {formData.role}
+                      </span>
                     </div>
                     {formData.is_active && (
                       <div className="flex items-center gap-1 px-3 py-1.5 bg-green-50 border border-green-200 rounded-full">
@@ -231,8 +268,9 @@ const AccountAdmin = () => {
 
             {/* Stats */}
             <div
-              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 shadow-sm transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
+              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 shadow-sm transition-all duration-700 ${
+                animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
               style={{ transitionDelay: '200ms' }}
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Thống kê hệ thống</h3>
@@ -242,11 +280,14 @@ const AccountAdmin = () => {
                   return (
                     <div
                       key={stat.id}
-                      className={`p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all duration-300 ${animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-                        }`}
+                      className={`p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all duration-300 ${
+                        animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                      }`}
                       style={{ transitionDelay: `${300 + index * 100}ms` }}
                     >
-                      <div className={`inline-flex p-2 rounded-lg ${stat.color} bg-opacity-10 mb-2`}>
+                      <div
+                        className={`inline-flex p-2 rounded-lg ${stat.color} bg-opacity-10 mb-2`}
+                      >
                         <Icon className={`w-4 h-4 ${stat.color.replace('bg-', 'text-')}`} />
                       </div>
                       <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
@@ -263,8 +304,9 @@ const AccountAdmin = () => {
 
           {/* Right Column */}
           <div
-            className={`lg:col-span-2 space-y-6 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+            className={`lg:col-span-2 space-y-6 transition-all duration-700 ${
+              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
             style={{ transitionDelay: '100ms' }}
           >
             {/* Edit Form */}
@@ -324,9 +366,7 @@ const AccountAdmin = () => {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -342,9 +382,7 @@ const AccountAdmin = () => {
 
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Họ và tên
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
                   <input
                     type="text"
                     name="full_name"
@@ -358,9 +396,7 @@ const AccountAdmin = () => {
                 {/* Role & Status */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Vai trò
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Vai trò</label>
                     <select
                       name="role"
                       value={formData.role}
@@ -405,15 +441,22 @@ const AccountAdmin = () => {
                 {recentActivities.map((activity, index) => (
                   <div
                     key={activity.id}
-                    className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all ${animate ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                      }`}
+                    className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all ${
+                      animate ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                    }`}
                     style={{ transitionDelay: `${400 + index * 100}ms` }}
                   >
-                    <div className={`p-2 rounded-lg ${activity.type === 'login' ? 'bg-green-100 text-green-600' :
-                      activity.type === 'update' ? 'bg-blue-100 text-blue-600' :
-                        activity.type === 'delete' ? 'bg-red-100 text-red-600' :
-                          'bg-purple-100 text-purple-600'
-                      }`}>
+                    <div
+                      className={`p-2 rounded-lg ${
+                        activity.type === 'login'
+                          ? 'bg-green-100 text-green-600'
+                          : activity.type === 'update'
+                          ? 'bg-blue-100 text-blue-600'
+                          : activity.type === 'delete'
+                          ? 'bg-red-100 text-red-600'
+                          : 'bg-purple-100 text-purple-600'
+                      }`}
+                    >
                       {activity.type === 'login' && <Activity className="w-4 h-4" />}
                       {activity.type === 'update' && <Edit2 className="w-4 h-4" />}
                       {activity.type === 'delete' && <Trash2 className="w-4 h-4" />}
@@ -465,9 +508,7 @@ const AccountAdmin = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Mật khẩu mới
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
                 <input
                   type="password"
                   name="new_password"

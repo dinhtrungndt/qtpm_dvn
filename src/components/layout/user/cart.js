@@ -10,10 +10,13 @@ const CartPage = () => {
   const { items: cart, loading, error } = useSelector((state) => state.cart);
   const [showClearModal, setShowClearModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const { isAuthenticated } = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(fetchCart());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchCart());
+    }
+  }, [dispatch, isAuthenticated]);
 
   const handleIncrease = (item) => {
     dispatch(updateCartItem(item.id, item.quantity + 1));

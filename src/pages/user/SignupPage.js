@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { setApiShowMessage } from '../../services/api';
-import { register, setGlobalShowMessage } from '../../stores/redux/actions/userActions';
-import useNotification, { NotificationStyles } from '../../utils/notification';
+import Notification from '../../constants/notifications/notifi';
+import useNotification from '../../hooks/useNotification';
+import { register } from '../../stores/redux/actions/userActions';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
@@ -15,23 +15,39 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const { message, messageType, showMessage } = useNotification();
 
-  useEffect(() => {
-    setGlobalShowMessage(showMessage);
-    setApiShowMessage(showMessage);
-  }, [showMessage]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !email || !password) {
       showMessage('Vui lòng nhập đầy đủ thông tin', 'error');
       return;
     }
+
+    if (username.length < 4) {
+      showMessage('Tên đăng nhập phải có ít nhất 4 ký tự', 'error');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showMessage('Email không hợp lệ', 'error');
+      return;
+    }
+
+    if (password.length < 8) {
+      showMessage('Mật khẩu phải có ít nhất 8 ký tự', 'error');
+      return;
+    }
+
     setIsLoading(true);
+
     try {
       await dispatch(register({ username, email, password, full_name: fullName, role: 'user' }));
-      navigate('/login');
+      showMessage('Đăng ký thành công! Vui lòng đăng nhập.', 'success');
+      setTimeout(() => navigate('/login'), 1500);
     } catch (error) {
-      // Thông báo đã được xử lý trong action
+      const backendMsg = error?.response?.data?.detail || 'Đăng ký thất bại, vui lòng thử lại.';
+      showMessage(backendMsg, 'error');
     } finally {
       setIsLoading(false);
     }
@@ -39,12 +55,7 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
-      <NotificationStyles />
-      {message && (
-        <div className={`fixed top-5 right-5 px-5 py-3 rounded-lg shadow-lg z-50 text-sm font-medium text-white slide-in ${messageType === 'error' ? 'bg-red-500' : 'bg-green-500'}`}>
-          {message}
-        </div>
-      )}
+      <Notification message={message} messageType={messageType} />
 
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 fade-in">

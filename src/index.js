@@ -6,11 +6,14 @@ import App from './App';
 import './index.css';
 import { setStore } from './stores/redux/actions/userActions';
 import { configureStore } from './stores/redux/store';
+import { disableConsoleInProduction } from './utils/disableConsole';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const store = configureStore();
 setStore(store);
+
+disableConsoleInProduction();
 
 root.render(
   <React.StrictMode>

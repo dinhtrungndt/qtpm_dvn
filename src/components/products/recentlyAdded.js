@@ -2,7 +2,14 @@ import { Eye, Heart, Minus, Plus, ShoppingCart, Star, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { addToCart, fetchCart, removeFromCart, updateCartItem } from '../../stores/redux/actions/cartActions';
+import Notification from '../../constants/notifications/notifi';
+import useNotification from '../../hooks/useNotification';
+import {
+  addToCart,
+  fetchCart,
+  removeFromCart,
+  updateCartItem,
+} from '../../stores/redux/actions/cartActions';
 import { getAllProducts } from '../../stores/redux/actions/productActions';
 import Loading from '../../utils/loading';
 
@@ -14,45 +21,55 @@ const RecentlyAdded = () => {
   const navigate = useNavigate();
   const { products, loading } = useSelector(state => state.product);
   const { items: cartItems } = useSelector(state => state.cart);
+  const { isAuthenticated } = useSelector(state => state.user);
+  const { message, messageType, showMessage } = useNotification();
 
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(fetchCart());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchCart());
+    }
+  }, [dispatch, isAuthenticated]);
 
-  const toggleLike = (id) => {
+  const toggleLike = id => {
     setLikedItems(prev => ({
       ...prev,
-      [id]: !prev[id]
+      [id]: !prev[id],
     }));
   };
 
-  const frameworks = [...new Set(products.map(product => product.framework).filter(f => f !== "N/A"))];
+  const frameworks = [
+    ...new Set(products.map(product => product.framework).filter(f => f !== 'N/A')),
+  ];
 
   const filteredProducts = selectedFramework
-    ? products.filter(product => product.framework === selectedFramework).sort((a, b) => b.sold - a.sold).slice(0, 6)
+    ? products
+        .filter(product => product.framework === selectedFramework)
+        .sort((a, b) => b.sold - a.sold)
+        .slice(0, 6)
     : products.sort((a, b) => b.sold - a.sold).slice(0, 6);
 
   if (loading) return <Loading />;
 
-  const handleBuyNow = (productId) => {
+  const handleBuyNow = productId => {
     dispatch(addToCart(productId, 1));
     navigate('/buynow/' + productId);
   };
 
-  const getQuantity = (productId) => {
+  const getQuantity = productId => {
     const item = cartItems.find(i => i.product_id === Number(productId));
     return item ? item.quantity : 0;
   };
 
-  const handleAddToCart = (productId) => {
+  const handleAddToCart = productId => {
     dispatch(addToCart(Number(productId), 1)).then(() => {
       dispatch(fetchCart());
       setActiveQuantity(prev => ({ ...prev, [productId]: true }));
     });
+    showMessage('Đã thêm vào giỏ hàng!', 'success');
   };
 
-  const handleIncrease = (productId) => {
+  const handleIncrease = productId => {
     const item = cartItems.find(i => i.product_id === productId);
     if (item) {
       dispatch(updateCartItem(item.id, item.quantity + 1));
@@ -61,7 +78,7 @@ const RecentlyAdded = () => {
     }
   };
 
-  const handleDecrease = (productId) => {
+  const handleDecrease = productId => {
     const item = cartItems.find(i => i.product_id === productId);
     if (item && item.quantity > 1) {
       dispatch(updateCartItem(item.id, item.quantity - 1));
@@ -73,21 +90,29 @@ const RecentlyAdded = () => {
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+      <Notification message={message} messageType={messageType} />
       <div className="max-w-[1600px] mx-auto">
-
         {/* Framework Filter Buttons */}
         <div className="flex flex-wrap gap-2 mb-4">
           <button
             onClick={() => setSelectedFramework(null)}
-            className={`px-3 py-2 rounded-lg text-sm font-medium ${!selectedFramework ? 'bg-blue-500 text-white' : 'bg-white text-blue-500 border border-blue-500 hover:bg-blue-100'}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium ${
+              !selectedFramework
+                ? 'bg-blue-500 text-white'
+                : 'bg-white text-blue-500 border border-blue-500 hover:bg-blue-100'
+            }`}
           >
             Tất cả
           </button>
-          {frameworks.map((framework) => (
+          {frameworks.map(framework => (
             <button
               key={framework}
               onClick={() => setSelectedFramework(framework)}
-              className={`px-3 py-2 rounded-lg text-sm font-medium ${selectedFramework === framework ? 'bg-blue-500 text-white' : 'bg-white text-blue-500 border border-blue-500 hover:bg-blue-100'}`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium ${
+                selectedFramework === framework
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-blue-500 border border-blue-500 hover:bg-blue-100'
+              }`}
             >
               {framework}
             </button>
@@ -96,7 +121,7 @@ const RecentlyAdded = () => {
 
         {/* Product Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {filteredProducts.map((product) => (
+          {filteredProducts.map(product => (
             <div
               key={product.id}
               className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
@@ -104,7 +129,9 @@ const RecentlyAdded = () => {
               {/* Badge + Heart */}
               <div className="absolute top-2 left-2 right-2 flex justify-between items-start z-10">
                 {product.badge && (
-                  <span className={`${product.badgeColor} text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md`}>
+                  <span
+                    className={`${product.badgeColor} text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md`}
+                  >
                     {product.badge}
                   </span>
                 )}
@@ -112,7 +139,11 @@ const RecentlyAdded = () => {
                   onClick={() => toggleLike(product.id)}
                   className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:scale-110 transition-transform"
                 >
-                  <Heart className={`w-3.5 h-3.5 ${likedItems[product.id] ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                  <Heart
+                    className={`w-3.5 h-3.5 ${
+                      likedItems[product.id] ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                    }`}
+                  />
                 </button>
               </div>
 
@@ -162,7 +193,7 @@ const RecentlyAdded = () => {
                   {product.name}
                 </h3>
 
-                {product.framework && product.framework !== "N/A" && (
+                {product.framework && product.framework !== 'N/A' && (
                   <span className="text-[10px] font-medium text-green-600 mb-1 inline-block">
                     Framework: {product.framework}
                   </span>
@@ -174,13 +205,15 @@ const RecentlyAdded = () => {
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-3 h-3 ${i < Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                          className={`w-3 h-3 ${
+                            i < Math.floor(product.rating)
+                              ? 'fill-yellow-400 text-yellow-400'
+                              : 'text-gray-300'
+                          }`}
                         />
                       ))}
                     </div>
-                    <span className="text-gray-600 ml-0.5 text-[10px]">
-                      {product.rating}
-                    </span>
+                    <span className="text-gray-600 ml-0.5 text-[10px]">{product.rating}</span>
                   </div>
                   <span className="text-gray-500 text-[10px]">
                     {product.sold > 1000 ? `${(product.sold / 1000).toFixed(1)}k` : product.sold}

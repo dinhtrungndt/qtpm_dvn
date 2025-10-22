@@ -10,7 +10,9 @@ const CardAbility = memo(({ id, title, icon: Icon, bgColor, textColor, content }
   if (isRemoved) return null;
 
   return (
-    <div className={`card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${bgColor}`}>
+    <div
+      className={`card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${bgColor}`}
+    >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={`w-full px-5 py-4 flex items-center justify-between ${textColor} hover:opacity-90 transition-opacity`}
@@ -19,7 +21,11 @@ const CardAbility = memo(({ id, title, icon: Icon, bgColor, textColor, content }
         <span className="font-semibold text-base">{title}</span>
         <Icon className="w-5 h-5" />
       </button>
-      <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div
+        className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
         <div className="px-5 py-4 bg-white border-t border-gray-200">
           <p className="text-gray-700 text-sm">{content || 'The body of the card'}</p>
         </div>
@@ -38,89 +44,121 @@ const CardRemovable = memo(({ id, title, bgColor, content, isOutlined, borderCol
     : `card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${bgColor}`;
 
   const buttonClass = isOutlined
-    ? "w-full px-5 py-4 flex items-center justify-between text-yellow-600 hover:bg-yellow-50 transition-colors"
-    : "w-full px-5 py-4 flex items-center justify-between text-white hover:opacity-90 transition-opacity";
+    ? 'w-full px-5 py-4 flex items-center justify-between text-yellow-600 hover:bg-yellow-50 transition-colors'
+    : 'w-full px-5 py-4 flex items-center justify-between text-white hover:opacity-90 transition-opacity';
 
   const bodyClass = isOutlined
-    ? "px-5 py-4 bg-white border-t border-gray-200"
+    ? 'px-5 py-4 bg-white border-t border-gray-200'
     : `px-5 py-4 ${bgColor} border-t border-white/20`;
 
-  const textClass = isOutlined ? "text-gray-700" : "text-white";
+  const textClass = isOutlined ? 'text-gray-700' : 'text-white';
 
   return (
     <div className={`${baseClass} ${isRemoved ? 'card-remove' : ''}`}>
-      <button
-        onClick={() => setIsRemoved(true)}
-        className={buttonClass}
-        type="button"
-      >
+      <button onClick={() => setIsRemoved(true)} className={buttonClass} type="button">
         <span className="font-semibold text-base">{title}</span>
         <X className="w-5 h-5" />
       </button>
       <div className={bodyClass}>
-        <p className={`${textClass} text-sm`}>{content || 'Click the X button to remove this card.'}</p>
+        <p className={`${textClass} text-sm`}>
+          {content || 'Click the X button to remove this card.'}
+        </p>
       </div>
     </div>
   );
 });
 
-const CardMaximizable = memo(({ id, title, icon: Icon, bgColor, textColor, content, isOutlined, borderColor, hoverBg }) => {
-  const [isMaximized, setIsMaximized] = useState(false);
+const CardMaximizable = memo(
+  ({ id, title, icon: Icon, bgColor, textColor, content, isOutlined, borderColor, hoverBg }) => {
+    const [isMaximized, setIsMaximized] = useState(false);
 
-  const toggleMaximize = () => setIsMaximized(!isMaximized);
+    const toggleMaximize = () => setIsMaximized(!isMaximized);
 
-  return (
-    <>
-      <div className={`card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${isOutlined ? `bg-white border-2 ${borderColor}` : bgColor} ${isMaximized ? 'hidden' : ''}`}>
-        <button
-          onClick={toggleMaximize}
-          className={`w-full px-5 py-4 flex items-center justify-between ${textColor} ${isOutlined ? hoverBg : 'hover:opacity-90'} transition-${isOutlined ? 'colors' : 'opacity'}`}
-          type="button"
+    return (
+      <>
+        <div
+          className={`card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${
+            isOutlined ? `bg-white border-2 ${borderColor}` : bgColor
+          } ${isMaximized ? 'hidden' : ''}`}
         >
-          <span className="font-semibold text-base">{title}</span>
-          <Maximize2 className="w-5 h-5" />
-        </button>
-        <div className={`px-5 py-4 ${isOutlined ? 'bg-white' : bgColor} border-t ${isOutlined ? 'border-gray-200' : 'border-white/20'}`}>
-          <p className={`${textColor} text-sm`}>{content || 'Click to maximize this card to full screen.'}</p>
-        </div>
-      </div>
-
-      {isMaximized && (
-        <div className="fixed inset-0 z-50 bg-black/90 animate-fade-in" onClick={toggleMaximize}>
-          <div
-            className={`absolute inset-0 rounded-xl shadow-2xl animate-scale-in flex flex-col ${isOutlined ? `bg-white border-4 ${borderColor}` : bgColor}`}
-            onClick={(e) => e.stopPropagation()}
+          <button
+            onClick={toggleMaximize}
+            className={`w-full px-5 py-4 flex items-center justify-between ${textColor} ${
+              isOutlined ? hoverBg : 'hover:opacity-90'
+            } transition-${isOutlined ? 'colors' : 'opacity'}`}
+            type="button"
           >
-            <div className={`px-6 py-4 flex items-center justify-between rounded-t-xl ${isOutlined ? `bg-white border-b-2 ${borderColor}` : `border-b ${bgColor} border-white/20`}`}>
-              <span className={`font-semibold text-xl ${textColor}`}>{title}</span>
-              <button
-                onClick={toggleMaximize}
-                className={`p-2 rounded-lg transition-colors ${isOutlined ? hoverBg : 'hover:bg-white/20'}`}
-                type="button"
+            <span className="font-semibold text-base">{title}</span>
+            <Maximize2 className="w-5 h-5" />
+          </button>
+          <div
+            className={`px-5 py-4 ${isOutlined ? 'bg-white' : bgColor} border-t ${
+              isOutlined ? 'border-gray-200' : 'border-white/20'
+            }`}
+          >
+            <p className={`${textColor} text-sm`}>
+              {content || 'Click to maximize this card to full screen.'}
+            </p>
+          </div>
+        </div>
+
+        {isMaximized && (
+          <div className="fixed inset-0 z-50 bg-black/90 animate-fade-in" onClick={toggleMaximize}>
+            <div
+              className={`absolute inset-0 rounded-xl shadow-2xl animate-scale-in flex flex-col ${
+                isOutlined ? `bg-white border-4 ${borderColor}` : bgColor
+              }`}
+              onClick={e => e.stopPropagation()}
+            >
+              <div
+                className={`px-6 py-4 flex items-center justify-between rounded-t-xl ${
+                  isOutlined
+                    ? `bg-white border-b-2 ${borderColor}`
+                    : `border-b ${bgColor} border-white/20`
+                }`}
               >
-                <Minimize2 className={`w-6 h-6 ${textColor}`} />
-              </button>
-            </div>
-            <div className={`flex-1 p-6 overflow-auto ${textColor}`}>
-              <p className="text-lg font-medium mb-4">{content || 'Click to maximize this card to full screen.'}</p>
-              <div className={isOutlined ? 'text-gray-600' : 'opacity-90'}>
-                <p className="mb-3">This is the maximized view. You can add more content here.</p>
-                <p className="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <span className={`font-semibold text-xl ${textColor}`}>{title}</span>
+                <button
+                  onClick={toggleMaximize}
+                  className={`p-2 rounded-lg transition-colors ${
+                    isOutlined ? hoverBg : 'hover:bg-white/20'
+                  }`}
+                  type="button"
+                >
+                  <Minimize2 className={`w-6 h-6 ${textColor}`} />
+                </button>
+              </div>
+              <div className={`flex-1 p-6 overflow-auto ${textColor}`}>
+                <p className="text-lg font-medium mb-4">
+                  {content || 'Click to maximize this card to full screen.'}
+                </p>
+                <div className={isOutlined ? 'text-gray-600' : 'opacity-90'}>
+                  <p className="mb-3">This is the maximized view. You can add more content here.</p>
+                  <p className="mb-3">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                  </p>
+                  <p>
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </>
-  );
-});
+        )}
+      </>
+    );
+  }
+);
 
 const CardOutlined = memo(({ id, title, icon: Icon, borderColor, textColor, hoverBg, content }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className={`card-animate bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border-2 ${borderColor}`}>
+    <div
+      className={`card-animate bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border-2 ${borderColor}`}
+    >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={`w-full px-5 py-4 flex items-center justify-between ${textColor} ${hoverBg} transition-colors`}
@@ -129,7 +167,11 @@ const CardOutlined = memo(({ id, title, icon: Icon, borderColor, textColor, hove
         <span className="font-semibold text-base">{title}</span>
         <Icon className="w-5 h-5" />
       </button>
-      <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div
+        className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
         <div className="px-5 py-4 bg-white border-t border-gray-200">
           <p className="text-gray-700 text-sm">{content || 'The body of the card'}</p>
         </div>
@@ -142,7 +184,9 @@ const CardTextBg = memo(({ id, title, icon: Icon, bgColor, textColor, content })
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className={`card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${bgColor}`}>
+    <div
+      className={`card-animate rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${bgColor}`}
+    >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={`w-full px-5 py-4 flex items-center justify-between ${textColor} hover:opacity-90 transition-opacity`}
@@ -151,7 +195,11 @@ const CardTextBg = memo(({ id, title, icon: Icon, bgColor, textColor, content })
         <span className="font-semibold text-base">{title}</span>
         <Icon className="w-5 h-5" />
       </button>
-      <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div
+        className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
         <div className={`px-5 py-4 ${bgColor} border-t border-white/20`}>
           <p className={`${textColor} text-sm`}>{content || 'The body of the card'}</p>
         </div>
@@ -167,7 +215,9 @@ const Cards = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold text-gray-900">Cards</h1>
         <div className="flex items-center gap-2 text-xs">
-          <Link to="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</Link>
+          <Link to="/" className="text-blue-600 hover:text-blue-700 transition-colors">
+            Trang chủ
+          </Link>
           <span className="text-gray-400">/</span>
           <span className="text-gray-600">Cards</span>
         </div>
@@ -257,7 +307,10 @@ const Cards = () => {
         {/* Card with text-bg Section */}
         <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
           <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Card with <code className="px-2 py-1 bg-pink-100 text-pink-600 rounded text-sm font-mono">.text-bg-*</code>
+            Card with{' '}
+            <code className="px-2 py-1 bg-pink-100 text-pink-600 rounded text-sm font-mono">
+              .text-bg-*
+            </code>
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <CardTextBg

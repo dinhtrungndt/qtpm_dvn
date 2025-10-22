@@ -1,4 +1,17 @@
-import { ArrowLeft, Building2, CheckCircle2, CreditCard, Info, Loader2, Package, Shield, Smartphone, Sparkles, Star, TrendingUp } from 'lucide-react';
+import {
+  ArrowLeft,
+  Building2,
+  CheckCircle2,
+  CreditCard,
+  Info,
+  Loader2,
+  Package,
+  Shield,
+  Smartphone,
+  Sparkles,
+  Star,
+  TrendingUp,
+} from 'lucide-react';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +27,7 @@ const BuyNow = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const { isLoading, order, error, message } = useSelector(state => state.payments);
   const { user } = useSelector(state => state.user);
-  const { productDetail } = useSelector((state) => state.product);
+  const { productDetail } = useSelector(state => state.product);
 
   useEffect(() => {
     if (id) dispatch(getProductById(id));
@@ -24,10 +37,11 @@ const BuyNow = () => {
     if (!user?.id) return;
     const isHttps = window.location.protocol === 'https:';
     const wsProtocol = isHttps ? 'wss' : 'ws';
+    const port = process.env.REACT_APP_API_WEB_SOCKET;
 
-    const ws = new WebSocket(`${wsProtocol}://127.0.0.1:1111/notifications/ws/${user.id}`);
+    const ws = new WebSocket(`${wsProtocol}://${port}/notifications/ws/${user.id}`);
 
-    ws.onmessage = (event) => {
+    ws.onmessage = event => {
       const data = JSON.parse(event.data);
       if (data.type?.startsWith('payment') && data.message.includes(`#${id}`)) {
         setShowSuccess(true);
@@ -40,17 +54,17 @@ const BuyNow = () => {
     return () => ws.close();
   }, [user?.id, id]);
 
-  const handleBuyNow = async (productId) => {
+  const handleBuyNow = async productId => {
     try {
       const res = await paymentService.buyNow(productId, paymentMethod);
-      console.log("Payment result:", res);
+      console.log('Payment result:', res);
 
       if (res.payUrl) {
         setPayUrl(res.payUrl);
-        window.open(res.payUrl, "_blank");
+        window.open(res.payUrl, '_blank');
       }
     } catch (err) {
-      console.error("Payment error:", err);
+      console.error('Payment error:', err);
     }
   };
 
@@ -61,7 +75,7 @@ const BuyNow = () => {
       icon: Smartphone,
       color: 'from-pink-500 to-pink-600',
       hoverColor: 'hover:from-pink-600 hover:to-pink-700',
-      description: 'Ví điện tử MoMo'
+      description: 'Ví điện tử MoMo',
     },
     {
       id: 'zalo',
@@ -69,7 +83,7 @@ const BuyNow = () => {
       icon: CreditCard,
       color: 'from-blue-500 to-blue-600',
       hoverColor: 'hover:from-blue-600 hover:to-blue-700',
-      description: 'Ví điện tử ZaloPay'
+      description: 'Ví điện tử ZaloPay',
     },
     {
       id: 'bank',
@@ -77,12 +91,12 @@ const BuyNow = () => {
       icon: Building2,
       color: 'from-green-500 to-green-600',
       hoverColor: 'hover:from-green-600 hover:to-green-700',
-      description: 'Chuyển khoản ngân hàng'
-    }
+      description: 'Chuyển khoản ngân hàng',
+    },
   ];
 
   // Format price
-  const formatPrice = (price) => {
+  const formatPrice = price => {
     if (!price) return '0đ';
     if (price >= 1000000) {
       return `${(price / 1000000).toFixed(1)}M đ`;
@@ -111,7 +125,9 @@ const BuyNow = () => {
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
                 Thanh toán
               </h1>
-              <p className="text-sm md:text-base text-gray-500 mt-1">Chọn phương thức thanh toán của bạn</p>
+              <p className="text-sm md:text-base text-gray-500 mt-1">
+                Chọn phương thức thanh toán của bạn
+              </p>
             </div>
           </div>
         </div>
@@ -133,7 +149,11 @@ const BuyNow = () => {
                   className="w-full h-48 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 {productDetail.badge && (
-                  <div className={`absolute top-3 left-3 ${productDetail.badgeColor || 'bg-red-500'} text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full shadow-lg`}>
+                  <div
+                    className={`absolute top-3 left-3 ${
+                      productDetail.badgeColor || 'bg-red-500'
+                    } text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full shadow-lg`}
+                  >
                     {productDetail.badge}
                   </div>
                 )}
@@ -162,10 +182,11 @@ const BuyNow = () => {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 md:w-5 md:h-5 ${i < Math.floor(productDetail.rating || 0)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
-                          }`}
+                        className={`w-4 h-4 md:w-5 md:h-5 ${
+                          i < Math.floor(productDetail.rating || 0)
+                            ? 'fill-yellow-400 text-yellow-400'
+                            : 'text-gray-300'
+                        }`}
                       />
                     ))}
                   </div>
@@ -178,7 +199,7 @@ const BuyNow = () => {
                 </div>
 
                 {/* Framework */}
-                {productDetail.framework && productDetail.framework !== "N/A" && (
+                {productDetail.framework && productDetail.framework !== 'N/A' && (
                   <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-lg border border-green-200">
                     <Package className="w-4 h-4 text-green-600" />
                     <span className="text-xs md:text-sm font-semibold text-green-700">
@@ -190,7 +211,9 @@ const BuyNow = () => {
                 {/* Features - Show top 3 */}
                 {productDetail.features && productDetail.features.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-xs md:text-sm font-semibold text-gray-700">Tính năng nổi bật:</p>
+                    <p className="text-xs md:text-sm font-semibold text-gray-700">
+                      Tính năng nổi bật:
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {productDetail.features.slice(0, 3).map((feature, idx) => (
                         <span
@@ -237,7 +260,9 @@ const BuyNow = () => {
                 <div className="grid grid-cols-3 gap-2 md:gap-3">
                   <div className="bg-white p-3 rounded-xl shadow-sm text-center border border-gray-100">
                     <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-green-500 mx-auto mb-1" />
-                    <p className="text-base md:text-xl font-bold text-gray-900">{productDetail.sold || 0}</p>
+                    <p className="text-base md:text-xl font-bold text-gray-900">
+                      {productDetail.sold || 0}
+                    </p>
                     <p className="text-[10px] md:text-xs text-gray-500">Đã bán</p>
                   </div>
                   <div className="bg-white p-3 rounded-xl shadow-sm text-center border border-gray-100">
@@ -256,8 +281,8 @@ const BuyNow = () => {
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-start gap-2">
                   <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                   <p className="text-xs md:text-sm text-blue-700">
-                    Bạn đang mua <span className="font-semibold">{productDetail.name}</span>.
-                    Vui lòng kiểm tra thông tin trước khi thanh toán.
+                    Bạn đang mua <span className="font-semibold">{productDetail.name}</span>. Vui
+                    lòng kiểm tra thông tin trước khi thanh toán.
                   </p>
                 </div>
               </div>
@@ -283,23 +308,35 @@ const BuyNow = () => {
                   <button
                     key={method.id}
                     onClick={() => setPaymentMethod(method.id)}
-                    className={`w-full p-3 md:p-4 rounded-2xl border-2 transition-all duration-300 text-left animate-slide-right ${isSelected
-                      ? 'border-blue-500 bg-blue-50 shadow-lg scale-105'
-                      : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
-                      }`}
+                    className={`w-full p-3 md:p-4 rounded-2xl border-2 transition-all duration-300 text-left animate-slide-right ${
+                      isSelected
+                        ? 'border-blue-500 bg-blue-50 shadow-lg scale-105'
+                        : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
+                    }`}
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="flex items-center gap-3 md:gap-4">
-                      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${method.color} shadow-md flex-shrink-0`}>
+                      <div
+                        className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${method.color} shadow-md flex-shrink-0`}
+                      >
                         <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-800 text-base md:text-lg truncate">{method.name}</h3>
-                        <p className="text-xs md:text-sm text-gray-500 truncate">{method.description}</p>
+                        <h3 className="font-semibold text-gray-800 text-base md:text-lg truncate">
+                          {method.name}
+                        </h3>
+                        <p className="text-xs md:text-sm text-gray-500 truncate">
+                          {method.description}
+                        </p>
                       </div>
-                      <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
-                        }`}>
-                        {isSelected && <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 text-white" />}
+                      <div
+                        className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
+                          isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
+                        }`}
+                      >
+                        {isSelected && (
+                          <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                        )}
                       </div>
                     </div>
                   </button>
@@ -311,10 +348,13 @@ const BuyNow = () => {
             <button
               onClick={() => handleBuyNow(id)}
               disabled={isLoading || !!payUrl}
-              className={`w-full mt-4 md:mt-6 py-3 md:py-4 rounded-2xl font-bold text-white shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base ${isLoading || payUrl
-                ? 'bg-gray-400 cursor-not-allowed'
-                : `bg-gradient-to-r ${paymentMethods.find(m => m.id === paymentMethod)?.color} ${paymentMethods.find(m => m.id === paymentMethod)?.hoverColor} hover:shadow-2xl hover:-translate-y-1 active:translate-y-0`
-                }`}
+              className={`w-full mt-4 md:mt-6 py-3 md:py-4 rounded-2xl font-bold text-white shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base ${
+                isLoading || payUrl
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : `bg-gradient-to-r ${paymentMethods.find(m => m.id === paymentMethod)?.color} ${
+                      paymentMethods.find(m => m.id === paymentMethod)?.hoverColor
+                    } hover:shadow-2xl hover:-translate-y-1 active:translate-y-0`
+              }`}
             >
               {isLoading ? (
                 <>
@@ -357,7 +397,9 @@ const BuyNow = () => {
                     <CheckCircle2 className="w-7 h-7 md:w-8 md:h-8 text-white" />
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Quét mã QR</h3>
-                  <p className="text-sm md:text-base text-gray-600">Sử dụng ứng dụng để thanh toán</p>
+                  <p className="text-sm md:text-base text-gray-600">
+                    Sử dụng ứng dụng để thanh toán
+                  </p>
                 </div>
 
                 {/* QR Code */}
@@ -372,18 +414,26 @@ const BuyNow = () => {
 
                 {/* Instructions */}
                 <div className="space-y-3 text-left bg-blue-50 p-3 md:p-4 rounded-2xl">
-                  <h4 className="font-semibold text-gray-800 mb-2 text-sm md:text-base">Hướng dẫn thanh toán:</h4>
+                  <h4 className="font-semibold text-gray-800 mb-2 text-sm md:text-base">
+                    Hướng dẫn thanh toán:
+                  </h4>
                   <div className="space-y-2 text-xs md:text-sm text-gray-600">
                     <div className="flex items-start gap-2">
-                      <div className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
+                      <div className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                        1
+                      </div>
                       <p>Mở ứng dụng {paymentMethods.find(m => m.id === paymentMethod)?.name}</p>
                     </div>
                     <div className="flex items-start gap-2">
-                      <div className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
+                      <div className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                        2
+                      </div>
                       <p>Quét mã QR hoặc click vào link đã mở</p>
                     </div>
                     <div className="flex items-start gap-2">
-                      <div className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
+                      <div className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                        3
+                      </div>
                       <p>Xác nhận thanh toán</p>
                     </div>
                   </div>
@@ -400,7 +450,9 @@ const BuyNow = () => {
                 <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mb-4 md:mb-6">
                   <Smartphone className="w-10 h-10 md:w-12 md:h-12 text-blue-500" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2">Sẵn sàng thanh toán</h3>
+                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2">
+                  Sẵn sàng thanh toán
+                </h3>
                 <p className="text-sm md:text-base text-gray-500 max-w-xs px-4">
                   Chọn phương thức thanh toán và nhấn "Mua ngay" để tạo mã QR
                 </p>
@@ -410,7 +462,10 @@ const BuyNow = () => {
         </div>
 
         {/* Trust Badges */}
-        <div className="mt-6 md:mt-8 bg-white rounded-3xl shadow-lg p-4 md:p-6 border border-gray-100 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+        <div
+          className="mt-6 md:mt-8 bg-white rounded-3xl shadow-lg p-4 md:p-6 border border-gray-100 animate-fade-in"
+          style={{ animationDelay: '0.3s' }}
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div className="flex flex-col items-center gap-2">
               <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -444,8 +499,12 @@ const BuyNow = () => {
             <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl animate-bounce-in">
               <CheckCircle2 className="w-8 h-8 md:w-10 md:h-10 text-white" />
             </div>
-            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Thanh toán thành công!</h3>
-            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">Đơn hàng của bạn đã được xác nhận</p>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+              Thanh toán thành công!
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
+              Đơn hàng của bạn đã được xác nhận
+            </p>
             <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
               <div className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full animate-progress"></div>
             </div>

@@ -6,38 +6,40 @@ import * as types from '../types/index';
 
 // Lưu trữ hàm showMessage toàn cục
 let globalShowMessage = null;
-export const setGlobalShowMessage = (showMessage) => {
+export const setGlobalShowMessage = showMessage => {
   globalShowMessage = showMessage;
 };
 
 // Lưu trữ store toàn cục (sẽ được gán từ index.js)
 let store = null;
-export const setStore = (s) => {
+export const setStore = s => {
   store = s;
 };
 
-export const login = (credentials) => async (dispatch) => {
+export const login = credentials => async dispatch => {
   dispatch({ type: types.LOGIN_REQUEST });
   try {
-    //  console.log('Sending login request with:', credentials);
     const data = await authService.login(credentials);
-    //  console.log('Login response:', data);
     const encryptedToken = encryptToken(data.access_token);
     localStorage.setItem('access_token', encryptedToken);
     const user = await authService.getCurrentUser();
-    //  console.log('Get current user response:', user);
     dispatch({ type: types.LOGIN_SUCCESS, payload: { user, token: data.access_token } });
     connectWebSocket(user.id);
     globalShowMessage?.(MESSAGES.LOGIN_SUCCESS, 'success');
   } catch (error) {
     console.error('Login error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.LOGIN_FAILURE, payload: error });
-    globalShowMessage?.(MESSAGES.LOGIN_FAILURE + ': ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'), 'error');
+    globalShowMessage?.(
+      MESSAGES.LOGIN_FAILURE +
+        ': ' +
+        (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
+      'error'
+    );
     throw error;
   }
 };
 
-export const register = (userData) => async (dispatch) => {
+export const register = userData => async dispatch => {
   dispatch({ type: types.REGISTER_REQUEST });
   try {
     const user = await authService.register(userData);
@@ -45,12 +47,15 @@ export const register = (userData) => async (dispatch) => {
     globalShowMessage?.(MESSAGES.REGISTER_SUCCESS, 'success');
   } catch (error) {
     dispatch({ type: types.REGISTER_FAILURE, payload: error });
-    globalShowMessage?.(MESSAGES.REGISTER_FAILURE + ': ' + (error.message || 'Lỗi không xác định'), 'error');
+    globalShowMessage?.(
+      MESSAGES.REGISTER_FAILURE + ': ' + (error.message || 'Lỗi không xác định'),
+      'error'
+    );
     throw error;
   }
 };
 
-export const logout = () => (dispatch) => {
+export const logout = () => dispatch => {
   localStorage.removeItem('access_token');
   if (window.ws) {
     window.ws.close();
@@ -59,7 +64,7 @@ export const logout = () => (dispatch) => {
   globalShowMessage?.(MESSAGES.LOGOUT, 'success');
 };
 
-export const getCurrentUser = () => async (dispatch) => {
+export const getCurrentUser = () => async dispatch => {
   try {
     const user = await authService.getCurrentUser();
     dispatch({ type: types.GET_CURRENT_USER, payload: user });
@@ -69,14 +74,20 @@ export const getCurrentUser = () => async (dispatch) => {
       dispatch(logout());
       globalShowMessage?.(MESSAGES.SESSION_EXPIRED, 'error');
     } else {
-      console.error('Get current user error:', error.response ? error.response.data : error.message);
+      console.error(
+        'Get current user error:',
+        error.response ? error.response.data : error.message
+      );
       dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
-      globalShowMessage?.('Lỗi xác thực: ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'), 'error');
+      globalShowMessage?.(
+        'Lỗi xác thực: ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
+        'error'
+      );
     }
   }
 };
 
-export const getListUsers = () => async (dispatch) => {
+export const getListUsers = () => async dispatch => {
   dispatch({ type: types.GET_LIST_USERS_REQUEST });
   try {
     const users = await userService.getListUsers();
@@ -87,7 +98,7 @@ export const getListUsers = () => async (dispatch) => {
   }
 };
 
-export const createUser = (userData) => async (dispatch) => {
+export const createUser = userData => async dispatch => {
   dispatch({ type: types.CREATE_USER_REQUEST });
   try {
     const newUser = await userService.createUser(userData);
@@ -97,11 +108,14 @@ export const createUser = (userData) => async (dispatch) => {
   } catch (error) {
     console.error('Create user error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.CREATE_USER_FAILURE, payload: error });
-    globalShowMessage?.('Tạo người dùng thất bại: ' + (error.response?.data?.detail || error.message), 'error');
+    globalShowMessage?.(
+      'Tạo người dùng thất bại: ' + (error.response?.data?.detail || error.message),
+      'error'
+    );
   }
 };
 
-export const updateUser = (userId, userData) => async (dispatch) => {
+export const updateUser = (userId, userData) => async dispatch => {
   dispatch({ type: types.UPDATE_USER_REQUEST });
   try {
     const updatedUser = await userService.updateUser(userId, userData);
@@ -111,11 +125,14 @@ export const updateUser = (userId, userData) => async (dispatch) => {
   } catch (error) {
     console.error('Update user error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.UPDATE_USER_FAILURE, payload: error });
-    globalShowMessage?.('Cập nhật thất bại: ' + (error.response?.data?.detail || error.message), 'error');
+    globalShowMessage?.(
+      'Cập nhật thất bại: ' + (error.response?.data?.detail || error.message),
+      'error'
+    );
   }
 };
 
-export const deleteUser = (userId) => async (dispatch) => {
+export const deleteUser = userId => async dispatch => {
   dispatch({ type: types.DELETE_USER_REQUEST });
   try {
     await userService.deleteUser(userId);
@@ -125,27 +142,85 @@ export const deleteUser = (userId) => async (dispatch) => {
   } catch (error) {
     console.error('Delete user error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.DELETE_USER_FAILURE, payload: error });
-    globalShowMessage?.('Xoá người dùng thất bại: ' + (error.response?.data?.detail || error.message), 'error');
+    globalShowMessage?.(
+      'Xoá người dùng thất bại: ' + (error.response?.data?.detail || error.message),
+      'error'
+    );
+  }
+};
+
+export const updateProfile = userData => async dispatch => {
+  dispatch({ type: types.UPDATE_PROFILE_REQUEST });
+  try {
+    const updatedUser = await userService.updateProfile(userData);
+    dispatch({ type: types.UPDATE_PROFILE_SUCCESS, payload: updatedUser });
+    globalShowMessage?.('Cập nhật thông tin thành công!', 'success');
+    dispatch(getCurrentUser()); // Refresh current user data
+  } catch (error) {
+    console.error('Update profile error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.UPDATE_PROFILE_FAILURE, payload: error });
+    globalShowMessage?.(
+      'Cập nhật thất bại: ' + (error.response?.data?.detail || error.message),
+      'error'
+    );
+  }
+};
+
+export const changePassword = passwordData => async dispatch => {
+  dispatch({ type: types.CHANGE_PASSWORD_REQUEST });
+  try {
+    await userService.changePassword({
+      current_password: passwordData.currentPassword,
+      new_password: passwordData.newPassword,
+    });
+    dispatch({ type: types.CHANGE_PASSWORD_SUCCESS });
+    globalShowMessage?.('Đổi mật khẩu thành công!', 'success');
+  } catch (error) {
+    console.error('Change password error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.CHANGE_PASSWORD_FAILURE, payload: error });
+    globalShowMessage?.(
+      'Đổi mật khẩu thất bại: ' + (error.response?.data?.detail || error.message),
+      'error'
+    );
+  }
+};
+
+export const deleteAccount = userId => async dispatch => {
+  dispatch({ type: types.DELETE_ACCOUNT_REQUEST });
+  try {
+    await userService.deleteAccount(userId);
+    dispatch({ type: types.DELETE_ACCOUNT_SUCCESS });
+    dispatch(logout()); // Log out after deletion
+    globalShowMessage?.('Tài khoản đã bị xóa', 'success');
+  } catch (error) {
+    console.error('Delete account error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.DELETE_ACCOUNT_FAILURE, payload: error });
+    globalShowMessage?.(
+      'Xóa tài khoản thất bại: ' + (error.response?.data?.detail || error.message),
+      'error'
+    );
   }
 };
 
 let ws = null;
-const connectWebSocket = (userId) => {
+const connectWebSocket = userId => {
   if (ws) ws.close();
   const port = process.env.REACT_APP_API_WEB_SOCKET;
   const isHttps = window.location.protocol === 'https:';
   const wsProtocol = isHttps ? 'wss' : 'ws';
   ws = new WebSocket(`${wsProtocol}://${port}/auth/ws/${userId}`);
   window.ws = ws;
-  ws.onopen = () =>//  console.log('WebSocket đã kết nối');
-    ws.onmessage = (event) => {
+  ws.onopen = () =>
+    // console.log('WebSocket đã kết nối');
+    (ws.onmessage = event => {
       if (event.data === 'logout') {
         globalShowMessage?.(MESSAGES.OTHER_LOGIN, 'error');
         if (store) store.dispatch(logout());
       }
-    };
-  ws.onclose = () =>//  console.log('WebSocket đã ngắt kết nối');
-    ws.onerror = (error) => console.error('Lỗi WebSocket:', error);
+    });
+  ws.onclose = () =>
+    // console.log('WebSocket đã ngắt kết nối');
+    (ws.onerror = error => console.error('Lỗi WebSocket:', error));
 };
 
 export const getStore = () => store;

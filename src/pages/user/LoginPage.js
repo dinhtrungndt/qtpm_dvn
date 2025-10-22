@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { setApiShowMessage } from '../../services/api';
-import { login, setGlobalShowMessage } from '../../stores/redux/actions/userActions';
-import useNotification, { NotificationStyles } from '../../utils/notification';
+import Notification from '../../constants/notifications/notifi';
+import useNotification from '../../hooks/useNotification';
+import { login } from '../../stores/redux/actions/userActions';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -13,23 +13,27 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { message, messageType, showMessage } = useNotification();
 
-  useEffect(() => {
-    setGlobalShowMessage(showMessage);
-    setApiShowMessage(showMessage);
-  }, [showMessage]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !password) {
       showMessage('Vui lòng nhập đầy đủ thông tin', 'error');
       return;
     }
+
+    if (username.length < 4) {
+      showMessage('Tên đăng nhập phải có ít nhất 4 ký tự', 'error');
+      return;
+    }
+
     setIsLoading(true);
     try {
       await dispatch(login({ username, password }));
       navigate('/dashboard/v1');
+      showMessage('Đăng nhập thành công!', 'success');
     } catch (error) {
-      console.error('Login failed:', error.message);
+      const log = error?.response?.data;
+      showMessage(log?.detail || 'Đăng nhập thất bại, vui lòng thử lại.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -37,12 +41,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
-      <NotificationStyles />
-      {message && (
-        <div className={`fixed top-5 right-5 px-5 py-3 rounded-lg shadow-lg z-50 text-sm font-medium text-white slide-in ${messageType === 'error' ? 'bg-red-500' : 'bg-green-500'}`}>
-          {message}
-        </div>
-      )}
+      <Notification message={message} messageType={messageType} />
 
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 fade-in">

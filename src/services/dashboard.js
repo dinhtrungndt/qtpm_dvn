@@ -1,25 +1,24 @@
+import { decryptToken } from '../utils/cryptoUtils';
 import api from './api';
 
-export const fetchDashboardStats = async (token) => {
-  try {
-    const response = await api.get('/dashboard/stats', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching dashboard stats:', error);
-    throw error;
-  }
+const getAuthConfig = () => {
+  const encryptedToken = localStorage.getItem('access_token');
+  const token = encryptedToken ? decryptToken(encryptedToken) : null;
+  return {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 };
 
-export const fetchDashboardSales = async (token) => {
-  try {
-    const response = await api.get('/dashboard/charts/sales', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+
+const dashboardService = {
+  getStats: async () => {
+    const response = await api.get('/dashboard/stats', getAuthConfig());
     return response.data;
-  } catch (error) {
-    console.error('Error fetching dashboard sales:', error);
-    throw error;
-  }
+  },
+  getSales: async () => {
+    const response = await api.get('/dashboard/charts/sales', getAuthConfig());
+    return response.data;
+  },
 };
+
+export default dashboardService;

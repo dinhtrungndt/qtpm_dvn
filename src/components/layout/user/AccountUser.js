@@ -1,13 +1,15 @@
-import { Calendar, Camera, Check, Edit2, Mail, Save, Shield, User, X } from 'lucide-react';
+import { Calendar, Camera, Edit2, Mail, Save, Shield, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Notification from '../../../constants/notifications/notifi';
+import useNotification from '../../../hooks/useNotification';
 
 const AccountUser = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector(state => state.user);
   const [isEditing, setIsEditing] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const { message, messageType, showMessage } = useNotification();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -28,19 +30,17 @@ const AccountUser = () => {
     }
   }, [user]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSave = async () => {
     setIsSaving(true);
-    // Simulate API call
     setTimeout(() => {
       setIsSaving(false);
       setIsEditing(false);
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
+      showMessage('Cập nhật thành công!', 'success');
     }, 1500);
   };
 
@@ -67,14 +67,7 @@ const AccountUser = () => {
     <div>
       <div className="p-4 mx-auto">
         {/* Success Message */}
-        {showSuccess && (
-          <div className="fixed top-20 right-6 z-50 animate-slide-in">
-            <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2">
-              <Check className="w-5 h-5" />
-              <span className="font-medium">Cập nhật thành công!</span>
-            </div>
-          </div>
-        )}
+        <Notification message={message} messageType={messageType} />
 
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -83,7 +76,9 @@ const AccountUser = () => {
             <p className="text-sm text-gray-500 mt-1">Quản lý thông tin cá nhân của bạn</p>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <a href="/" className="text-blue-600 hover:text-blue-700 transition-colors">Trang chủ</a>
+            <a href="/" className="text-blue-600 hover:text-blue-700 transition-colors">
+              Trang chủ
+            </a>
             <span className="text-gray-400">/</span>
             <span className="text-gray-600">Tài khoản</span>
           </div>
@@ -92,8 +87,9 @@ const AccountUser = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Profile Card */}
           <div
-            className={`lg:col-span-1 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+            className={`lg:col-span-1 transition-all duration-700 ${
+              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
           >
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               {/* Cover */}
@@ -125,12 +121,16 @@ const AccountUser = () => {
                     )}
                   </div>
 
-                  <h2 className="mt-4 text-xl font-bold text-gray-900">{formData.full_name || formData.username}</h2>
+                  <h2 className="mt-4 text-xl font-bold text-gray-900">
+                    {formData.full_name || formData.username}
+                  </h2>
                   <p className="text-sm text-gray-500">@{formData.username}</p>
 
                   <div className="mt-4 flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-full">
                     <Shield className="w-4 h-4 text-blue-600" />
-                    <span className="text-sm font-medium text-blue-700 capitalize">{user?.role || 'user'}</span>
+                    <span className="text-sm font-medium text-blue-700 capitalize">
+                      {user?.role || 'user'}
+                    </span>
                   </div>
                 </div>
 
@@ -161,8 +161,9 @@ const AccountUser = () => {
 
             {/* Stats */}
             <div
-              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
+              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 transition-all duration-700 ${
+                animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
               style={{ transitionDelay: '200ms' }}
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Thống kê</h3>
@@ -170,8 +171,11 @@ const AccountUser = () => {
                 {stats.map((stat, index) => (
                   <div
                     key={stat.id}
-                    className={`text-center p-4 rounded-lg ${stat.color} bg-opacity-10 border border-gray-200 hover:shadow-md transition-all duration-300 ${animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-                      }`}
+                    className={`text-center p-4 rounded-lg ${
+                      stat.color
+                    } bg-opacity-10 border border-gray-200 hover:shadow-md transition-all duration-300 ${
+                      animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                    }`}
                     style={{ transitionDelay: `${300 + index * 100}ms` }}
                   >
                     <div className="text-2xl mb-2">{stat.icon}</div>
@@ -185,8 +189,9 @@ const AccountUser = () => {
 
           {/* Right Column - Edit Form */}
           <div
-            className={`lg:col-span-2 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+            className={`lg:col-span-2 transition-all duration-700 ${
+              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
             style={{ transitionDelay: '100ms' }}
           >
             <div className="bg-white rounded-xl border border-gray-200 p-6">
@@ -243,9 +248,7 @@ const AccountUser = () => {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -261,9 +264,7 @@ const AccountUser = () => {
 
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Họ và tên
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
                   <input
                     type="text"
                     name="full_name"
@@ -276,9 +277,7 @@ const AccountUser = () => {
 
                 {/* Avatar URL */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    URL Avatar
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">URL Avatar</label>
                   <input
                     type="text"
                     name="avatar"

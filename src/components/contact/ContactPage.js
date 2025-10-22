@@ -1,6 +1,8 @@
 import emailjs from '@emailjs/browser';
-import { Check, Loader, Mail, MapPin, Phone, Send, X } from 'lucide-react';
+import { Loader, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { useState } from 'react';
+import Notification from '../../constants/notifications/notifi';
+import useNotification from '../../hooks/useNotification';
 
 const ContactPage = () => {
   const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
@@ -18,22 +20,21 @@ const ContactPage = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [notification, setNotification] = useState('');
+  const { message, messageType, showMessage } = useNotification();
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      setNotification({ msg: 'Vui lòng điền đầy đủ thông tin', type: 'error' });
-      setTimeout(() => setNotification(''), 3000);
+      showMessage('Vui lòng điền vào tất cả các trường bắt buộc!', 'error');
       return;
     }
 
@@ -51,7 +52,7 @@ const ContactPage = () => {
 
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
 
-      setNotification({ msg: 'Gửi tin nhắn thành công! Chúng tôi sẽ liên hệ lại sớm.', type: 'success' });
+      showMessage('Tin nhắn của bạn đã được gửi thành công!', 'success');
       setFormData({
         name: '',
         email: '',
@@ -59,11 +60,9 @@ const ContactPage = () => {
         subject: '',
         message: '',
       });
-      setTimeout(() => setNotification(''), 3000);
     } catch (error) {
       console.error('EmailJS Error:', error);
-      setNotification({ msg: 'Lỗi khi gửi tin nhắn. Vui lòng thử lại!', type: 'error' });
-      setTimeout(() => setNotification(''), 3000);
+      showMessage('Đã xảy ra lỗi khi gửi tin nhắn. Vui lòng thử lại sau.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -72,15 +71,7 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8">
       {/* Notification */}
-      {notification && (
-        <div className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg animate-slide-in z-50 flex items-center gap-2 ${notification.type === 'success'
-          ? 'bg-green-500 text-white'
-          : 'bg-red-500 text-white'
-          }`}>
-          {notification.type === 'success' ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-          {notification.msg}
-        </div>
-      )}
+      <Notification message={message} messageType={messageType} />
 
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -104,7 +95,10 @@ const ContactPage = () => {
                 <h3 className="text-xl font-bold text-white">Email</h3>
               </div>
               <p className="text-blue-100 mb-2">Gửi email cho chúng tôi</p>
-              <a href="mailto:congnghedvn@gmail.com" className="text-white font-semibold hover:underline text-lg">
+              <a
+                href="mailto:congnghedvn@gmail.com"
+                className="text-white font-semibold hover:underline text-lg"
+              >
                 congnghedvn@gmail.com
               </a>
             </div>
@@ -119,7 +113,10 @@ const ContactPage = () => {
                 <h3 className="text-xl font-bold text-white">Điện thoại</h3>
               </div>
               <p className="text-green-100 mb-2">Gọi cho chúng tôi</p>
-              <a href="tel:+84399690987" className="text-white font-semibold hover:underline text-lg">
+              <a
+                href="tel:+84399690987"
+                className="text-white font-semibold hover:underline text-lg"
+              >
                 0399.690.987
               </a>
             </div>
@@ -305,7 +302,6 @@ const ContactPage = () => {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
-
           </div>
         </div>
       </div>

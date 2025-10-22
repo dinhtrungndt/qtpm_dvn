@@ -17,7 +17,7 @@ const HeaderPageStart = () => {
   const [isOpenUserMenu, setIsOpenUserMenu] = useState(false);
   const [isOpenCart, setIsOpenCart] = useState(false);
   const cart = useSelector((state) => state.cart.items || []);
-  const { user } = useSelector((state) => state.user);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const cartRef = useRef(null);
   const userMenuRefDesktop = useRef(null);
   const userMenuRefMobile = useRef(null);
@@ -31,10 +31,10 @@ const HeaderPageStart = () => {
   useClickOutside(cartRefMobile, () => setIsOpenCart(false), isOpenCart);
 
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated) {
       dispatch(fetchCart());
     }
-  }, [dispatch, user]);
+  }, [dispatch, isAuthenticated]);
 
   const handleSelectCategory = (category) => {
     setCategorySearch(category);
@@ -134,7 +134,7 @@ const HeaderPageStart = () => {
           <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600 mr-4">Phần cứng</Link>
           <Link to="#" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Website</Link>
           <span className="mx-2 flex items-center text-black"><Dot /></span>
-          <Link to="/contact" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</Link>
+          <Link to="/contact-start" className="text-black font-semibold hover:border-b border-black hover:text-gray-600">Liên hệ</Link>
           <div className="border-l border-black mx-2 h-4" />
           {/* login */}
           {
@@ -158,7 +158,7 @@ const HeaderPageStart = () => {
           {/* Open User Menu with Animation */}
           <div
             ref={userMenuRefDesktop}
-            className={`absolute z-50 top-5 right-8 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
+            className={`absolute z-[100] top-5 right-8 mt-2 transform transition-all duration-200 ease-out origin-top-right ${isOpenUserMenu
               ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
               : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
               }`}

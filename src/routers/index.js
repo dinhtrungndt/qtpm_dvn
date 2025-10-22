@@ -2,8 +2,10 @@ import { lazy, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import ContactPage from '../components/contact/ContactPage';
+import ContactPageStart from '../components/contact/ContactPageStart';
 import FooterDashBoard from '../components/footer/FooterDashBoard';
 import DashboardHeader from '../components/header/Dashboard';
+import IntroduceStart from '../components/introduce/IntroduceStart';
 import AccountAdmin from '../components/layout/admin/accountAdmin';
 import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
@@ -69,9 +71,11 @@ const Routers = () => {
     }
   }, [isAuthenticated, location.pathname, navigate]);
 
-  const hideLayoutRoutes = ['/login', '/signup', '/'];
+  const hideLayoutRoutes = ['/login', '/signup', '/', '/contact-start', '/introduce', '/unauthorized'];
 
-  const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
+  const shouldHideLayout =
+    hideLayoutRoutes.includes(location.pathname) ||
+    location.pathname.startsWith('/detail/product');
 
   return (
     <div>
@@ -82,6 +86,8 @@ const Routers = () => {
         <Route path="/detail/product/:id" element={<DetailProduct />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/contact-start" element={<ContactPageStart />} />
+        <Route path="/introduce" element={<IntroduceStart />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
         <Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />

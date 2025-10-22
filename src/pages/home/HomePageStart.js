@@ -16,6 +16,12 @@ import '../styles/slide.css';
 
 const HomePageStart = () => {
 
+  const slides = [
+    { img: slide1, url: 'https://dvntechnology.com/phan-mem-ho-tro-kiem-ke-quan-ly-tai-san/' },
+    { img: slide2, url: 'https://dvntechnology.com/phan-mem-quan-ly-hang-cho-thong-minh/' },
+    { img: slide3, url: 'https://dvntechnology.com/phan-mem-xep-hang-tu-dong/' },
+  ];
+
   return (
     <div>
       {/* header */}
@@ -25,26 +31,26 @@ const HomePageStart = () => {
       <div className="mt-4">
         {/* Sản phẩm nổi bật */}
         <div className="flex md:text-sm text-[10px] justify-center gap-6 py-2 mb-4 bg-gradient-to-r from-blue-50 via-white to-blue-50 border-y border-blue-200 shadow-sm">
-          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          <a href="https://dvntechnology.com/gioi-thieu-petro-itm/" target="_blank" rel="noopener noreferrer" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Petro ITM
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </Link>
-          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </a>
+          <a href="https://dvntechnology.com/phan-mem-xep-hang-tu-dong/" target="_blank" rel="noopener noreferrer" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Lấy phiếu
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </Link>
-          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </a>
+          <a href="https://dvntechnology.com/phan-mem-ho-tro-kiem-ke-quan-ly-tai-san/" target="_blank" rel="noopener noreferrer" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Kiểm kê & Tài sản
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </Link>
-          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </a>
+          <a href="https://dvntechnology.com/phan-mem-quan-ly-hang-cho-thong-minh/" target="_blank" rel="noopener noreferrer" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             QL Hàng chờ
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </Link>
-          <Link to="#" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
+          </a>
+          <a href="https://dvntechnology.com/gioi-thieu/" target="_blank" rel="noopener noreferrer" className="relative text-gray-700 font-semibold hover:text-blue-600 transition-colors duration-300 group">
             Thông tin
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </Link>
+          </a>
         </div>
         {/* slide */}
         <div className="relative">
@@ -61,41 +67,30 @@ const HomePageStart = () => {
               nextEl: '.custom-swiper-next',
               prevEl: '.custom-swiper-prev',
             }}
-            pagination={{
-              clickable: true,
-              dynamicBullets: true
-            }}
+            pagination={{ clickable: true, dynamicBullets: true }}
             spaceBetween={30}
             slidesPerView={1}
-            loop={true}
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
+            loop
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
             speed={600}
-            className="h-auto mx-auto shadow-lg overflow-hidden"
+            className="h-auto mx-auto shadow-lg overflow-hidden cursor-pointer"
           >
-            <SwiperSlide>
-              <img
-                src={slide1}
-                alt="slide1"
-                className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={slide2}
-                alt="slide2"
-                className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={slide3}
-                alt="slide3"
-                className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </SwiperSlide>
+            {slides.map((s, idx) => (
+              <SwiperSlide key={idx}>
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full"
+                >
+                  <img
+                    src={s.img}
+                    alt={`slide${idx + 1}`}
+                    className="w-full h-36 md:h-96 object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </a>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
         {/* Danh mục sản phẩm */}
