@@ -5,16 +5,16 @@ export default function CreativeMarketSection() {
         {/* Left Content */}
         <div className="p-8 md:p-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Bắt đầu Kiếm tiền với Creative Market
+            Bắt đầu Kiếm tiền với DVN Technology
           </h2>
           <p className="text-base text-gray-700 mb-6 leading-relaxed">
-            Bán thiết kế của bạn và tiếp cận hàng triệu người mua hoặc quảng bá các nghệ sĩ khác trên Creative Market để kiếm tiền!
+            Bán thiết kế của bạn và tiếp cận hàng triệu người mua hoặc quảng bá các nghệ sĩ khác trên DVN Technology để kiếm tiền!
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
-            <button className="px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
-              Mở cửa hàng
-            </button>
+            <a href="tel:+84399690987" className="px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
+              Liên hệ ngay
+            </a>
             <button className="px-6 py-3 bg-white text-teal-600 font-medium rounded-lg border-2 border-teal-600 hover:bg-teal-50 transition-colors">
               Trở thành đối tác
             </button>

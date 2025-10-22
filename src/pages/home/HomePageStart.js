@@ -99,7 +99,7 @@ const HomePageStart = () => {
           <div className="grid grid-cols-3 items-center px-4 mt-6 mb-2">
             <div></div>
             <p className="font-medium md:text-lg text-sm text-center">Nổi bật ✮</p>
-            <Link to="#" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
+            <Link to="/seemore" className="relative text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-all duration-300 group inline-block justify-self-end">
               Xem thêm {'>'}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
             </Link>

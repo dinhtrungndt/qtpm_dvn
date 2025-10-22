@@ -21,6 +21,7 @@ import Checkout from '../components/layout/user/checkout';
 import Cards from '../components/layout/widgets/Cards';
 import InforBox from '../components/layout/widgets/InforBox';
 import SmallBox from '../components/layout/widgets/SmallBox';
+import SeeMore from '../components/products/SeeMore';
 import DetailProduct from '../components/start/DetailProduct';
 import HomePageStart from '../pages/home/HomePageStart';
 import LoginPage from '../pages/user/LoginPage';
@@ -71,7 +72,7 @@ const Routers = () => {
     }
   }, [isAuthenticated, location.pathname, navigate]);
 
-  const hideLayoutRoutes = ['/login', '/signup', '/', '/contact-start', '/introduce', '/unauthorized'];
+  const hideLayoutRoutes = ['/login', '/signup', '/', '/contact-start', '/introduce', '/seemore', '/unauthorized'];
 
   const shouldHideLayout =
     hideLayoutRoutes.includes(location.pathname) ||
@@ -87,6 +88,7 @@ const Routers = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/contact-start" element={<ContactPageStart />} />
+        <Route path="/seemore" element={<SeeMore />} />
         <Route path="/introduce" element={<IntroduceStart />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 

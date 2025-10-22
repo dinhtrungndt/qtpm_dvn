@@ -99,9 +99,8 @@ const HeaderPageStart = () => {
             >
               {categorySearch}
               <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  isOpenCategoryDropdown ? 'rotate-180' : 'rotate-0'
-                }`}
+                className={`w-4 h-4 transition-transform duration-200 ${isOpenCategoryDropdown ? 'rotate-180' : 'rotate-0'
+                  }`}
               />
             </button>
 
@@ -111,11 +110,10 @@ const HeaderPageStart = () => {
                   <div
                     key={item}
                     onClick={() => handleSelectCategory(item)}
-                    className={`px-4 py-2.5 text-sm flex items-center gap-3 cursor-pointer hover:bg-blue-50 transition-colors ${
-                      item === categorySearch
-                        ? 'bg-blue-50 text-blue-600 font-semibold'
-                        : 'text-gray-700'
-                    }`}
+                    className={`px-4 py-2.5 text-sm flex items-center gap-3 cursor-pointer hover:bg-blue-50 transition-colors ${item === categorySearch
+                      ? 'bg-blue-50 text-blue-600 font-semibold'
+                      : 'text-gray-700'
+                      }`}
                   >
                     {item === categorySearch && <Check className="w-4 h-4 text-blue-600" />}
                     <span className={item !== categorySearch ? 'ml-7' : ''}>{item}</span>
@@ -144,16 +142,14 @@ const HeaderPageStart = () => {
         {/* Mobile Menu Sidebar */}
         <>
           <div
-            className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 z-40 ${
-              isOpenMenu ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+            className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 z-40 ${isOpenMenu ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
             onClick={() => setIsOpenMenu(false)}
           />
 
           <div
-            className={`fixed top-0 left-0 w-72 h-full bg-white shadow-2xl z-50 flex flex-col p-6 transform transition-transform duration-300 ease-out ${
-              isOpenMenu ? 'translate-x-0' : '-translate-x-full'
-            }`}
+            className={`fixed top-0 left-0 w-72 h-full bg-white shadow-2xl z-50 flex flex-col p-6 transform transition-transform duration-300 ease-out ${isOpenMenu ? 'translate-x-0' : '-translate-x-full'
+              }`}
           >
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
               <img src={logoHeader} alt="logo" className="w-16 h-auto" />
@@ -205,6 +201,9 @@ const HeaderPageStart = () => {
 
           <div className="w-px h-5 bg-gray-300" />
 
+          <Link to="/seemore" className="font-semibold hover:text-blue-600 transition-colors">
+            Sản phẩm
+          </Link>
           <Link to="/contact-start" className="font-semibold hover:text-blue-600 transition-colors">
             Liên hệ
           </Link>
@@ -229,11 +228,10 @@ const HeaderPageStart = () => {
 
               <div
                 ref={userMenuRefDesktop}
-                className={`absolute top-full right-0 mt-2 transform transition-all duration-200 ease-out origin-top-right z-50 ${
-                  isOpenUserMenu
-                    ? 'opacity-100 scale-100 translate-y-0'
-                    : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-                }`}
+                className={`absolute top-full right-0 mt-2 transform transition-all duration-200 ease-out origin-top-right z-50 ${isOpenUserMenu
+                  ? 'opacity-100 scale-100 translate-y-0'
+                  : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+                  }`}
               >
                 <OpenUser handleLogout={handleLogout} />
               </div>
@@ -263,11 +261,10 @@ const HeaderPageStart = () => {
 
             {/* Cart Dropdown */}
             <div
-              className={`absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-xl shadow-2xl transition-all duration-200 ease-out origin-top-right z-50 ${
-                isOpenCart
-                  ? 'opacity-100 scale-100 translate-y-0'
-                  : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-              }`}
+              className={`absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-xl shadow-2xl transition-all duration-200 ease-out origin-top-right z-50 ${isOpenCart
+                ? 'opacity-100 scale-100 translate-y-0'
+                : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+                }`}
             >
               <div className="p-4 border-b border-gray-200">
                 <h3 className="font-bold text-gray-900">Giỏ hàng của bạn</h3>
@@ -353,11 +350,10 @@ const HeaderPageStart = () => {
 
               <div
                 ref={userMenuRefMobile}
-                className={`absolute top-full right-0 mt-2 transform transition-all duration-200 ease-out origin-top-right z-50 ${
-                  isOpenUserMenu
-                    ? 'opacity-100 scale-100 translate-y-0'
-                    : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-                }`}
+                className={`absolute top-full right-0 mt-2 transform transition-all duration-200 ease-out origin-top-right z-50 ${isOpenUserMenu
+                  ? 'opacity-100 scale-100 translate-y-0'
+                  : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+                  }`}
               >
                 <OpenUser handleLogout={handleLogout} />
               </div>
