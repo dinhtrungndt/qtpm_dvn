@@ -6,6 +6,7 @@ import dashboardReducer from './reducers/dashboardReducer';
 import orderReducer from './reducers/orderReducer';
 import paymentsReducer from './reducers/paymentsReducer';
 import productReducer from './reducers/productReducer';
+import searchReducer from './reducers/searchReducer';
 import themeReducer from './reducers/themeReducer';
 import userReducer from './reducers/userReducer';
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   order: orderReducer,
   payments: paymentsReducer,
+  search: searchReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
