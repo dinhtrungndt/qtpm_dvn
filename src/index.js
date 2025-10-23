@@ -10,11 +10,6 @@ import { disableConsoleInProduction } from './utils/disableConsole';
 
 disableConsoleInProduction();
 
-if (process.env.NODE_ENV === "production") {
-  window.addEventListener("error", (e) => e.preventDefault());
-  window.addEventListener("unhandledrejection", (e) => e.preventDefault());
-}
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const store = configureStore();
