@@ -3,8 +3,7 @@
     {
       "source": "/api/:path*",
       "destination": "https://api-qtpm-dvn.fly.dev/:path*"
-    },
-    { "source": "/ws/:path*", "destination": "wss://api-qtpm-dvn.fly.dev/:path*" }
+    }
   ],
   "headers": [
     {
