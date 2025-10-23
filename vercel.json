@@ -6,7 +6,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/src/App.js"
+      "destination": "/index.html"
     }
   ],
   "headers": [
