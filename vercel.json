@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://api-qtpm-dvn.fly.dev/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
