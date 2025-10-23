@@ -8,12 +8,17 @@ import { setStore } from './stores/redux/actions/userActions';
 import { configureStore } from './stores/redux/store';
 import { disableConsoleInProduction } from './utils/disableConsole';
 
+disableConsoleInProduction();
+
+if (process.env.NODE_ENV === "production") {
+  window.addEventListener("error", (e) => e.preventDefault());
+  window.addEventListener("unhandledrejection", (e) => e.preventDefault());
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const store = configureStore();
 setStore(store);
-
-disableConsoleInProduction();
 
 root.render(
   <React.StrictMode>
