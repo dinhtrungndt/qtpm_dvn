@@ -46,9 +46,18 @@ const SignupPage = () => {
       showMessage('Đăng ký thành công! Vui lòng đăng nhập.', 'success');
       setTimeout(() => navigate('/login'), 1500);
     } catch (error) {
-      const backendMsg = error?.response?.data?.detail || 'Đăng ký thất bại, vui lòng thử lại.';
+      const detail = error?.response?.data?.detail;
+
+      let backendMsg = 'Đăng ký thất bại, vui lòng thử lại.';
+
+      if (Array.isArray(detail)) {
+        backendMsg = detail.map((err) => err.msg).join(', ');
+      } else if (typeof detail === 'string') {
+        backendMsg = detail;
+      }
       showMessage(backendMsg, 'error');
-    } finally {
+    }
+    finally {
       setIsLoading(false);
     }
   };

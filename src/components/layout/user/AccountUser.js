@@ -1,10 +1,12 @@
 import { Calendar, Camera, Edit2, Mail, Save, Shield, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../../constants/notifications/notifi';
 import useNotification from '../../../hooks/useNotification';
+import { updateProfile } from '../../../stores/redux/actions/userActions';
 
 const AccountUser = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
   const [isEditing, setIsEditing] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -36,12 +38,26 @@ const AccountUser = () => {
   };
 
   const handleSave = async () => {
-    setIsSaving(true);
-    setTimeout(() => {
+    try {
+      setIsSaving(true);
+
+      const payload = {
+        username: formData.username,
+        email: formData.email,
+        full_name: formData.full_name,
+        ...(formData.file && { file: formData.file }),
+      };
+
+      await dispatch(updateProfile(payload));
+
       setIsSaving(false);
       setIsEditing(false);
       showMessage('Cập nhật thành công!', 'success');
-    }, 1500);
+    } catch (error) {
+      setIsSaving(false);
+      showMessage('Lỗi khi cập nhật thông tin!', 'error');
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
@@ -87,9 +103,8 @@ const AccountUser = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Profile Card */}
           <div
-            className={`lg:col-span-1 transition-all duration-700 ${
-              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`lg:col-span-1 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
           >
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               {/* Cover */}
@@ -115,9 +130,30 @@ const AccountUser = () => {
                       )}
                     </div>
                     {isEditing && (
-                      <button className="absolute bottom-2 right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-all group-hover:scale-110">
-                        <Camera className="w-4 h-4" />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => document.getElementById('avatarInput').click()}
+                          className="absolute bottom-2 right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-all group-hover:scale-110"
+                        >
+                          <Camera className="w-4 h-4" />
+                        </button>
+                        <input
+                          id="avatarInput"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={e => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              setFormData(prev => ({
+                                ...prev,
+                                file,
+                                avatar: URL.createObjectURL(file),
+                              }));
+                            }
+                          }}
+                        />
+                      </>
                     )}
                   </div>
 
@@ -161,9 +197,8 @@ const AccountUser = () => {
 
             {/* Stats */}
             <div
-              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 transition-all duration-700 ${
-                animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
               style={{ transitionDelay: '200ms' }}
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Thống kê</h3>
@@ -171,11 +206,9 @@ const AccountUser = () => {
                 {stats.map((stat, index) => (
                   <div
                     key={stat.id}
-                    className={`text-center p-4 rounded-lg ${
-                      stat.color
-                    } bg-opacity-10 border border-gray-200 hover:shadow-md transition-all duration-300 ${
-                      animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-                    }`}
+                    className={`text-center p-4 rounded-lg ${stat.color
+                      } bg-opacity-10 border border-gray-200 hover:shadow-md transition-all duration-300 ${animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                      }`}
                     style={{ transitionDelay: `${300 + index * 100}ms` }}
                   >
                     <div className="text-2xl mb-2">{stat.icon}</div>
@@ -189,9 +222,8 @@ const AccountUser = () => {
 
           {/* Right Column - Edit Form */}
           <div
-            className={`lg:col-span-2 transition-all duration-700 ${
-              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`lg:col-span-2 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
             style={{ transitionDelay: '100ms' }}
           >
             <div className="bg-white rounded-xl border border-gray-200 p-6">

@@ -5,7 +5,10 @@ const getAuthConfig = () => {
   const encryptedToken = localStorage.getItem('access_token');
   const token = encryptedToken ? decryptToken(encryptedToken) : null;
   return {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    },
   };
 };
 
@@ -16,7 +19,7 @@ const productService = {
   },
 
   getListAll: async () => {
-    const res = await api.get('/products/all', getAuthConfig());
+    const res = await api.get('/products/all');
     return res.data;
   },
 
@@ -30,13 +33,31 @@ const productService = {
     return res.data;
   },
 
+  // ✅ Sửa lại: gửi FormData để upload file và các field khác
   create: async (productData) => {
-    const res = await api.post('/products/', productData, getAuthConfig());
+    const formData = new FormData();
+    for (const key in productData) {
+      if (key === 'file' && productData.file) {
+        formData.append('file', productData.file);
+      } else if (productData[key] !== undefined) {
+        formData.append(key, productData[key]);
+      }
+    }
+    const res = await api.post('/products/', formData, getAuthConfig());
     return res.data;
   },
 
+  // ✅ Sửa lại tương tự cho update
   update: async (id, productData) => {
-    const res = await api.put(`/products/${id}`, productData, getAuthConfig());
+    const formData = new FormData();
+    for (const key in productData) {
+      if (key === 'file' && productData.file) {
+        formData.append('file', productData.file);
+      } else if (productData[key] !== undefined) {
+        formData.append(key, productData[key]);
+      }
+    }
+    const res = await api.put(`/products/${id}`, formData, getAuthConfig());
     return res.data;
   },
 
