@@ -67,6 +67,21 @@ const userService = {
     const res = await api.delete(`/users/${userId}`, { headers: getAuthHeader() });
     return res.data;
   },
+
+  getFavoriteProducts: async () => {
+    const res = await api.get('users/me/favorites', { headers: getAuthHeader() });
+    return res.data;
+  },
+
+  addToFavorites: async (productId) => {
+    const res = await api.post(`users/me/favorites/${productId}`, {}, { headers: getAuthHeader() });
+    return res.data;
+  },
+
+  removeFromFavorites: async (productId) => {
+    const res = await api.delete(`users/me/favorites/${productId}`, { headers: getAuthHeader() });
+    return res.data;
+  },
 };
 
 export default userService;

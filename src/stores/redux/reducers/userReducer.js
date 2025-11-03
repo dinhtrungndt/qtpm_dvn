@@ -11,6 +11,7 @@ const initialState = {
   isLoading: false,
   error: null,
   listUsers: [],
+  favoriteProducts: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -122,6 +123,37 @@ const userReducer = (state = initialState, action) => {
         error: null,
         message: 'Tài khoản đã bị xóa',
       };
+    case types.GET_FAVORITE_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        favoriteProducts: action.payload,
+        isLoading: false,
+        error: null,
+      };
+    case types.ADD_TO_FAVORITES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        message: 'Thêm sản phẩm vào yêu thích thành công',
+        favoriteProducts: action.payload
+      };
+    case types.REMOVE_FROM_FAVORITES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        message: 'Xóa sản phẩm khỏi yêu thích thành công',
+        favoriteProducts: action.payload
+      };
+
+    case types.GET_FAVORITE_PRODUCTS_FAILURE:
+    case types.ADD_TO_FAVORITES_FAILURE:
+    case types.REMOVE_FROM_FAVORITES_FAILURE:
+      return { ...state, isLoading: false, error: action.payload };
+
+    case types.GET_FAVORITE_PRODUCTS_REQUEST:
+    case types.ADD_TO_FAVORITES_REQUEST:
+    case types.REMOVE_FROM_FAVORITES_REQUEST:
+      return { ...state, isLoading: true, error: null, message: null };
     case types.LOGOUT:
       return {
         ...state,

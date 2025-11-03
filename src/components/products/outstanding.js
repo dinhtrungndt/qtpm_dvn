@@ -11,29 +11,39 @@ import {
   updateCartItem
 } from '../../stores/redux/actions/cartActions';
 import { getAllProducts } from '../../stores/redux/actions/productActions';
+import {
+  addToFavorites,
+  getFavoriteProducts,
+  removeFromFavorites
+} from '../../stores/redux/actions/userActions';
 import Loading from '../../utils/loading';
 
 const Outstanding = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [likedItems, setLikedItems] = useState({});
   const [activeQuantity, setActiveQuantity] = useState({});
   const { products, loading } = useSelector(state => state.product);
   const { items: cartItems } = useSelector(state => state.cart);
   const { message, messageType, showMessage } = useNotification();
-  const { isAuthenticated } = useSelector(state => state.user);
+  const { isAuthenticated, favoriteProducts } = useSelector(state => state.user);
   const [loadingState, setLoadingState] = useState(false);
-
-  const toggleLike = id => {
-    setLikedItems(prev => ({ ...prev, [id]: !prev[id] }));
-  };
 
   useEffect(() => {
     setLoadingState(true);
     dispatch(getAllProducts()).finally(() => setLoadingState(false));
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(getFavoriteProducts());
+    }
+  }, [dispatch, isAuthenticated]);
 
-  const bestSeller = products.sort((a, b) => b.sold - a.sold).slice(0, 6);
+  const bestSeller = products
+    ?.slice()
+    ?.sort((a, b) => b.sold - a.sold)
+    ?.slice(0, 6) || [];
+
+  const isFavorite = productId =>
+    Array.isArray(favoriteProducts) &&
+    favoriteProducts.some(p => p.id === productId);
 
   if (loading) return <Loading />;
 
@@ -78,6 +88,31 @@ const Outstanding = () => {
     }
   };
 
+  const handleFavorite = productId => {
+    if (!isAuthenticated) {
+      showMessage('Vui lòng đăng nhập để yêu thích sản phẩm.', 'error');
+      return;
+    }
+
+    if (isFavorite(productId)) {
+      dispatch(removeFromFavorites(productId))
+        .then(() => {
+          showMessage('Đã xóa khỏi danh sách yêu thích.', 'success');
+        })
+        .catch(() => {
+          showMessage('Có lỗi xảy ra, vui lòng thử lại.', 'error');
+        });
+    } else {
+      dispatch(addToFavorites(productId))
+        .then(() => {
+          showMessage('Đã thêm vào danh sách yêu thích!', 'success');
+        })
+        .catch(() => {
+          showMessage('Có lỗi xảy ra, vui lòng thử lại.', 'error');
+        });
+    }
+  };
+
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <Notification message={message} messageType={messageType} />
@@ -85,14 +120,13 @@ const Outstanding = () => {
         <Loading />
       ) : (
         <div className="max-w-[1600px] mx-auto">
-          {/* Product Grid - 6 cột */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {bestSeller.map(product => (
               <div
                 key={product.id}
                 className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
               >
-                {/* Badge & Heart - Compact */}
+                {/* Badge & Heart */}
                 <div className="absolute top-2 left-2 right-2 flex justify-between items-start z-10">
                   {product.badge && (
                     <span
@@ -102,24 +136,26 @@ const Outstanding = () => {
                     </span>
                   )}
                   <button
-                    onClick={() => toggleLike(product.id)}
+                    onClick={() => handleFavorite(product.id)}
                     className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:scale-110 transition-transform"
                   >
                     <Heart
-                      className={`w-3.5 h-3.5 ${likedItems[product.id] ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                      className={`w-3.5 h-3.5 ${isFavorite(product.id)
+                        ? 'fill-red-500 text-red-500'
+                        : 'text-gray-600'
                         }`}
                     />
                   </button>
                 </div>
 
-                {/* Discount Badge - Compact */}
+                {/* Discount */}
                 {product.discount && (
                   <div className="absolute top-2 right-2 bg-red-500 text-white font-bold text-[10px] px-2 py-0.5 rounded-bl-xl rounded-tr-xl shadow-md z-10 mt-8">
                     -{product.discount}%
                   </div>
                 )}
 
-                {/* Image Container - Smaller */}
+                {/* Image */}
                 <div className="relative overflow-hidden bg-gray-100 h-40">
                   <img
                     src={product.image}
@@ -127,7 +163,6 @@ const Outstanding = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
 
-                  {/* Overlay on hover - Compact buttons */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-2 left-2 right-2 flex gap-1.5">
                       <Link
@@ -148,26 +183,22 @@ const Outstanding = () => {
                   </div>
                 </div>
 
-                {/* Content - Compact */}
+                {/* Content */}
                 <div className="p-3">
-                  {/* Category */}
                   <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-wide">
                     {product.category}
                   </span>
 
-                  {/* Product Name - 2 lines max */}
                   <h3 className="font-semibold text-sm text-gray-800 mt-1 mb-2 line-clamp-2 h-10 group-hover:text-blue-600 transition-colors leading-tight">
                     {product.name}
                   </h3>
 
-                  {/* Framework - Thêm trường framework */}
                   {product.framework && product.framework !== 'N/A' && (
                     <span className="text-[10px] font-medium text-green-600 mb-1 inline-block">
                       Framework: {product.framework}
                     </span>
                   )}
 
-                  {/* Rating & Sold - Compact */}
                   <div className="flex items-center justify-between mb-2 text-xs">
                     <div className="flex items-center gap-0.5">
                       <div className="flex">
@@ -181,14 +212,17 @@ const Outstanding = () => {
                           />
                         ))}
                       </div>
-                      <span className="text-gray-600 ml-0.5 text-[10px]">{product.rating}</span>
+                      <span className="text-gray-600 ml-0.5 text-[10px]">
+                        {product.rating}
+                      </span>
                     </div>
                     <span className="text-gray-500 text-[10px]">
-                      {product.sold > 1000 ? `${(product.sold / 1000).toFixed(1)}k` : product.sold}
+                      {product.sold > 1000
+                        ? `${(product.sold / 1000).toFixed(1)}k`
+                        : product.sold}
                     </span>
                   </div>
 
-                  {/* Features - Show only 2 */}
                   <div className="flex flex-wrap gap-1 mb-2">
                     {product.features.slice(0, 2).map((feature, idx) => (
                       <span
@@ -206,7 +240,6 @@ const Outstanding = () => {
                     )}
                   </div>
 
-                  {/* Price Section - Compact */}
                   <div className="border-t border-gray-100 pt-2">
                     <div className="flex items-end justify-between">
                       <div>
@@ -221,7 +254,6 @@ const Outstanding = () => {
                             : `${(product.price / 1000).toFixed(0)}K`}
                         </span>
                       </div>
-                      {/* Shopping Cart + Mini Counter */}
                       <div className="relative">
                         {!activeQuantity[product.id] ? (
                           <button
@@ -238,7 +270,9 @@ const Outstanding = () => {
                             >
                               <Minus className="w-3 h-3" />
                             </button>
-                            <span className="px-2 text-xs">{getQuantity(product.id)}</span>
+                            <span className="px-2 text-xs">
+                              {getQuantity(product.id)}
+                            </span>
                             <button
                               onClick={() => handleIncrease(product.id)}
                               className="p-1.5 hover:bg-blue-600 rounded-r-lg"
@@ -252,7 +286,6 @@ const Outstanding = () => {
                   </div>
                 </div>
 
-                {/* Bottom accent line */}
                 <div className="h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
               </div>
             ))}

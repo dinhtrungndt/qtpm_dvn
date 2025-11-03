@@ -11,17 +11,21 @@ import {
   updateCartItem
 } from '../../stores/redux/actions/cartActions';
 import { getAllProducts } from '../../stores/redux/actions/productActions';
+import {
+  addToFavorites,
+  getFavoriteProducts,
+  removeFromFavorites
+} from '../../stores/redux/actions/userActions';
 import Loading from '../../utils/loading';
 
 const RecentlyAdded = () => {
-  const [likedItems, setLikedItems] = useState({});
-  const [selectedFramework, setSelectedFramework] = useState(null);
-  const [activeQuantity, setActiveQuantity] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [selectedFramework, setSelectedFramework] = useState(null);
+  const [activeQuantity, setActiveQuantity] = useState({});
   const { products, loading } = useSelector(state => state.product);
   const { items: cartItems } = useSelector(state => state.cart);
-  const { isAuthenticated } = useSelector(state => state.user);
+  const { isAuthenticated, favoriteProducts } = useSelector(state => state.user);
   const { message, messageType, showMessage } = useNotification();
   const [loadingState, setLoadingState] = useState(false);
 
@@ -30,15 +34,13 @@ const RecentlyAdded = () => {
     dispatch(getAllProducts()).finally(() => setLoadingState(false));
     if (isAuthenticated) {
       dispatch(fetchCart());
+      dispatch(getFavoriteProducts());
     }
   }, [dispatch, isAuthenticated]);
 
-  const toggleLike = id => {
-    setLikedItems(prev => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  const isFavorite = productId =>
+    Array.isArray(favoriteProducts) &&
+    favoriteProducts.some(p => p.id === productId);
 
   const frameworks = [
     ...new Set(products.map(product => product.framework).filter(f => f !== 'N/A')),
@@ -52,6 +54,31 @@ const RecentlyAdded = () => {
     : products.sort((a, b) => b.sold - a.sold).slice(0, 6);
 
   if (loading) return <Loading />;
+
+  const handleFavorite = productId => {
+    if (!isAuthenticated) {
+      showMessage('Vui lòng đăng nhập để yêu thích sản phẩm.', 'error');
+      return;
+    }
+
+    if (isFavorite(productId)) {
+      dispatch(removeFromFavorites(productId))
+        .then(() => {
+          showMessage('Đã xóa khỏi danh sách yêu thích.', 'success');
+        })
+        .catch(() => {
+          showMessage('Có lỗi xảy ra, vui lòng thử lại.', 'error');
+        });
+    } else {
+      dispatch(addToFavorites(productId))
+        .then(() => {
+          showMessage('Đã thêm vào danh sách yêu thích!', 'success');
+        })
+        .catch(() => {
+          showMessage('Có lỗi xảy ra, vui lòng thử lại.', 'error');
+        });
+    }
+  };
 
   const handleBuyNow = productId => {
     dispatch(addToCart(productId, 1));
@@ -101,7 +128,7 @@ const RecentlyAdded = () => {
         <Loading />
       ) : (
         <div className="max-w-[1600px] mx-auto">
-          {/* Framework Filter Buttons */}
+          {/* Filter Framework */}
           <div className="flex flex-wrap gap-2 mb-4">
             <button
               onClick={() => setSelectedFramework(null)}
@@ -126,14 +153,14 @@ const RecentlyAdded = () => {
             ))}
           </div>
 
-          {/* Product Grid */}
+          {/* Grid sản phẩm */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filteredProducts.map(product => (
               <div
                 key={product.id}
                 className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
               >
-                {/* Badge + Heart */}
+                {/* Badge + Tim yêu thích */}
                 <div className="absolute top-2 left-2 right-2 flex justify-between items-start z-10">
                   {product.badge && (
                     <span
@@ -143,32 +170,32 @@ const RecentlyAdded = () => {
                     </span>
                   )}
                   <button
-                    onClick={() => toggleLike(product.id)}
+                    onClick={() => handleFavorite(product.id)}
                     className="bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:scale-110 transition-transform"
                   >
                     <Heart
-                      className={`w-3.5 h-3.5 ${likedItems[product.id] ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                      className={`w-3.5 h-3.5 ${isFavorite(product.id)
+                        ? 'fill-red-500 text-red-500'
+                        : 'text-gray-600'
                         }`}
                     />
                   </button>
                 </div>
 
-                {/* Discount Badge */}
+                {/* Discount */}
                 {product.discount && (
                   <div className="absolute top-2 right-2 bg-red-500 text-white font-bold text-[10px] px-2 py-0.5 rounded-bl-xl rounded-tr-xl shadow-md z-10 mt-8">
                     -{product.discount}%
                   </div>
                 )}
 
-                {/* Image Section */}
+                {/* Hình ảnh */}
                 <div className="relative overflow-hidden bg-gray-100 h-40">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-
-                  {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-2 left-2 right-2 flex gap-1.5">
                       <Link
@@ -189,7 +216,7 @@ const RecentlyAdded = () => {
                   </div>
                 </div>
 
-                {/* Content Section */}
+                {/* Nội dung sản phẩm */}
                 <div className="p-3">
                   <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-wide">
                     {product.category}
@@ -242,7 +269,7 @@ const RecentlyAdded = () => {
                     )}
                   </div>
 
-                  {/* Price + Cart Logic (Giống Outstanding) */}
+                  {/* Giá và Giỏ hàng */}
                   <div className="border-t border-gray-100 pt-2">
                     <div className="flex items-end justify-between">
                       <div>
@@ -288,7 +315,7 @@ const RecentlyAdded = () => {
                   </div>
                 </div>
 
-                {/* Bottom Line */}
+                {/* Viền dưới hiệu ứng */}
                 <div className="h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
               </div>
             ))}

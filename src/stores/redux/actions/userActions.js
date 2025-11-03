@@ -31,8 +31,8 @@ export const login = credentials => async dispatch => {
     dispatch({ type: types.LOGIN_FAILURE, payload: error });
     globalShowMessage?.(
       MESSAGES.LOGIN_FAILURE +
-        ': ' +
-        (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
+      ': ' +
+      (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
       'error'
     );
     throw error;
@@ -149,6 +149,45 @@ export const deleteUser = userId => async dispatch => {
   }
 };
 
+export const getFavoriteProducts = () => async dispatch => {
+  dispatch({ type: types.GET_FAVORITE_PRODUCTS_REQUEST });
+  try {
+    const favoriteProducts = await userService.getFavoriteProducts();
+    dispatch({ type: types.GET_FAVORITE_PRODUCTS_SUCCESS, payload: favoriteProducts });
+  } catch (error) {
+    console.error('Get favorite products error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.GET_FAVORITE_PRODUCTS_FAILURE, payload: error });
+  }
+};
+
+export const addToFavorites = productId => async dispatch => {
+  dispatch({ type: types.ADD_TO_FAVORITES_REQUEST });
+  try {
+    const updatedUser = await userService.addToFavorites(productId);
+    dispatch({
+      type: types.ADD_TO_FAVORITES_SUCCESS,
+      payload: updatedUser.favorite_products
+    });
+  } catch (error) {
+    console.error('Add to favorites error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.ADD_TO_FAVORITES_FAILURE, payload: error });
+  }
+};
+
+export const removeFromFavorites = productId => async dispatch => {
+  dispatch({ type: types.REMOVE_FROM_FAVORITES_REQUEST });
+  try {
+    const updatedUser = await userService.removeFromFavorites(productId);
+    dispatch({
+      type: types.REMOVE_FROM_FAVORITES_SUCCESS,
+      payload: updatedUser.favorite_products
+    });
+  } catch (error) {
+    console.error('Remove from favorites error:', error.response ? error.response.data : error.message);
+    dispatch({ type: types.REMOVE_FROM_FAVORITES_FAILURE, payload: error });
+  }
+};
+
 export const updateProfile = userData => async dispatch => {
   dispatch({ type: types.UPDATE_PROFILE_REQUEST });
   try {
@@ -211,13 +250,13 @@ const connectWebSocket = userId => {
   ws = new WebSocket(`${wsProtocol}://${port}/auth/ws/${userId}`);
   window.ws = ws;
   ws.onopen = () =>
-    // console.log('WebSocket đã kết nối');
-    (ws.onmessage = event => {
-      if (event.data === 'logout') {
-        globalShowMessage?.(MESSAGES.OTHER_LOGIN, 'error');
-        if (store) store.dispatch(logout());
-      }
-    });
+  // console.log('WebSocket đã kết nối');
+  (ws.onmessage = event => {
+    if (event.data === 'logout') {
+      globalShowMessage?.(MESSAGES.OTHER_LOGIN, 'error');
+      if (store) store.dispatch(logout());
+    }
+  });
   ws.onclose = () =>
     // console.log('WebSocket đã ngắt kết nối');
     (ws.onerror = error => console.error('Lỗi WebSocket:', error));
