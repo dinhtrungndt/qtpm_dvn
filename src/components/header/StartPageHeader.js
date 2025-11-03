@@ -1,5 +1,5 @@
 import { Check, ChevronDown, Logs, Search, ShoppingBasket, SquareUser, X } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoHeader } from '../../constants/images';
@@ -9,6 +9,9 @@ import { fetchSuggestions } from '../../stores/redux/actions/searchActions';
 import { logout } from '../../stores/redux/actions/userActions';
 import OpenUser from '../layout/OpenUser';
 import SearchModal from '../search/SearchModal';
+
+const categorySearchs = ['Tất cả', 'Phần mềm', 'Website', 'Phần cứng', 'Phụ kiện'];
+const menus = ['Phần mềm', 'Phần cứng', 'Website', 'Liên hệ'];
 
 const HeaderPageStart = () => {
   const dispatch = useDispatch();
@@ -28,8 +31,13 @@ const HeaderPageStart = () => {
   const userMenuRefMobile = useRef(null);
   const categoryRef = useRef(null);
 
-  const categorySearchs = ['Tất cả', 'Phần mềm', 'Website', 'Phần cứng', 'Phụ kiện'];
-  const menus = ['Phần mềm', 'Phần cứng', 'Website', 'Liên hệ'];
+  const totalPrice = useMemo(() => {
+    if (!Array.isArray(cart) || cart.length === 0) return 0;
+    return cart.reduce(
+      (total, item) => total + (item.product?.price || 0) * item.quantity,
+      0
+    );
+  }, [cart]);
 
   useClickOutside(cartRef, () => setIsOpenCart(false), isOpenCart);
   useClickOutside(categoryRef, () => setIsOpenCategoryDropdown(false), isOpenCategoryDropdown);
@@ -81,7 +89,7 @@ const HeaderPageStart = () => {
           <input
             type="text"
             placeholder={`Tìm kiếm ${categorySearch}...`}
-            className="w-48 lg:w-72 focus:outline-none focus:ring-0 bg-white text-sm"
+            className="w-48 lg:w-60 focus:outline-none focus:ring-0 bg-white text-sm"
             onClick={() => {
               setIsOpenSearch(true);
               dispatch(fetchSuggestions());
@@ -189,13 +197,13 @@ const HeaderPageStart = () => {
 
         {/* Right - Desktop Navigation */}
         <div className="hidden lg:flex items-center text-sm text-gray-700 gap-4">
-          <Link to="#" className="font-semibold hover:text-blue-600 transition-colors">
+          <Link to="https://dvntechnology.com/phan-mem" target="_blank" className="font-semibold hover:text-blue-600 transition-colors">
             Phần mềm
           </Link>
-          <Link to="#" className="font-semibold hover:text-blue-600 transition-colors">
+          <Link to="https://dvntechnology.com/san-pham" target="_blank" className="font-semibold hover:text-blue-600 transition-colors">
             Phần cứng
           </Link>
-          <Link to="#" className="font-semibold hover:text-blue-600 transition-colors">
+          <Link to="https://dvntechnology.com" target="_blank" className="font-semibold hover:text-blue-600 transition-colors">
             Website
           </Link>
 
@@ -305,13 +313,7 @@ const HeaderPageStart = () => {
                   <div className="flex justify-between text-sm font-bold">
                     <span className="text-gray-700">Tổng cộng:</span>
                     <span className="text-blue-600">
-                      {cart
-                        .reduce(
-                          (total, item) => total + (item.product?.price || 0) * item.quantity,
-                          0
-                        )
-                        .toLocaleString()}
-                      ₫
+                      {totalPrice.toLocaleString()}₫
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -381,6 +383,89 @@ const HeaderPageStart = () => {
               <ShoppingBasket className="w-5 h-5" />
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Cart Drawer - Mobile */}
+      <div className="lg:hidden">
+        {/* Overlay */}
+        <div
+          className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 z-40 ${isOpenCart ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          onClick={() => setIsOpenCart(false)}
+        />
+
+        {/* Bottom Sheet */}
+        <div
+          className={`fixed bottom-0 left-0 right-0 max-h-[80vh] bg-white rounded-t-2xl shadow-2xl z-50 transform transition-transform duration-300 ease-out ${isOpenCart ? 'translate-y-0' : 'translate-y-full'}`}
+        >
+          <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+            <h3 className="font-bold text-gray-900">Giỏ hàng của bạn</h3>
+            <button
+              onClick={() => setIsOpenCart(false)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+
+          <div className="max-h-[55vh] overflow-y-auto p-4">
+            {cart.length > 0 ? (
+              <div className="space-y-3">
+                {cart.map(item => (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    <img
+                      src={item.product?.image || 'https://via.placeholder.com/80'}
+                      alt={item.product?.name}
+                      className="w-14 h-14 object-cover rounded-lg flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 truncate">
+                        {item.product?.name || 'Không rõ sản phẩm'}
+                      </p>
+                      <p className="text-xs text-gray-500">Số lượng: {item.quantity}</p>
+                    </div>
+                    <p className="text-sm font-bold text-blue-600 flex-shrink-0">
+                      {((item.product?.price || 0) * item.quantity).toLocaleString()}₫
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-gray-500 text-sm py-8">Giỏ hàng trống</p>
+            )}
+          </div>
+
+          {cart.length > 0 && (
+            <div className="p-4 border-t border-gray-200 space-y-3">
+              <div className="flex justify-between text-sm font-bold">
+                <span className="text-gray-700">Tổng cộng:</span>
+                <span className="text-blue-600">{totalPrice.toLocaleString()}₫</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => {
+                    navigate('/cart');
+                    setIsOpenCart(false);
+                  }}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-lg py-2.5 text-sm font-semibold transition-colors"
+                >
+                  Xem giỏ hàng
+                </button>
+                <button
+                  onClick={() => {
+                    navigate('/checkout');
+                    setIsOpenCart(false);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2.5 text-sm font-semibold transition-colors"
+                >
+                  Thanh toán
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
