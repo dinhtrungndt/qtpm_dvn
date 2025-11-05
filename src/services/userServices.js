@@ -52,7 +52,7 @@ const userService = {
     const formData = new FormData();
     for (const key in userData) {
       if (key === 'file' && userData.file) {
-        formData.append('file', userData.file);
+        formData.append('file', userData.file, userData.file.name);
       } else if (userData[key] !== undefined) {
         formData.append(key, userData[key]);
       }

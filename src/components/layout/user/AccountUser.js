@@ -1,6 +1,6 @@
 import { Calendar, Camera, Edit2, Mail, Save, Shield, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Notification from '../../../constants/notifications/notifi';
 import useNotification from '../../../hooks/useNotification';
 import { updateProfile } from '../../../stores/redux/actions/userActions';
