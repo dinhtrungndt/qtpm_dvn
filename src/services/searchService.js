@@ -42,40 +42,40 @@ const searchService = {
       // console.error('Search error:', error);
       if (error.response?.status === 404) {
         // console.error(
-        'Search endpoint not found. Please ensure the backend server is configured correctly.'
-        );
-throw new Error('Search endpoint not found. Please check backend configuration.');
+        //   'Search endpoint not found. Please ensure the backend server is configured correctly.'
+        // );
+        // throw new Error('Search endpoint not found. Please check backend configuration.');
       }
-return {
-  users: null,
-  products: [],
-  orders: [],
-  carts: [],
-  payments: [],
-};
+      return {
+        users: null,
+        products: [],
+        orders: [],
+        carts: [],
+        payments: [],
+      };
     }
   },
-getSuggestions: async () => {
-  try {
-    const response = await api.get('/search/suggestions');
-    return {
-      users: null,
-      products: response.data.products || [],
-      orders: [],
-      carts: [],
-      payments: [],
-    };
-  } catch (error) {
-    // console.error('Suggestions error:', error);
-    return {
-      users: null,
-      products: [],
-      orders: [],
-      carts: [],
-      payments: [],
-    };
-  }
-},
+  getSuggestions: async () => {
+    try {
+      const response = await api.get('/search/suggestions');
+      return {
+        users: null,
+        products: response.data.products || [],
+        orders: [],
+        carts: [],
+        payments: [],
+      };
+    } catch (error) {
+      // console.error('Suggestions error:', error);
+      return {
+        users: null,
+        products: [],
+        orders: [],
+        carts: [],
+        payments: [],
+      };
+    }
+  },
 };
 
 export default searchService;

@@ -75,14 +75,14 @@ export const getCurrentUser = () => async dispatch => {
       globalShowMessage?.(MESSAGES.SESSION_EXPIRED, 'error');
     } else {
       // console.error(
-      'Get current user error:',
-        error.response ? error.response.data : error.message
+      //   'Get current user error:',
+      //   error.response ? error.response.data : error.message
+      // );
+      dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
+      globalShowMessage?.(
+        'Lỗi xác thực: ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
+        'error'
       );
-dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
-globalShowMessage?.(
-  'Lỗi xác thực: ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
-  'error'
-);
     }
   }
 };
@@ -258,9 +258,9 @@ const connectWebSocket = userId => {
       if (store) store.dispatch(logout());
     }
   });
-  ws.onclose = () =>
-    // console.log('WebSocket đã ngắt kết nối');
-    (ws.onerror = error =>; // console.error('Lỗi WebSocket:', error));
+  // ws.onclose = () =>
+  // console.log('WebSocket đã ngắt kết nối');
+  // (ws.onerror = error => console.error('Lỗi WebSocket:', error));
 };
 
 export const getStore = () => store;
