@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   clearSearch,
   fetchSuggestions,
-  performSearch,
+  performSearch
 } from '../../stores/redux/actions/searchActions';
 
 const SearchModal = ({ isOpen, onClose }) => {
@@ -284,9 +284,12 @@ const SearchModal = ({ isOpen, onClose }) => {
                           className="flex items-center gap-3 p-3 hover:bg-purple-50 rounded-xl cursor-pointer transition-all group border border-transparent hover:border-purple-200"
                         >
                           <img
-                            src={user.avatar || 'https://via.placeholder.com/40'}
+                            src={user.avatar || 'https://dvntechnology.com/icons/Logo.png'}
                             alt={user.username}
                             className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
                           />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">

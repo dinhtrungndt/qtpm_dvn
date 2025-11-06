@@ -215,9 +215,12 @@ const SeeMore = () => {
 
                   <div className={`overflow-hidden ${viewMode === 'list' ? 'h-48 sm:h-full' : 'aspect-[4/3]'}`}>
                     <img
-                      src={product.image || 'https://via.placeholder.com/400x300?text=No+Image'}
+                      src={product.image || 'https://dvntechnology.com/icons/Logo.png0x300?text=No+Image'}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
                     />
                   </div>
                 </div>

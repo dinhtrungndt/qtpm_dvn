@@ -15,7 +15,7 @@ export const decryptToken = (encryptedToken) => {
     const bytes = CryptoJS.AES.decrypt(encryptedToken, SECRET_KEY);
     return bytes.toString(CryptoJS.enc.Utf8);
   } catch (error) {
-    console.error('Lỗi giải mã token:', error);
+    // console.error('Lỗi giải mã token:', error);
     return null;
   }
 };

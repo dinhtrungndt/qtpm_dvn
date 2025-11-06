@@ -18,7 +18,7 @@ export const addToCart = (productId, quantity) => async (dispatch) => {
     dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: data });
     dispatch(fetchCart());
   } catch (error) {
-    console.error("Add to cart error:", error.response?.data || error.message);
+    // console.error("Add to cart error:", error.response?.data || error.message);
     dispatch({ type: types.ADD_TO_CART_FAILURE, payload: error.response?.data?.detail || error.message });
   }
 };

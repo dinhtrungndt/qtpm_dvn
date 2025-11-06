@@ -47,6 +47,16 @@ const userReducer = (state = initialState, action) => {
     case types.REGISTER_FAILURE:
     case types.UPDATE_PROFILE_FAILURE:
     case types.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        message: action.payload?.response?.data?.detail || 'Đổi mật khẩu thất bại',
+        messageType: 'error'
+      };
+
+    case 'CLEAR_MESSAGE':
+      return { ...state, message: null, messageType: null };
     case types.DELETE_ACCOUNT_FAILURE:
       return {
         ...state,
@@ -111,7 +121,8 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: null,
-        message: 'Đổi mật khẩu thành công',
+        message: 'Đổi mật khẩu thành công!',
+        messageType: 'success'
       };
     case types.DELETE_ACCOUNT_SUCCESS:
       return {
@@ -154,6 +165,8 @@ const userReducer = (state = initialState, action) => {
     case types.ADD_TO_FAVORITES_REQUEST:
     case types.REMOVE_FROM_FAVORITES_REQUEST:
       return { ...state, isLoading: true, error: null, message: null };
+    case 'CLEAR_MESSAGE':
+      return { ...state, message: null, messageType: null };
     case types.LOGOUT:
       return {
         ...state,

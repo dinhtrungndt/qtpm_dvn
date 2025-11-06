@@ -63,6 +63,17 @@ const userService = {
     return res.data;
   },
 
+  changePassword: async (passwordData) => {
+    const formData = new FormData();
+    formData.append("current_password", passwordData.current_password);
+    formData.append("new_password", passwordData.new_password);
+
+    return await api.post("/settings/change-password", formData, {
+      headers: getAuthHeader(),
+    });
+  },
+
+
   deleteUser: async (userId) => {
     const res = await api.delete(`/users/${userId}`, { headers: getAuthHeader() });
     return res.data;

@@ -27,7 +27,7 @@ export const login = credentials => async dispatch => {
     connectWebSocket(user.id);
     globalShowMessage?.(MESSAGES.LOGIN_SUCCESS, 'success');
   } catch (error) {
-    console.error('Login error:', error.response ? error.response.data : error.message);
+    // console.error('Login error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.LOGIN_FAILURE, payload: error });
     globalShowMessage?.(
       MESSAGES.LOGIN_FAILURE +
@@ -74,15 +74,15 @@ export const getCurrentUser = () => async dispatch => {
       dispatch(logout());
       globalShowMessage?.(MESSAGES.SESSION_EXPIRED, 'error');
     } else {
-      console.error(
-        'Get current user error:',
+      // console.error(
+      'Get current user error:',
         error.response ? error.response.data : error.message
       );
-      dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
-      globalShowMessage?.(
-        'Lỗi xác thực: ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
-        'error'
-      );
+dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
+globalShowMessage?.(
+  'Lỗi xác thực: ' + (error.response?.data?.detail || error.message || 'Lỗi không xác định'),
+  'error'
+);
     }
   }
 };
@@ -93,7 +93,7 @@ export const getListUsers = () => async dispatch => {
     const users = await userService.getListUsers();
     dispatch({ type: types.GET_LIST_USERS_SUCCESS, payload: users });
   } catch (error) {
-    console.error('Get list users error:', error.response ? error.response.data : error.message);
+    // console.error('Get list users error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.GET_LIST_USERS_FAILURE, payload: error });
   }
 };
@@ -106,7 +106,7 @@ export const createUser = userData => async dispatch => {
     globalShowMessage?.('Tạo người dùng thành công!', 'success');
     dispatch(getListUsers()); // refresh list
   } catch (error) {
-    console.error('Create user error:', error.response ? error.response.data : error.message);
+    // console.error('Create user error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.CREATE_USER_FAILURE, payload: error });
     globalShowMessage?.(
       'Tạo người dùng thất bại: ' + (error.response?.data?.detail || error.message),
@@ -123,7 +123,7 @@ export const updateUser = (userId, userData) => async dispatch => {
     globalShowMessage?.('Cập nhật người dùng thành công!', 'success');
     dispatch(getListUsers());
   } catch (error) {
-    console.error('Update user error:', error.response ? error.response.data : error.message);
+    // console.error('Update user error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.UPDATE_USER_FAILURE, payload: error });
     globalShowMessage?.(
       'Cập nhật thất bại: ' + (error.response?.data?.detail || error.message),
@@ -140,7 +140,7 @@ export const deleteUser = userId => async dispatch => {
     globalShowMessage?.('Xoá người dùng thành công!', 'success');
     dispatch(getListUsers());
   } catch (error) {
-    console.error('Delete user error:', error.response ? error.response.data : error.message);
+    // console.error('Delete user error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.DELETE_USER_FAILURE, payload: error });
     globalShowMessage?.(
       'Xoá người dùng thất bại: ' + (error.response?.data?.detail || error.message),
@@ -155,7 +155,7 @@ export const getFavoriteProducts = () => async dispatch => {
     const favoriteProducts = await userService.getFavoriteProducts();
     dispatch({ type: types.GET_FAVORITE_PRODUCTS_SUCCESS, payload: favoriteProducts });
   } catch (error) {
-    console.error('Get favorite products error:', error.response ? error.response.data : error.message);
+    // console.error('Get favorite products error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.GET_FAVORITE_PRODUCTS_FAILURE, payload: error });
   }
 };
@@ -169,7 +169,7 @@ export const addToFavorites = productId => async dispatch => {
       payload: updatedUser.favorite_products
     });
   } catch (error) {
-    console.error('Add to favorites error:', error.response ? error.response.data : error.message);
+    // console.error('Add to favorites error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.ADD_TO_FAVORITES_FAILURE, payload: error });
   }
 };
@@ -183,7 +183,7 @@ export const removeFromFavorites = productId => async dispatch => {
       payload: updatedUser.favorite_products
     });
   } catch (error) {
-    console.error('Remove from favorites error:', error.response ? error.response.data : error.message);
+    // console.error('Remove from favorites error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.REMOVE_FROM_FAVORITES_FAILURE, payload: error });
   }
 };
@@ -196,7 +196,7 @@ export const updateProfile = userData => async dispatch => {
     globalShowMessage?.('Cập nhật thông tin thành công!', 'success');
     dispatch(getCurrentUser()); // Refresh current user data
   } catch (error) {
-    console.error('Update profile error:', error.response ? error.response.data : error.message);
+    // console.error('Update profile error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.UPDATE_PROFILE_FAILURE, payload: error });
     globalShowMessage?.(
       'Cập nhật thất bại: ' + (error.response?.data?.detail || error.message),
@@ -205,7 +205,7 @@ export const updateProfile = userData => async dispatch => {
   }
 };
 
-export const changePassword = passwordData => async dispatch => {
+export const changePassword = (passwordData) => async (dispatch) => {
   dispatch({ type: types.CHANGE_PASSWORD_REQUEST });
   try {
     await userService.changePassword({
@@ -213,14 +213,14 @@ export const changePassword = passwordData => async dispatch => {
       new_password: passwordData.newPassword,
     });
     dispatch({ type: types.CHANGE_PASSWORD_SUCCESS });
-    globalShowMessage?.('Đổi mật khẩu thành công!', 'success');
+    return true;
   } catch (error) {
-    console.error('Change password error:', error.response ? error.response.data : error.message);
-    dispatch({ type: types.CHANGE_PASSWORD_FAILURE, payload: error });
-    globalShowMessage?.(
-      'Đổi mật khẩu thất bại: ' + (error.response?.data?.detail || error.message),
-      'error'
-    );
+    const msg = error.response?.data?.detail || 'Mật khẩu hiện tại không đúng';
+    dispatch({
+      type: types.CHANGE_PASSWORD_FAILURE,
+      payload: { response: { data: { detail: msg } } }
+    });
+    throw error;
   }
 };
 
@@ -229,10 +229,10 @@ export const deleteAccount = userId => async dispatch => {
   try {
     await userService.deleteAccount(userId);
     dispatch({ type: types.DELETE_ACCOUNT_SUCCESS });
-    dispatch(logout()); // Log out after deletion
+    dispatch(logout());
     globalShowMessage?.('Tài khoản đã bị xóa', 'success');
   } catch (error) {
-    console.error('Delete account error:', error.response ? error.response.data : error.message);
+    // console.error('Delete account error:', error.response ? error.response.data : error.message);
     dispatch({ type: types.DELETE_ACCOUNT_FAILURE, payload: error });
     globalShowMessage?.(
       'Xóa tài khoản thất bại: ' + (error.response?.data?.detail || error.message),
@@ -243,7 +243,8 @@ export const deleteAccount = userId => async dispatch => {
 
 let ws = null;
 const connectWebSocket = userId => {
-  if (ws) ws.close();
+  // if (ws) ws.close();
+  if (ws) return;
   const port = process.env.REACT_APP_API_WEB_SOCKET;
   const isHttps = window.location.protocol === 'https:';
   const wsProtocol = isHttps ? 'wss' : 'ws';
@@ -259,7 +260,7 @@ const connectWebSocket = userId => {
   });
   ws.onclose = () =>
     // console.log('WebSocket đã ngắt kết nối');
-    (ws.onerror = error => console.error('Lỗi WebSocket:', error));
+    (ws.onerror = error =>; // console.error('Lỗi WebSocket:', error));
 };
 
 export const getStore = () => store;

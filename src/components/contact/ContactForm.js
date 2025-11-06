@@ -36,7 +36,7 @@ export default function ContactForm() {
       setEmail('');
       setAgreed(false);
     } catch (error) {
-      console.error('LỖI KHI GỬI EMAIL:', error);
+      // console.error('LỖI KHI GỬI EMAIL:', error);
       alert('Đã xảy ra lỗi, vui lòng thử lại.');
     } finally {
       setIsSubmitting(false);

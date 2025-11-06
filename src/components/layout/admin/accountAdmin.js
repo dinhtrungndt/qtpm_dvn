@@ -13,7 +13,7 @@ import {
   UserCheck,
   Users,
   UserX,
-  X,
+  X
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,7 +81,7 @@ const AccountAdmin = () => {
       }, 1500);
     } catch (error) {
       setIsSaving(false);
-      console.error('Update failed:', error);
+      // console.error('Update failed:', error);
     }
   };
 
@@ -97,7 +97,7 @@ const AccountAdmin = () => {
       setPasswordData({ current_password: '', new_password: '', confirm_password: '' });
       showMessage('Đổi mật khẩu thành công!', 'success');
     } catch (error) {
-      console.error('Password change failed:', error);
+      // console.error('Password change failed:', error);
     }
   };
 
@@ -173,9 +173,8 @@ const AccountAdmin = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Profile Card */}
           <div
-            className={`lg:col-span-1 transition-all duration-700 ${
-              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`lg:col-span-1 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
           >
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
               {/* Cover with Admin Badge */}
@@ -268,9 +267,8 @@ const AccountAdmin = () => {
 
             {/* Stats */}
             <div
-              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 shadow-sm transition-all duration-700 ${
-                animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+              className={`mt-6 bg-white rounded-xl border border-gray-200 p-6 shadow-sm transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
               style={{ transitionDelay: '200ms' }}
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Thống kê hệ thống</h3>
@@ -280,9 +278,8 @@ const AccountAdmin = () => {
                   return (
                     <div
                       key={stat.id}
-                      className={`p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all duration-300 ${
-                        animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-                      }`}
+                      className={`p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all duration-300 ${animate ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                        }`}
                       style={{ transitionDelay: `${300 + index * 100}ms` }}
                     >
                       <div
@@ -304,9 +301,8 @@ const AccountAdmin = () => {
 
           {/* Right Column */}
           <div
-            className={`lg:col-span-2 space-y-6 transition-all duration-700 ${
-              animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`lg:col-span-2 space-y-6 transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
             style={{ transitionDelay: '100ms' }}
           >
             {/* Edit Form */}
@@ -441,21 +437,19 @@ const AccountAdmin = () => {
                 {recentActivities.map((activity, index) => (
                   <div
                     key={activity.id}
-                    className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all ${
-                      animate ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                    }`}
+                    className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all ${animate ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                      }`}
                     style={{ transitionDelay: `${400 + index * 100}ms` }}
                   >
                     <div
-                      className={`p-2 rounded-lg ${
-                        activity.type === 'login'
+                      className={`p-2 rounded-lg ${activity.type === 'login'
                           ? 'bg-green-100 text-green-600'
                           : activity.type === 'update'
-                          ? 'bg-blue-100 text-blue-600'
-                          : activity.type === 'delete'
-                          ? 'bg-red-100 text-red-600'
-                          : 'bg-purple-100 text-purple-600'
-                      }`}
+                            ? 'bg-blue-100 text-blue-600'
+                            : activity.type === 'delete'
+                              ? 'bg-red-100 text-red-600'
+                              : 'bg-purple-100 text-purple-600'
+                        }`}
                     >
                       {activity.type === 'login' && <Activity className="w-4 h-4" />}
                       {activity.type === 'update' && <Edit2 className="w-4 h-4" />}

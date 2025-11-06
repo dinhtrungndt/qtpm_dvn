@@ -61,7 +61,7 @@ const ContactPage = () => {
         message: '',
       });
     } catch (error) {
-      console.error('EmailJS Error:', error);
+      // console.error('EmailJS Error:', error);
       showMessage('Đã xảy ra lỗi khi gửi tin nhắn. Vui lòng thử lại sau.', 'error');
     } finally {
       setIsLoading(false);
