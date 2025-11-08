@@ -13,13 +13,13 @@ const RTL_Sidebar = () => {
           <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
             <X className="w-10 h-10 text-blue-600" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Layout đã được đóng</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Layout RTL</h2>
           <p className="text-gray-600 mb-6">Nhấn nút bên dưới để mở lại layout</p>
           <button
             onClick={() => setIsClosed(false)}
             className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold"
           >
-            Mở lại Layout
+            Layout RTL
           </button>
         </div>
       </div>

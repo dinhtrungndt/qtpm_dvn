@@ -13,6 +13,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
   const location = useLocation();
 
   const isCollapsedPage = location.pathname === "/layout/collapsed-sidebar";
+  const isRTLPage = location.pathname === "/layout/rtl-sidebar";
 
   useEffect(() => {
     if (isCollapsedPage && !sidebar.collapsed) {
@@ -52,7 +53,16 @@ const DashboardMenu = ({ isOpen, onClose }) => {
 
       {/* Sidebar Menu */}
       <div
-        className={`fixed top-0 left-0 h-full ${widthClass} ${sidebar.color || 'bg-gray-800'} shadow-2xl z-50 transform transition-all duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
+        className={`fixed top-0 ${isRTLPage ? 'right-0' : 'left-0'} h-full ${widthClass}
+    ${sidebar.color || 'bg-gray-800'} shadow-2xl z-50 transform transition-all duration-300 ease-in-out
+    ${isRTLPage
+            ? isOpen
+              ? 'translate-x-0'
+              : 'translate-x-full md:translate-x-0'
+            : isOpen
+              ? 'translate-x-0'
+              : '-translate-x-full md:translate-x-0'
+          }`}
         data-bs-theme={sidebar.theme?.toLowerCase() || 'light'}
         onMouseEnter={isCollapsedPage ? handleMouseEnter : undefined}
         onMouseLeave={isCollapsedPage ? handleMouseLeave : undefined}
