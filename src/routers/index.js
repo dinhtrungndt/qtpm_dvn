@@ -11,6 +11,7 @@ import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
+import FormElements from '../components/layout/form/FormElements';
 import Collapsed_Sidebar from '../components/layout/layout_options/collapsed_sidebar';
 import Complete_Layout from '../components/layout/layout_options/complete_layout';
 import Default_Sidebar from '../components/layout/layout_options/default_sidebar';
@@ -124,6 +125,7 @@ const Routers = () => {
         <Route path="/ui/general" element={<PrivateRoute><UI_General /></PrivateRoute>} />
         <Route path="/ui/icons" element={<PrivateRoute><UI_Icons /></PrivateRoute>} />
         <Route path="/ui/timeline" element={<PrivateRoute><UI_Timeline /></PrivateRoute>} />
+        <Route path="/form-elements" element={<PrivateRoute><FormElements /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />

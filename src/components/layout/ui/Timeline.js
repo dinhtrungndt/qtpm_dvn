@@ -11,13 +11,13 @@ const UI_Timeline = () => {
           id: 1,
           icon: <Mail className="w-5 h-5" />,
           iconBg: 'bg-blue-500',
-          user: 'Support Team',
-          action: 'sent you an email',
+          user: 'Đội hỗ trợ',
+          action: 'đã gửi cho bạn một email',
           time: '12:05',
           content: 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...',
           buttons: [
-            { text: 'Read more', color: 'bg-blue-600 hover:bg-blue-700' },
-            { text: 'Delete', color: 'bg-red-600 hover:bg-red-700' }
+            { text: 'Đọc thêm', color: 'bg-blue-600 hover:bg-blue-700' },
+            { text: 'Xóa', color: 'bg-red-600 hover:bg-red-700' }
           ]
         },
         {
@@ -25,19 +25,19 @@ const UI_Timeline = () => {
           icon: <User className="w-5 h-5" />,
           iconBg: 'bg-green-600',
           user: 'Sarah Young',
-          action: 'accepted your friend request',
-          time: '5 mins ago',
+          action: 'đã chấp nhận lời mời kết bạn của bạn',
+          time: '5 phút trước',
         },
         {
           id: 3,
           icon: <MessageCircle className="w-5 h-5" />,
           iconBg: 'bg-yellow-400',
           user: 'Jay White',
-          action: 'commented on your post',
-          time: '27 mins ago',
+          action: 'đã bình luận bài viết của bạn',
+          time: '27 phút trước',
           content: 'Take me to your leader! Switzerland is small and neutral! We are more like Germany, ambitious and misunderstood!',
           buttons: [
-            { text: 'View comment', color: 'bg-yellow-500 hover:bg-yellow-600' }
+            { text: 'Xem bình luận', color: 'bg-yellow-500 hover:bg-yellow-600' }
           ]
         }
       ]
@@ -51,8 +51,8 @@ const UI_Timeline = () => {
           icon: <Camera className="w-5 h-5" />,
           iconBg: 'bg-blue-500',
           user: 'Mina Lee',
-          action: 'uploaded new photos',
-          time: '2 days ago',
+          action: 'đã tải lên ảnh mới',
+          time: '2 ngày trước',
           images: [
             'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
             'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
@@ -64,12 +64,12 @@ const UI_Timeline = () => {
           id: 5,
           icon: <Clock className="w-5 h-5" />,
           iconBg: 'bg-cyan-400',
-          user: 'Mr. Doe',
-          action: 'shared a video',
-          time: '5 days ago',
+          user: 'Ông Doe',
+          action: 'đã chia sẻ một video',
+          time: '5 ngày trước',
           video: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
           buttons: [
-            { text: 'See comments', color: 'bg-yellow-500 hover:bg-yellow-600' }
+            { text: 'Xem bình luận', color: 'bg-yellow-500 hover:bg-yellow-600' }
           ]
         }
       ]
@@ -78,7 +78,7 @@ const UI_Timeline = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
-      {/* Header */}
+      {/* Tiêu đề */}
       <div className="flex items-center justify-between mb-6 animate-slideDown">
         <h1 className="text-2xl md:text-3xl font-semibold text-gray-800">Timeline</h1>
         <div className="flex items-center gap-2 text-sm">
@@ -94,30 +94,30 @@ const UI_Timeline = () => {
         </div>
       </div>
 
-      {/* Timeline */}
+      {/* Dòng thời gian */}
       <div className="relative">
-        {/* Vertical line */}
+        {/* Đường thẳng dọc */}
         <div className="absolute left-[21px] top-12 bottom-0 w-0.5 bg-gray-300"></div>
 
         {timelineData.map((section, sectionIdx) => (
           <div key={sectionIdx} className="mb-8 animate-fadeIn" style={{ animationDelay: `${sectionIdx * 0.2}s` }}>
-            {/* Date Badge */}
+            {/* Nhãn ngày tháng */}
             <div className={`inline-block px-4 py-2 rounded-md text-white font-semibold mb-6 text-sm ${section.color === 'red' ? 'bg-red-600' : 'bg-green-600'
               } animate-slideIn`} style={{ animationDelay: `${sectionIdx * 0.2 + 0.1}s` }}>
               {section.date}
             </div>
 
-            {/* Timeline Items */}
+            {/* Các mục dòng thời gian */}
             {section.items.map((item, itemIdx) => (
               <div key={item.id} className="relative flex gap-4 mb-6 animate-slideUp" style={{ animationDelay: `${sectionIdx * 0.2 + itemIdx * 0.1}s` }}>
-                {/* Icon */}
+                {/* Biểu tượng */}
                 <div className={`flex-shrink-0 w-11 h-11 rounded-full ${item.iconBg} flex items-center justify-center text-white shadow-lg z-10 hover:scale-110 transition-transform duration-300`}>
                   {item.icon}
                 </div>
 
-                {/* Content Card */}
+                {/* Thẻ nội dung */}
                 <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-300">
-                  {/* Header */}
+                  {/* Tiêu đề */}
                   <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-blue-600">{item.user}</span>
@@ -129,7 +129,7 @@ const UI_Timeline = () => {
                     </div>
                   </div>
 
-                  {/* Body */}
+                  {/* Nội dung */}
                   <div className="p-4">
                     {item.content && (
                       <p className="text-gray-700 mb-4 leading-relaxed text-sm">{item.content}</p>
@@ -150,7 +150,7 @@ const UI_Timeline = () => {
                         <iframe
                           className="w-full aspect-video"
                           src={item.video}
-                          title="YouTube video"
+                          title="Video YouTube"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         ></iframe>
@@ -176,7 +176,7 @@ const UI_Timeline = () => {
           </div>
         ))}
 
-        {/* End indicator */}
+        {/* Chỉ báo kết thúc */}
         <div className="relative flex items-center gap-4 animate-fadeIn" style={{ animationDelay: '0.8s' }}>
           <div className="flex-shrink-0 w-11 h-11 rounded-full bg-gray-400 flex items-center justify-center shadow-lg z-10">
             <Clock className="w-5 h-5 text-white" />
