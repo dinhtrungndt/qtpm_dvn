@@ -258,7 +258,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </Link>
 
               {/* Tables */}
-              <Link to="/updating" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+              <Link to="/simple-tables" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <div className="flex items-center gap-3">
                   <Table className="h-4 w-4" />
                   {!isMini && <span className="text-sm">Tables</span>}

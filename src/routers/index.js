@@ -22,6 +22,7 @@ import RTL_Sidebar from '../components/layout/layout_options/rTL_sidebar';
 import Sidebar_Mini from '../components/layout/layout_options/sidebar_Mmni';
 import HistoryOrder from '../components/layout/orders/historyOrder';
 import Settings from '../components/layout/setting';
+import Simple_Tables from '../components/layout/table/tables';
 import ThemeGenerate from '../components/layout/themegenerate';
 import UI_General from '../components/layout/ui/General';
 import UI_Icons from '../components/layout/ui/Icons';
@@ -126,6 +127,7 @@ const Routers = () => {
         <Route path="/ui/icons" element={<PrivateRoute><UI_Icons /></PrivateRoute>} />
         <Route path="/ui/timeline" element={<PrivateRoute><UI_Timeline /></PrivateRoute>} />
         <Route path="/form-elements" element={<PrivateRoute><FormElements /></PrivateRoute>} />
+        <Route path="/simple-tables" element={<PrivateRoute><Simple_Tables /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
