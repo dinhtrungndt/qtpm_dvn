@@ -12,6 +12,8 @@ const themeReducer = (state = initialState, action) => {
       return { ...state, sidebar: { ...state.sidebar, ...action.payload } };
     case types.TOGGLE_SIDEBAR_COLLAPSED:
       return { ...state, sidebar: { ...state.sidebar, collapsed: !state.sidebar.collapsed } };
+    case types.SET_SIDEBAR_COLLAPSED:
+      return { ...state, sidebar: { ...state.sidebar, collapsed: action.payload } };
     case types.SET_NAVBAR_THEME:
       return { ...state, navbar: action.payload };
     case types.SET_FOOTER_THEME:

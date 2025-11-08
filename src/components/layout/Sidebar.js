@@ -2,7 +2,7 @@ import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { toggleSidebarCollapsed } from '../../stores/redux/actions/themeActions';
+import { setSidebarCollapsed } from '../../stores/redux/actions/themeActions';
 
 const DashboardMenu = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -16,10 +16,18 @@ const DashboardMenu = ({ isOpen, onClose }) => {
   const isRTLPage = location.pathname === "/layout/rtl-sidebar";
 
   useEffect(() => {
-    if (isCollapsedPage && !sidebar.collapsed) {
-      dispatch(toggleSidebarCollapsed());
+    if (isCollapsedPage) {
+      // Set collapsed = true khi vào trang collapsed-sidebar
+      if (!sidebar.collapsed) {
+        dispatch(setSidebarCollapsed(true));
+      }
+    } else {
+      // Reset collapsed = false khi rời khỏi trang collapsed-sidebar
+      if (sidebar.collapsed) {
+        dispatch(setSidebarCollapsed(false));
+      }
     }
-  }, [isCollapsedPage]);
+  }, [isCollapsedPage, sidebar.collapsed, dispatch]);
 
   const toggleMenu = (menuId) => {
     setOpenMenus(prev => ({
@@ -40,7 +48,8 @@ const DashboardMenu = ({ isOpen, onClose }) => {
     }
   };
 
-  const isMini = sidebar.collapsed && !hovered;
+  // Chỉ áp dụng logic mini khi đang ở trang collapsed-sidebar
+  const isMini = isCollapsedPage && sidebar.collapsed && !hovered;
   const widthClass = isMini ? 'w-16' : 'w-64';
 
   return (
@@ -58,10 +67,10 @@ const DashboardMenu = ({ isOpen, onClose }) => {
     ${isRTLPage
             ? isOpen
               ? 'translate-x-0'
-              : 'translate-x-full md:translate-x-0'
+              : 'translate-x-full'
             : isOpen
               ? 'translate-x-0'
-              : '-translate-x-full md:translate-x-0'
+              : '-translate-x-full'
           }`}
         data-bs-theme={sidebar.theme?.toLowerCase() || 'light'}
         onMouseEnter={isCollapsedPage ? handleMouseEnter : undefined}
@@ -80,8 +89,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
             </div>
             <button
               onClick={onClose}
-              className="p-1 hover:bg-gray-700 rounded transition-colors md:hidden"
-              title="Close menu"
+              className="p-1 hover:bg-gray-700 rounded transition-colors"
             >
               <X className="h-5 w-5 text-gray-300" />
             </button>

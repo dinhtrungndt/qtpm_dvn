@@ -149,6 +149,7 @@ export const SET_FOOTER_THEME = 'SET_FOOTER_THEME';
 
 // Toggle sidebar collapsed
 export const TOGGLE_SIDEBAR_COLLAPSED = "TOGGLE_SIDEBAR_COLLAPSED";
+export const SET_SIDEBAR_COLLAPSED = "SET_SIDEBAR_COLLAPSED";
 
 // Search
 export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';

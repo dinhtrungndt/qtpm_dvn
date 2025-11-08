@@ -1,5 +1,5 @@
 import { Bell, ChevronDown, Dot, Logs, MessageCircle, Search } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import useClickOutside from '../../hooks/useClickOutside';
@@ -29,6 +29,13 @@ const DashboardHeader = () => {
   const [isOpenDashboardMenu, setIsOpenDashboardMenu] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
   const [isOpenNotification, setIsOpenNotification] = useState(false);
+
+  // Auto-open sidebar on desktop on initial load
+  useEffect(() => {
+    if (window.innerWidth >= 768) { // md breakpoint
+      setIsOpenDashboardMenu(true);
+    }
+  }, []);
 
   // Refs
   const userMenuRef = useRef(null);

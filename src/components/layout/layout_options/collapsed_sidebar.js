@@ -2,7 +2,7 @@ import { Minus, Plus, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { toggleSidebarCollapsed } from '../../../stores/redux/actions/themeActions';
+import { setSidebarCollapsed } from '../../../stores/redux/actions/themeActions';
 
 const Collapsed_Sidebar = () => {
   const [isMinimized, setIsMinimized] = useState(false);
@@ -10,7 +10,13 @@ const Collapsed_Sidebar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(toggleSidebarCollapsed());
+    // Set collapsed = true khi vào trang này
+    dispatch(setSidebarCollapsed(true));
+
+    // Cleanup: reset về false khi rời khỏi trang
+    return () => {
+      dispatch(setSidebarCollapsed(false));
+    };
   }, [dispatch]);
 
   if (isClosed) {

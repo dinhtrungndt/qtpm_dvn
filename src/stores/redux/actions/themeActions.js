@@ -18,3 +18,8 @@ export const setFooterThemeActions = (payload) => ({
 export const toggleSidebarCollapsed = () => ({
   type: types.TOGGLE_SIDEBAR_COLLAPSED,
 });
+
+export const setSidebarCollapsed = (collapsed) => ({
+  type: types.SET_SIDEBAR_COLLAPSED,
+  payload: collapsed,
+});
