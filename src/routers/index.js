@@ -22,6 +22,9 @@ import Sidebar_Mini from '../components/layout/layout_options/sidebar_Mmni';
 import HistoryOrder from '../components/layout/orders/historyOrder';
 import Settings from '../components/layout/setting';
 import ThemeGenerate from '../components/layout/themegenerate';
+import UI_General from '../components/layout/ui/General';
+import UI_Icons from '../components/layout/ui/Icons';
+import UI_Timeline from '../components/layout/ui/Timeline';
 import AccountUser from '../components/layout/user/AccountUser';
 import BuyNow from '../components/layout/user/BuyNow';
 import CartPage from '../components/layout/user/cart';
@@ -118,6 +121,9 @@ const Routers = () => {
         <Route path="/layout/sidebar-mini" element={<PrivateRoute><Sidebar_Mini /></PrivateRoute>} />
         <Route path="/layout/collapsed-sidebar" element={<PrivateRoute><Collapsed_Sidebar /></PrivateRoute>} />
         <Route path="/layout/rtl-sidebar" element={<PrivateRoute><RTL_Sidebar /></PrivateRoute>} />
+        <Route path="/ui/general" element={<PrivateRoute><UI_General /></PrivateRoute>} />
+        <Route path="/ui/icons" element={<PrivateRoute><UI_Icons /></PrivateRoute>} />
+        <Route path="/ui/timeline" element={<PrivateRoute><UI_Timeline /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />

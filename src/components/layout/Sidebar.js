@@ -226,15 +226,15 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   )}
                 </button>
                 <div className={`overflow-hidden transition-all duration-200 ${openMenus['ui-elements'] ? 'max-h-48' : 'max-h-0'}`}>
-                  <Link to="/updating" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  <Link to="/ui/general" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     {!isMini && <span className="text-sm">General</span>}
                   </Link>
-                  <Link to="/updating" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  <Link to="/ui/icons" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     {!isMini && <span className="text-sm">Icons</span>}
                   </Link>
-                  <Link to="/updating" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                  <Link to="/ui/timeline" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
                     <Circle className="h-2 w-2" />
                     {!isMini && <span className="text-sm">Timeline</span>}
                   </Link>
