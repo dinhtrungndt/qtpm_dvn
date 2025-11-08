@@ -11,11 +11,13 @@ import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
+import Collapsed_Sidebar from '../components/layout/layout_options/collapsed_sidebar';
 import Complete_Layout from '../components/layout/layout_options/complete_layout';
 import Default_Sidebar from '../components/layout/layout_options/default_sidebar';
 import Fixed_Footer from '../components/layout/layout_options/fixed_footer';
 import Fixed_Header from '../components/layout/layout_options/fixed_header';
 import Fixed_Sidebar from '../components/layout/layout_options/fixed_sidebar';
+import RTL_Sidebar from '../components/layout/layout_options/rTL_sidebar';
 import Sidebar_Mini from '../components/layout/layout_options/sidebar_Mmni';
 import HistoryOrder from '../components/layout/orders/historyOrder';
 import Settings from '../components/layout/setting';
@@ -114,6 +116,8 @@ const Routers = () => {
         <Route path="/layout/fixed-footer" element={<PrivateRoute><Fixed_Footer /></PrivateRoute>} />
         <Route path="/layout/complete" element={<PrivateRoute><Complete_Layout /></PrivateRoute>} />
         <Route path="/layout/sidebar-mini" element={<PrivateRoute><Sidebar_Mini /></PrivateRoute>} />
+        <Route path="/layout/collapsed-sidebar" element={<PrivateRoute><Collapsed_Sidebar /></PrivateRoute>} />
+        <Route path="/layout/rtl-sidebar" element={<PrivateRoute><RTL_Sidebar /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
