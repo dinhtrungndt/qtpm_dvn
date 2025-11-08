@@ -11,6 +11,12 @@ import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
+import Complete_Layout from '../components/layout/layout_options/complete_layout';
+import Default_Sidebar from '../components/layout/layout_options/default_sidebar';
+import Fixed_Footer from '../components/layout/layout_options/fixed_footer';
+import Fixed_Header from '../components/layout/layout_options/fixed_header';
+import Fixed_Sidebar from '../components/layout/layout_options/fixed_sidebar';
+import Sidebar_Mini from '../components/layout/layout_options/sidebar_Mmni';
 import HistoryOrder from '../components/layout/orders/historyOrder';
 import Settings from '../components/layout/setting';
 import ThemeGenerate from '../components/layout/themegenerate';
@@ -102,6 +108,12 @@ const Routers = () => {
         <Route path="/widgets/small-box" element={<PrivateRoute><SmallBox /></PrivateRoute>} />
         <Route path="/widgets/info" element={<PrivateRoute><InforBox /></PrivateRoute>} />
         <Route path="/widgets/card" element={<PrivateRoute><Cards /></PrivateRoute>} />
+        <Route path="/layout/default" element={<PrivateRoute><Default_Sidebar /></PrivateRoute>} />
+        <Route path="/layout/fixed-sidebar" element={<PrivateRoute><Fixed_Sidebar /></PrivateRoute>} />
+        <Route path="/layout/fixed-header" element={<PrivateRoute><Fixed_Header /></PrivateRoute>} />
+        <Route path="/layout/fixed-footer" element={<PrivateRoute><Fixed_Footer /></PrivateRoute>} />
+        <Route path="/layout/complete" element={<PrivateRoute><Complete_Layout /></PrivateRoute>} />
+        <Route path="/layout/sidebar-mini" element={<PrivateRoute><Sidebar_Mini /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />
