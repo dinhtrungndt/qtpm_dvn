@@ -167,7 +167,7 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                     {!isMini && (
                       <>
                         <span className="text-sm">Layout Options</span>
-                        <span className="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded">6</span>
+                        <span className="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded">8</span>
                       </>
                     )}
                   </div>
@@ -212,12 +212,34 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </div>
 
               {/* UI Elements */}
-              <Link to="/updating" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <div className="flex items-center gap-3">
-                  <Layers className="h-4 w-4" />
-                  {!isMini && <span className="text-sm">UI Elements</span>}
+              <div>
+                <button
+                  onClick={() => toggleMenu('ui-elements')}
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <Layers className="h-4 w-4" />
+                    {!isMini && <span className="text-sm">UI Elements</span>}
+                  </div>
+                  {!isMini && (
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['ui-elements'] ? 'rotate-180' : ''}`} />
+                  )}
+                </button>
+                <div className={`overflow-hidden transition-all duration-200 ${openMenus['ui-elements'] ? 'max-h-48' : 'max-h-0'}`}>
+                  <Link to="/updating" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                    <Circle className="h-2 w-2" />
+                    {!isMini && <span className="text-sm">General</span>}
+                  </Link>
+                  <Link to="/updating" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                    <Circle className="h-2 w-2" />
+                    {!isMini && <span className="text-sm">Icons</span>}
+                  </Link>
+                  <Link to="/updating" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                    <Circle className="h-2 w-2" />
+                    {!isMini && <span className="text-sm">Timeline</span>}
+                  </Link>
                 </div>
-              </Link>
+              </div>
 
               {/* Forms */}
               <Link to="/updating" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
