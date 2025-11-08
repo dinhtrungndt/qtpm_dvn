@@ -327,6 +327,18 @@ const AccountUser = () => {
                 />
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">URL Avatar</label>
+                <input
+                  type="url"
+                  name="avatar"
+                  value={formData.avatar}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+
               {isEditing && (
                 <div className="pt-6 border-t border-gray-200">
                   <h4 className="text-base font-semibold text-gray-900 mb-4">Đổi mật khẩu</h4>

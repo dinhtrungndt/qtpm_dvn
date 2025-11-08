@@ -10,21 +10,28 @@ export const setApiShowMessage = showMessage => {
   setGlobalShowMessage(showMessage);
 };
 
+// ✅ API chính
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'any-value',
+    'ngrok-skip-browser-warning': 'any-value', // bỏ cảnh báo ngrok
   },
   timeout: 15000,
 });
 
+// ✅ Bổ sung token + header ngrok cho mọi request
 api.interceptors.request.use(config => {
   const encryptedToken = localStorage.getItem('access_token');
   const token = decryptToken(encryptedToken);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  if (!config.headers['ngrok-skip-browser-warning']) {
+    config.headers['ngrok-skip-browser-warning'] = 'any-value';
+  }
+
   return config;
 });
 
@@ -49,9 +56,31 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // console.error('SERVER CRASH:', error.response);
     return Promise.reject(error);
   }
 );
+
+// ✅ API riêng cho upload ảnh (multipart/form-data)
+export const apiUpload = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: {
+    'ngrok-skip-browser-warning': 'any-value',
+  },
+  timeout: 20000,
+});
+
+apiUpload.interceptors.request.use(config => {
+  const encryptedToken = localStorage.getItem('access_token');
+  const token = decryptToken(encryptedToken);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  if (!config.headers['ngrok-skip-browser-warning']) {
+    config.headers['ngrok-skip-browser-warning'] = 'any-value';
+  }
+
+  return config;
+});
 
 export default api;
