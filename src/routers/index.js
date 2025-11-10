@@ -9,6 +9,11 @@ import IntroduceStart from '../components/introduce/IntroduceStart';
 import AccountAdmin from '../components/layout/admin/accountAdmin';
 import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
+import Lockscreen from '../components/layout/auth/lockscreen';
+import LoginPageAuthV1 from '../components/layout/auth/version1/LoginPageAuthV1';
+import RegisterPageAuthV1 from '../components/layout/auth/version1/RegisterPageAuthV1';
+import LoginPageAuthV2 from '../components/layout/auth/version2/LoginPageAuthV2';
+import RegisterPageAuthV2 from '../components/layout/auth/version2/RegisterPageAuthV2';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
 import FormElements from '../components/layout/form/FormElements';
@@ -128,6 +133,11 @@ const Routers = () => {
         <Route path="/ui/timeline" element={<PrivateRoute><UI_Timeline /></PrivateRoute>} />
         <Route path="/form-elements" element={<PrivateRoute><FormElements /></PrivateRoute>} />
         <Route path="/simple-tables" element={<PrivateRoute><Simple_Tables /></PrivateRoute>} />
+        <Route path="/auth-v1-login" element={<PrivateRoute><LoginPageAuthV1 /></PrivateRoute>} />
+        <Route path="/auth-v1-register" element={<PrivateRoute><RegisterPageAuthV1 /></PrivateRoute>} />
+        <Route path="/auth-v2-login" element={<PrivateRoute><LoginPageAuthV2 /></PrivateRoute>} />
+        <Route path="/auth-v2-register" element={<PrivateRoute><RegisterPageAuthV2 /></PrivateRoute>} />
+        <Route path="/lock-screen" element={<PrivateRoute><Lockscreen /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />

@@ -265,61 +265,112 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                 </div>
               </Link>
 
-              {/* Tạm ẩn */}
-              {false && (
-                <>
+              {/* Section Header */}
+              <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                Examples
+              </div>
 
-                  {/* Section Header */}
-                  <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    Examples
+              {/* Auth */}
+              <div>
+                <button
+                  onClick={() => toggleMenu('auth')}
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <Lock className="h-4 w-4" />
+                    {!isMini && <span className="text-sm">Auth</span>}
                   </div>
-
-                  {/* Auth */}
-                  <Link to="/auth" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                  {!isMini && (
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['auth'] ? 'rotate-180' : ''}`} />
+                  )}
+                </button>
+                <div className={`overflow-hidden transition-all duration-200 ${openMenus['auth'] ? 'max-h-96' : 'max-h-0'}`}>
+                  {/* Version 1 */}
+                  <button
+                    onClick={() => toggleMenu('auth-v1')}
+                    className="w-full flex items-center justify-between px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors"
+                  >
                     <div className="flex items-center gap-3">
-                      <Lock className="h-4 w-4" />
-                      {!isMini && <span className="text-sm">Auth</span>}
+                      <Circle className="h-2 w-2" />
+                      <span>Version 1</span>
                     </div>
-                  </Link>
-
-                  {/* Section Header */}
-                  <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    {!isMini && <span className="text-sm">Documentations</span>}
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['auth-v1'] ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-200 ${openMenus['auth-v1'] ? 'max-h-32' : 'max-h-0'}`}>
+                    <Link to="/auth-v1-login" className="flex items-center gap-3 px-4 py-2 pl-16 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                      <Circle className="h-2 w-2" />
+                      Login
+                    </Link>
+                    <Link to="/auth-v1-register" className="flex items-center gap-3 px-4 py-2 pl-16 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                      <Circle className="h-2 w-2" />
+                      Register
+                    </Link>
                   </div>
+                  {/* Version 2 */}
+                  <button
+                    onClick={() => toggleMenu('auth-v2')}
+                    className="w-full flex items-center justify-between px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Circle className="h-2 w-2" />
+                      <span>Version 2</span>
+                    </div>
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openMenus['auth-v2'] ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-200 ${openMenus['auth-v2'] ? 'max-h-32' : 'max-h-0'}`}>
+                    <Link to="/auth-v2-login" className="flex items-center gap-3 px-4 py-2 pl-16 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                      <Circle className="h-2 w-2" />
+                      Login
+                    </Link>
+                    <Link to="/auth-v2-register" className="flex items-center gap-3 px-4 py-2 pl-16 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                      <Circle className="h-2 w-2" />
+                      Register
+                    </Link>
+                  </div>
+                  {/* Lockscreen */}
+                  <Link to="/lock-screen" className="flex items-center gap-3 px-4 py-2 pl-12 text-gray-300 hover:bg-gray-700 text-sm transition-colors">
+                    <Circle className="h-2 w-2" />
+                    Lockscreen
+                  </Link>
+                </div>
+              </div>
 
-                  {/* Documentation Items */}
-                  <Link to="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <Download className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">Installation</span>}
-                  </Link>
-                  <Link to="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <BookOpen className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">Layout</span>}
-                  </Link>
-                  <Link to="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <Code className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">Components</span>}
-                  </Link>
-                  <Link to="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <Globe className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">Browser Support</span>}
-                  </Link>
-                  <Link to="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <Users className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">How To Contribute</span>}
-                  </Link>
-                  <Link to="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <HelpCircle className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">FAQ</span>}
-                  </Link>
-                  <Link to="/docs/license" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                    <FileCheck className="h-4 w-4" />
-                    {!isMini && <span className="text-sm">License</span>}
-                  </Link>
+              {/* Section Header */}
+              <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                {!isMini && <span className="text-sm">Documentations</span>}
+              </div>
+
+              {/* Documentation Items */}
+              <Link to="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <Download className="h-4 w-4" />
+                {!isMini && <span className="text-sm">Installation</span>}
+              </Link>
+              <Link to="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <BookOpen className="h-4 w-4" />
+                {!isMini && <span className="text-sm">Layout</span>}
+              </Link>
+              <Link to="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <Code className="h-4 w-4" />
+                {!isMini && <span className="text-sm">Components</span>}
+              </Link>
+              <Link to="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <Globe className="h-4 w-4" />
+                {!isMini && <span className="text-sm">Browser Support</span>}
+              </Link>
+              <Link to="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <Users className="h-4 w-4" />
+                {!isMini && <span className="text-sm">How To Contribute</span>}
+              </Link>
+              <Link to="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <HelpCircle className="h-4 w-4" />
+                {!isMini && <span className="text-sm">FAQ</span>}
+              </Link>
+              <Link to="/docs/license" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <FileCheck className="h-4 w-4" />
+                {!isMini && <span className="text-sm">License</span>}
+              </Link>
 
 
-                </>
-              )}
 
               {/* Orders */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
