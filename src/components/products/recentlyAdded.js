@@ -50,8 +50,8 @@ const RecentlyAdded = () => {
     ? products
       .filter(product => product.framework === selectedFramework)
       .sort((a, b) => b.sold - a.sold)
-      .slice(0, 6)
-    : products.sort((a, b) => b.sold - a.sold).slice(0, 6);
+      .slice(0, 5)
+    : products.sort((a, b) => b.sold - a.sold).slice(0, 5);
 
   if (loading) return <Loading />;
 
@@ -154,8 +154,8 @@ const RecentlyAdded = () => {
           </div>
 
           {/* Grid sản phẩm */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-            {filteredProducts.map(product => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
+            {filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"

@@ -39,7 +39,7 @@ const Outstanding = () => {
   const bestSeller = products
     ?.slice()
     ?.sort((a, b) => b.sold - a.sold)
-    ?.slice(0, 6) || [];
+    ?.slice(0, 5) || [];
 
   const isFavorite = productId =>
     Array.isArray(favoriteProducts) &&
@@ -120,7 +120,7 @@ const Outstanding = () => {
         <Loading />
       ) : (
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
             {bestSeller.map(product => (
               <div
                 key={product.id}

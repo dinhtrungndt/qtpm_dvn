@@ -1,6 +1,8 @@
 import { lazy, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+
+// ===== COMPONENTS =====
 import ContactPage from '../components/contact/ContactPage';
 import ContactPageStart from '../components/contact/ContactPageStart';
 import FooterDashBoard from '../components/footer/FooterDashBoard';
@@ -50,16 +52,21 @@ import Updating from '../utils/updating';
 // Lazy load components
 const DashboardV2 = lazy(() => import("../components/layout/dashboard/dashboardV2"));
 
+// ===== PRIVATE ROUTE =====
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, checkedAuth } = useSelector((state) => state.user);
   const location = useLocation();
 
-  if (!isAuthenticated && location.pathname !== '/login' && location.pathname !== '/signup' && location.pathname !== '/') {
+  if (!checkedAuth) return <div>Loading...</div>;
+
+  if (!isAuthenticated && !['/login', '/signup', '/'].includes(location.pathname)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+
   return children;
 };
 
+// ===== ROLE ROUTE =====
 const RoleRoute = ({ children, allowedRoles }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -74,12 +81,13 @@ const RoleRoute = ({ children, allowedRoles }) => {
   return children;
 };
 
-
+// ===== MAIN ROUTER =====
 const Routers = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Redirect user sau login
   useEffect(() => {
     if (isAuthenticated && (location.pathname === '/login' || location.pathname === '/signup')) {
       if (isAuthenticated?.role === 'Admin') {
@@ -90,26 +98,33 @@ const Routers = () => {
     }
   }, [isAuthenticated, location.pathname, navigate]);
 
-  const hideLayoutRoutes = ['/login', '/signup', '/', '/contact-start', '/introduce', '/seemore', '/unauthorized'];
+  // ✅ Chỉ ẩn layout cho login/signup
+  const isAuthPage = ['/login', '/signup'].includes(location.pathname);
 
-  const shouldHideLayout =
-    hideLayoutRoutes.includes(location.pathname) ||
+  // ✅ Các route public (home, contact-start, introduce,...)
+  const isPublicPage =
+    ['/', '/contact-start', '/introduce', '/seemore', '/unauthorized'].includes(location.pathname) ||
     location.pathname.startsWith('/detail/product');
 
   return (
     <div>
-      {!shouldHideLayout && <DashboardHeader />}
+      {/* Ẩn DashboardHeader cho login/signup và public pages */}
+      {!isAuthPage && !isPublicPage && <DashboardHeader />}
 
       <Routes>
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<HomePageStart />} />
         <Route path="/detail/product/:id" element={<DetailProduct />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
         <Route path="/contact-start" element={<ContactPageStart />} />
         <Route path="/seemore" element={<SeeMore />} />
         <Route path="/introduce" element={<IntroduceStart />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
+        {/* AUTH ROUTES */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+
+        {/* PRIVATE ROUTES */}
         <Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
         <Route path="/buynow/:id" element={<PrivateRoute><BuyNow /></PrivateRoute>} />
         <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
@@ -144,16 +159,17 @@ const Routers = () => {
         <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
         <Route path="/updating" element={<PrivateRoute><Updating /></PrivateRoute>} />
 
-        {/* Route chỉ dành cho Admin */}
-        <Route path="/theme-generate" element={<RoleRoute allowedRoles={['admin']}><ThemeGenerate /></RoleRoute>} />
+        {/* ADMIN ROUTES */}
         <Route path="/admin" element={<RoleRoute allowedRoles={['admin']}><AccountAdmin /></RoleRoute>} />
         <Route path="/manage/users" element={<RoleRoute allowedRoles={['admin']}><ManageUser /></RoleRoute>} />
         <Route path="/manage/products" element={<RoleRoute allowedRoles={['admin']}><ManageProduct /></RoleRoute>} />
 
+        {/* FALLBACK */}
         <Route path="*" element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />} />
       </Routes>
 
-      {!shouldHideLayout && <FooterDashBoard />}
+      {/* Footer cũng ẩn với login/signup và public pages */}
+      {!isAuthPage && !isPublicPage && <FooterDashBoard />}
     </div>
   );
 };

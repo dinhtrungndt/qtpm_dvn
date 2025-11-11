@@ -7,7 +7,8 @@ const decryptedToken = decryptToken(encryptedToken);
 const initialState = {
   user: null,
   token: decryptedToken,
-  isAuthenticated: !!decryptedToken,
+  isAuthenticated: false,
+  checkedAuth: false,
   isLoading: false,
   error: null,
   listUsers: [],
@@ -69,6 +70,7 @@ const userReducer = (state = initialState, action) => {
         user: action.payload,
         isAuthenticated: true,
         isLoading: false,
+        checkedAuth: true,
         error: null,
       };
     case types.GET_CURRENT_USER_FAILURE:
@@ -174,6 +176,7 @@ const userReducer = (state = initialState, action) => {
         token: null,
         isAuthenticated: false,
         isLoading: false,
+        checkedAuth: true,
         error: null,
         listUsers: [],
       };
