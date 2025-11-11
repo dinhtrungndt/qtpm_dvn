@@ -1,53 +1,59 @@
-import { ChevronRight, FileText, MessageCircle } from 'lucide-react';
+import { FileText, MessageCircle } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FAQ_Docs = () => {
   const faqs = [
     {
-      question: "Can DVN Technology be used with .NET Core?",
-      answer: "Yes, DVN Technology fully supports .NET Core integration. Check our documentation for implementation details."
+      question: "DVN Technology có hỗ trợ phát triển trên nền tảng .NET Core không?",
+      answer:
+        "Có. DVN Technology được xây dựng để tích hợp hoàn toàn với .NET Core và .NET Framework, giúp doanh nghiệp dễ dàng triển khai và mở rộng hệ thống hiện tại.",
     },
     {
-      question: "Is there an integration guide for React and .NET?",
-      answer: "We provide comprehensive guides for integrating React with .NET applications in our documentation."
+      question: "DVN có hướng dẫn tích hợp giữa React và .NET không?",
+      answer:
+        "Chúng tôi cung cấp tài liệu chi tiết và ví dụ thực tế về cách kết nối ReactJS với API .NET thông qua RESTful và SignalR.",
     },
     {
-      question: "What technologies does DVN Technology support?",
-      answer: "DVN Technology supports .NET, SQL Server, Python, React, and TailwindCSS among others."
+      question: "DVN Technology sử dụng và hỗ trợ những công nghệ nào?",
+      answer:
+        "DVN Technology sử dụng và hỗ trợ nhiều công nghệ hiện đại như .NET, SQL Server, Python, ReactJS, JavaScript, và TailwindCSS.",
     },
     {
-      question: "How do I get notified of new DVN Technology versions?",
-      answer: "Subscribe to our newsletter or follow our release notes page to stay updated with new versions."
+      question: "Làm sao để nhận thông báo về các bản cập nhật mới của DVN?",
+      answer:
+        "Bạn có thể đăng ký nhận bản tin qua email hoặc theo dõi chúng tôi trên Facebook, LinkedIn để nhận thông tin cập nhật mới nhất về sản phẩm và tính năng.",
     },
     {
-      question: "Does DVN Technology support Python integration?",
-      answer: "Yes, Python integration is fully supported. Visit our documentation for integration examples."
+      question: "DVN có hỗ trợ tích hợp Python cho AI hoặc tự động hóa không?",
+      answer:
+        "Có. Hệ thống của DVN hỗ trợ Python để xử lý dữ liệu, tích hợp mô hình AI/ML và tự động hóa các quy trình nghiệp vụ.",
     },
     {
-      question: "Why TailwindCSS instead of Bootstrap?",
-      answer: "TailwindCSS offers utility-first approach providing more flexibility and smaller bundle sizes for modern applications."
-    }
+      question: "Tại sao DVN Technology lại chọn TailwindCSS thay vì Bootstrap?",
+      answer:
+        "TailwindCSS giúp xây dựng giao diện linh hoạt, tối ưu kích thước file và tăng tốc độ phát triển UI, phù hợp với triết lý hiệu suất và tinh gọn của DVN.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
-        {/* Breadcrumb */}
-        <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-gray-900 font-medium">FAQ</span>
-        </nav>
-
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 py-8 px-4">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Docs<span className="text-blue-600">FAQ</span>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-2xl font-bold text-gray-900">
+            Câu hỏi thường gặp (FAQ)
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find answers to commonly asked questions about DVN Technology integrations and features
-          </p>
+          <div className="flex items-center gap-2 text-xs">
+            <Link
+              to="/"
+              className="text-blue-600 hover:text-blue-700 transition-colors"
+            >
+              Trang chủ
+            </Link>
+            <span className="text-gray-400">/</span>
+            <span className="text-gray-600">FAQ</span>
+          </div>
         </div>
 
         {/* FAQ Grid */}
@@ -55,39 +61,39 @@ const FAQ_Docs = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 border border-gray-100"
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all p-6 border border-gray-100 hover:border-emerald-200"
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
                 {faq.question}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {faq.answer}
-              </p>
+              <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
             </div>
           ))}
         </div>
 
         {/* Call to Action */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-8 text-center text-white">
-          <h2 className="text-2xl md:text-3xl font-bold mb-3">
-            Anything you want
+        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl shadow-xl p-10 text-center text-white">
+          <h2 className="text-3xl font-bold mb-3">
+            Bạn vẫn còn thắc mắc?
           </h2>
-          <p className="text-blue-100 mb-6 text-lg">
-            Can't find what you're looking for?
+          <p className="text-emerald-100 mb-6 text-lg">
+            Nếu bạn không tìm thấy câu trả lời phù hợp, đừng lo — đội ngũ DVN Technology luôn sẵn sàng hỗ trợ bạn.
           </p>
-          <p className="text-blue-50 mb-8 max-w-2xl mx-auto">
-            Feel free to reach out to our support team or check our comprehensive documentation
-            for more detailed information about integrating .NET, SQL Server, Python, React,
-            and TailwindCSS in your projects.
+          <p className="text-emerald-50 mb-8 max-w-2xl mx-auto">
+            Liên hệ ngay với chúng tôi để được tư vấn chi tiết về giải pháp phần mềm,
+            tích hợp hệ thống hoặc hỗ trợ kỹ thuật liên quan đến .NET, SQL Server, Python, ReactJS và TailwindCSS.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors shadow-lg">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center px-6 py-3 bg-white text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition-colors shadow-lg"
+            >
               <MessageCircle className="w-5 h-5 mr-2" />
-              Contact Support
+              Liên hệ hỗ trợ
             </Link>
-            <button className="inline-flex items-center justify-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors border-2 border-blue-400">
+            <button className="inline-flex items-center justify-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-800 transition-colors border-2 border-emerald-400">
               <FileText className="w-5 h-5 mr-2" />
-              View Documentation
+              Xem tài liệu kỹ thuật
             </button>
           </div>
         </div>
