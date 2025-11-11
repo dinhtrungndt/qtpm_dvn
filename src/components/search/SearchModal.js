@@ -148,13 +148,13 @@ const SearchModal = ({ isOpen, onClose }) => {
       {/* Modal */}
       <div
         ref={modalRef}
-        className="fixed top-4 left-1/2 -translate-x-1/2 w-full max-w-2xl z-50 px-4 animate-slide-down"
+        className="fixed top-4 left-1/2 -translate-x-1/2 w-full max-w-xl z-50 px-4 animate-slide-down"
       >
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
           {/* Search Input */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-blue-500 focus-within:bg-white transition-all">
-              <Search className="w-5 h-5 text-gray-400 flex-shrink-0" />
+          <div className="p-3 border-b border-gray-200">
+            <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:bg-white transition-all">
+              <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
@@ -166,16 +166,16 @@ const SearchModal = ({ isOpen, onClose }) => {
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="p-1 hover:bg-gray-200 rounded-lg transition-colors"
+                  className="p-0.5 hover:bg-gray-200 rounded transition-colors"
                 >
-                  <X className="w-4 h-4 text-gray-400" />
+                  <X className="w-3.5 h-3.5 text-gray-400" />
                 </button>
               )}
               <button
                 onClick={onClose}
-                className="p-1 hover:bg-gray-200 rounded-lg transition-colors"
+                className="p-0.5 hover:bg-gray-200 rounded transition-colors"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-4 h-4 text-gray-600" />
               </button>
             </div>
           </div>
@@ -184,32 +184,32 @@ const SearchModal = ({ isOpen, onClose }) => {
           <div className="max-h-[70vh] overflow-y-auto scrollbar-hide">
             {/* Loading */}
             {loading && (
-              <div className="p-8 text-center">
-                <div className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                <p className="mt-3 text-sm text-gray-500">Đang tìm kiếm...</p>
+              <div className="p-6 text-center">
+                <div className="inline-block w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-2 text-sm text-gray-500">Đang tìm kiếm...</p>
               </div>
             )}
 
             {/* Suggestions */}
             {!loading && showSuggestions && (
-              <div className="p-4">
-                <div className="flex items-center gap-2 mb-3 text-gray-600">
-                  <TrendingUp className="w-4 h-4" />
+              <div className="p-3">
+                <div className="flex items-center gap-2 mb-2 text-gray-600">
+                  <TrendingUp className="w-3.5 h-3.5" />
                   <span className="text-xs font-semibold uppercase tracking-wider">
                     Gợi ý cho bạn
                   </span>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   {safeSuggestions.map(product => (
                     <div
                       key={product.id}
                       onClick={() => handleItemClick('product', product.id)}
-                      className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl cursor-pointer transition-all group"
+                      className="flex items-center gap-2.5 p-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-all group"
                     >
                       <img
                         src={product.image || 'https://via.placeholder.com/80'}
                         alt={product.name}
-                        className="w-12 h-12 object-cover rounded-lg flex-shrink-0 group-hover:scale-105 transition-transform"
+                        className="w-10 h-10 object-cover rounded-lg flex-shrink-0 group-hover:scale-105 transition-transform"
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">
@@ -228,27 +228,27 @@ const SearchModal = ({ isOpen, onClose }) => {
 
             {/* Search Results */}
             {!loading && showResults && (
-              <div className="p-4 space-y-6">
+              <div className="p-3 space-y-4">
                 {/* Products */}
                 {safeResults.products.length > 0 && (
                   <div>
-                    <div className="flex items-center gap-2 mb-3 text-gray-600">
-                      <ShoppingBag className="w-4 h-4" />
+                    <div className="flex items-center gap-2 mb-2 text-gray-600">
+                      <ShoppingBag className="w-3.5 h-3.5" />
                       <span className="text-xs font-semibold uppercase tracking-wider">
                         Sản phẩm ({safeResults.products.length})
                       </span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {safeResults.products.map(product => (
                         <div
                           key={product.id}
                           onClick={() => handleItemClick('product', product.id)}
-                          className="flex items-center gap-3 p-3 hover:bg-blue-50 rounded-xl cursor-pointer transition-all group border border-transparent hover:border-blue-200"
+                          className="flex items-center gap-2.5 p-2 hover:bg-blue-50 rounded-lg cursor-pointer transition-all group border border-transparent hover:border-blue-200"
                         >
                           <img
                             src={product.image || 'https://via.placeholder.com/80'}
                             alt={product.name}
-                            className="w-14 h-14 object-cover rounded-lg flex-shrink-0 group-hover:scale-105 transition-transform"
+                            className="w-12 h-12 object-cover rounded-lg flex-shrink-0 group-hover:scale-105 transition-transform"
                           />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
@@ -270,23 +270,23 @@ const SearchModal = ({ isOpen, onClose }) => {
                 {/* Users (Admin only) */}
                 {safeResults.users.length > 0 && (
                   <div>
-                    <div className="flex items-center gap-2 mb-3 text-gray-600">
-                      <User className="w-4 h-4" />
+                    <div className="flex items-center gap-2 mb-2 text-gray-600">
+                      <User className="w-3.5 h-3.5" />
                       <span className="text-xs font-semibold uppercase tracking-wider">
                         Người dùng ({safeResults.users.length})
                       </span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {safeResults.users.map(user => (
                         <div
                           key={user.id}
                           onClick={() => handleItemClick('user', user.id)}
-                          className="flex items-center gap-3 p-3 hover:bg-purple-50 rounded-xl cursor-pointer transition-all group border border-transparent hover:border-purple-200"
+                          className="flex items-center gap-2.5 p-2 hover:bg-purple-50 rounded-lg cursor-pointer transition-all group border border-transparent hover:border-purple-200"
                         >
                           <img
                             src={user.avatar || 'https://dvntechnology.com/icons/Logo.png'}
                             alt={user.username}
-                            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                            className="w-9 h-9 rounded-full object-cover flex-shrink-0"
                             onError={(e) => {
                               e.target.style.display = 'none';
                             }}
@@ -308,21 +308,21 @@ const SearchModal = ({ isOpen, onClose }) => {
                 {/* Orders */}
                 {safeResults.orders.length > 0 && (
                   <div>
-                    <div className="flex items-center gap-2 mb-3 text-gray-600">
-                      <Package className="w-4 h-4" />
+                    <div className="flex items-center gap-2 mb-2 text-gray-600">
+                      <Package className="w-3.5 h-3.5" />
                       <span className="text-xs font-semibold uppercase tracking-wider">
                         Đơn hàng ({safeResults.orders.length})
                       </span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {safeResults.orders.map(order => (
                         <div
                           key={order.id}
                           onClick={() => handleItemClick('order', order.id)}
-                          className="flex items-center gap-3 p-3 hover:bg-green-50 rounded-xl cursor-pointer transition-all group border border-transparent hover:border-green-200"
+                          className="flex items-center gap-2.5 p-2 hover:bg-green-50 rounded-lg cursor-pointer transition-all group border border-transparent hover:border-green-200"
                         >
-                          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <Package className="w-5 h-5 text-green-600" />
+                          <div className="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Package className="w-4 h-4 text-green-600" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-900 group-hover:text-green-600 transition-colors">
@@ -344,23 +344,23 @@ const SearchModal = ({ isOpen, onClose }) => {
                 {/* Cart Items */}
                 {safeResults.carts.length > 0 && (
                   <div>
-                    <div className="flex items-center gap-2 mb-3 text-gray-600">
-                      <ShoppingBag className="w-4 h-4" />
+                    <div className="flex items-center gap-2 mb-2 text-gray-600">
+                      <ShoppingBag className="w-3.5 h-3.5" />
                       <span className="text-xs font-semibold uppercase tracking-wider">
                         Giỏ hàng ({safeResults.carts.length})
                       </span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {safeResults.carts.map(cart => (
                         <div
                           key={cart.id}
                           onClick={() => handleItemClick('cart', cart.id)}
-                          className="flex items-center gap-3 p-3 hover:bg-orange-50 rounded-xl cursor-pointer transition-all group border border-transparent hover:border-orange-200"
+                          className="flex items-center gap-2.5 p-2 hover:bg-orange-50 rounded-lg cursor-pointer transition-all group border border-transparent hover:border-orange-200"
                         >
                           <img
                             src={cart.product?.image || 'https://via.placeholder.com/80'}
                             alt={cart.product?.name}
-                            className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                            className="w-10 h-10 object-cover rounded-lg flex-shrink-0"
                           />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-900 truncate group-hover:text-orange-600 transition-colors">
@@ -380,21 +380,21 @@ const SearchModal = ({ isOpen, onClose }) => {
                 {/* Payments */}
                 {safeResults.payments.length > 0 && (
                   <div>
-                    <div className="flex items-center gap-2 mb-3 text-gray-600">
-                      <CreditCard className="w-4 h-4" />
+                    <div className="flex items-center gap-2 mb-2 text-gray-600">
+                      <CreditCard className="w-3.5 h-3.5" />
                       <span className="text-xs font-semibold uppercase tracking-wider">
                         Thanh toán ({safeResults.payments.length})
                       </span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {safeResults.payments.map(payment => (
                         <div
                           key={payment.payment_id}
                           onClick={() => handleItemClick('payment', payment.payment_id)}
-                          className="flex items-center gap-3 p-3 hover:bg-indigo-50 rounded-xl cursor-pointer transition-all group border border-transparent hover:border-indigo-200"
+                          className="flex items-center gap-2.5 p-2 hover:bg-indigo-50 rounded-lg cursor-pointer transition-all group border border-transparent hover:border-indigo-200"
                         >
-                          <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <CreditCard className="w-5 h-5 text-indigo-600" />
+                          <div className="w-9 h-9 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <CreditCard className="w-4 h-4 text-indigo-600" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
@@ -417,12 +417,12 @@ const SearchModal = ({ isOpen, onClose }) => {
 
             {/* No Results */}
             {!loading && query.trim() && !showResults && (
-              <div className="p-12 text-center">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-8 h-8 text-gray-400" />
+              <div className="p-8 text-center">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Search className="w-6 h-6 text-gray-400" />
                 </div>
-                <p className="text-gray-900 font-semibold mb-1">Không tìm thấy kết quả</p>
-                <p className="text-sm text-gray-500">Thử tìm kiếm với từ khóa khác</p>
+                <p className="text-gray-900 font-semibold mb-1 text-sm">Không tìm thấy kết quả</p>
+                <p className="text-xs text-gray-500">Thử tìm kiếm với từ khóa khác</p>
               </div>
             )}
           </div>
