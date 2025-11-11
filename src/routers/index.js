@@ -18,6 +18,7 @@ import LoginPageAuthV2 from '../components/layout/auth/version2/LoginPageAuthV2'
 import RegisterPageAuthV2 from '../components/layout/auth/version2/RegisterPageAuthV2';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
+import FAQ_Docs from '../components/layout/docs/FAQ';
 import FormElements from '../components/layout/form/FormElements';
 import Collapsed_Sidebar from '../components/layout/layout_options/collapsed_sidebar';
 import Complete_Layout from '../components/layout/layout_options/complete_layout';
@@ -153,6 +154,7 @@ const Routers = () => {
         <Route path="/auth-v2-login" element={<PrivateRoute><LoginPageAuthV2 /></PrivateRoute>} />
         <Route path="/auth-v2-register" element={<PrivateRoute><RegisterPageAuthV2 /></PrivateRoute>} />
         <Route path="/lock-screen" element={<PrivateRoute><Lockscreen /></PrivateRoute>} />
+        <Route path="/docs/faq" element={<PrivateRoute><FAQ_Docs /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
         <Route path="/contact" element={<PrivateRoute><ContactPage /></PrivateRoute>} />
         <Route path="/user" element={<PrivateRoute><AccountUser /></PrivateRoute>} />

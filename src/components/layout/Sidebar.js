@@ -1,4 +1,4 @@
-import { BookOpen, Box, ChevronDown, Circle, Code, Download, FileCheck, FileText, Globe, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
+import { Box, ChevronDown, Circle, FileCheck, FileText, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -341,26 +341,6 @@ const DashboardMenu = ({ isOpen, onClose }) => {
               </div>
 
               {/* Documentation Items */}
-              <Link to="/docs/installation" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Download className="h-4 w-4" />
-                {!isMini && <span className="text-sm">Installation</span>}
-              </Link>
-              <Link to="/docs/layout" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <BookOpen className="h-4 w-4" />
-                {!isMini && <span className="text-sm">Layout</span>}
-              </Link>
-              <Link to="/docs/components" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Code className="h-4 w-4" />
-                {!isMini && <span className="text-sm">Components</span>}
-              </Link>
-              <Link to="/docs/browser" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Globe className="h-4 w-4" />
-                {!isMini && <span className="text-sm">Browser Support</span>}
-              </Link>
-              <Link to="/docs/contribute" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
-                <Users className="h-4 w-4" />
-                {!isMini && <span className="text-sm">How To Contribute</span>}
-              </Link>
               <Link to="/docs/faq" className="flex items-center gap-3 px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
                 <HelpCircle className="h-4 w-4" />
                 {!isMini && <span className="text-sm">FAQ</span>}
