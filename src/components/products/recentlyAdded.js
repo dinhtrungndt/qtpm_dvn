@@ -254,16 +254,17 @@ const RecentlyAdded = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-1 min-h-[1.5rem]">
-                      {product.features.slice(0, 2).map((feature, idx) => (
-                        <span
-                          key={idx}
-                          className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-md flex items-center gap-0.5"
-                        >
-                          <Zap className="w-2.5 h-2.5 text-blue-500 flex-shrink-0" />
-                          <span className="truncate">{feature}</span>
-                        </span>
-                      ))}
-                      {product.features.length > 2 && (
+                      {Array.isArray(product.features) &&
+                        product.features.slice(0, 2).map((feature, idx) => (
+                          <span
+                            key={idx}
+                            className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-md flex items-center gap-0.5"
+                          >
+                            <Zap className="w-2.5 h-2.5 text-blue-500 flex-shrink-0" />
+                            <span className="truncate">{feature}</span>
+                          </span>
+                        ))}
+                      {Array.isArray(product.features) && product.features.length > 2 && (
                         <span className="text-[10px] text-gray-400 px-1 flex items-center">
                           +{product.features.length - 2}
                         </span>
