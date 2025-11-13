@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Dot, Logs, MessageCircle, Search } from "lucide-react";
+import { Bell, Check, ChevronDown, Dot, Logs, MessageCircle, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -82,15 +82,15 @@ const DashboardHeader = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <Link to="/" className="text-sm hover:text-gray-900 transition-colors mr-4">Trang chủ</Link>
-            <Link to="/dashboard/v1" className="text-sm hover:text-gray-900 transition-colors mr-4">Dashboard</Link>
-            <Link to="/contact" className="text-sm hover:text-gray-900 transition-colors mr-4">Liên hệ</Link>
-            <Link to="/history/orders" className="text-sm hover:text-gray-900 transition-colors">Đơn hàng</Link>
+            <Link to="/" className="text-xs hover:text-gray-900 transition-colors mr-4">Trang chủ</Link>
+            <Link to="/dashboard/v1" className="text-xs hover:text-gray-900 transition-colors mr-4">Dashboard</Link>
+            <Link to="/contact" className="text-xs hover:text-gray-900 transition-colors mr-4">Liên hệ</Link>
+            <Link to="/history/orders" className="text-xs hover:text-gray-900 transition-colors">Đơn hàng</Link>
             {user?.role === 'admin' && (
               <>
                 <span className="flex items-center text-black"><Dot /></span>
-                <Link to="/manage/users" className="text-sm hover:text-gray-900 transition-colors mr-4">Quản lý Users</Link>
-                <Link to="/manage/products" className="text-sm hover:text-gray-900 transition-colors">Quản lý Products</Link>
+                <Link to="/manage/users" className="text-xs hover:text-gray-900 transition-colors mr-4">Quản lý Users</Link>
+                <Link to="/manage/products" className="text-xs hover:text-gray-900 transition-colors">Quản lý Products</Link>
               </>
             )}
           </div>
@@ -99,29 +99,40 @@ const DashboardHeader = () => {
         {/* RIGHT */}
         <div className="flex items-center gap-2 text-gray-600">
           {/* SEARCH - Desktop */}
-          <div className="hidden md:flex items-center border border-gray-300 rounded-full px-4 py-2 gap-2 hover:border-gray-400 transition-colors relative">
+          <div className="hidden md:flex items-center justify-center border border-gray-300 rounded-full px-3 py-1.5 gap-1.5 relative hover:border-gray-400 transition-colors">
             <Search
-              className="w-5 h-5 text-gray-400 cursor-pointer"
-              onClick={openSearch}
+              className="w-4 h-4 text-gray-400 cursor-pointer"
+              onClick={() => {
+                setIsOpenSearch(true);
+                dispatch(fetchSuggestions());
+              }}
             />
             <input
               type="text"
               placeholder={`Tìm kiếm ${categorySearch}...`}
-              className="w-48 focus:outline-none bg-transparent text-sm"
+              className="w-32 lg:w-48 focus:outline-none focus:ring-0 bg-white text-xs"
+              onClick={() => {
+                setIsOpenSearch(true);
+                dispatch(fetchSuggestions());
+              }}
               readOnly
-              onClick={openSearch}
             />
-            <div className="border-l border-gray-300 mx-2 h-6" />
+            <div className="border-l border-gray-300 mx-1.5 h-4" />
+
+            {/* Category Dropdown */}
             <div className="relative" ref={categoryRef}>
               <button
                 onClick={() => setIsOpenCategoryDropdown(!isOpenCategoryDropdown)}
-                className="flex items-center gap-1 text-sm font-semibold hover:text-blue-600 transition-colors"
+                className="flex items-center gap-1.5 text-xs text-black font-semibold hover:text-blue-600 transition-colors"
               >
                 {categorySearch}
-                <ChevronDown className={`w-4 h-4 transition-transform ${isOpenCategoryDropdown ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpenCategoryDropdown ? 'rotate-180' : ''}`}
+                />
               </button>
+
               {isOpenCategoryDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2">
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2 animate-fade-in">
                   {categorySearchs.map(item => (
                     <div
                       key={item}
@@ -129,7 +140,7 @@ const DashboardHeader = () => {
                       className={`px-4 py-2.5 text-sm flex items-center gap-3 cursor-pointer hover:bg-blue-50 transition-colors ${item === categorySearch ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-700'
                         }`}
                     >
-                      {item === categorySearch && <div className="w-4 h-4 bg-blue-600 rounded-full" />}
+                      {item === categorySearch && <Check className="w-4 h-4 text-blue-600" />}
                       <span className={item !== categorySearch ? 'ml-7' : ''}>{item}</span>
                     </div>
                   ))}
