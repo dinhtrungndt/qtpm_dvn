@@ -14,13 +14,26 @@ const ManageProduct = () => {
   const [formData, setFormData] = useState({
     name: '',
     price: '',
+    originalPrice: '',
+    discount: '',
+    category: '',
     stock: '',
     description: '',
+    badge: '',
+    badgeColor: '',
+    rating: '',
+    reviews: '',
+    sold: '',
+    framework: '',
+    features: '',
+    file: null
   });
+
   const [editingId, setEditingId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [notification, setNotification] = useState('');
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -137,48 +150,132 @@ const ManageProduct = () => {
               </button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* BASIC FIELDS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="Tên sản phẩm"
+                <input type="text" placeholder="Tên sản phẩm"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white"
                 />
-                <input
-                  type="number"
-                  placeholder="Giá"
+
+                <input type="text" placeholder="Danh mục"
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white"
+                />
+
+                <input type="number" placeholder="Giá bán"
                   value={formData.price}
                   onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white"
                 />
-                <input
-                  type="number"
-                  placeholder="Tồn kho"
+
+                <input type="number" placeholder="Giá gốc"
+                  value={formData.originalPrice}
+                  onChange={(e) => setFormData({ ...formData, originalPrice: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white"
+                />
+
+                <input type="number" placeholder="Giảm giá (%)"
+                  value={formData.discount}
+                  onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white"
+                />
+
+                <input type="number" placeholder="Tồn kho"
                   value={formData.stock}
                   onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                  className="px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white"
                 />
               </div>
+
+              {/* DESCRIPTION */}
               <textarea
                 placeholder="Mô tả sản phẩm"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows="3"
-                className="w-full px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all resize-none"
+                className="w-full px-4 py-2 rounded-lg bg-slate-600 border border-slate-500 text-white resize-none"
               />
+
+              {/* IMAGE UPLOAD */}
+              <input type="file"
+                onChange={(e) => setFormData({ ...formData, file: e.target.files[0] })}
+                className="text-white"
+              />
+
+              {/* ADVANCED TOGGLE */}
+              <button
+                type="button"
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                className="px-4 py-2 bg-slate-500 text-white rounded-md"
+              >
+                {showAdvanced ? "Ẩn bớt" : "Hiện thêm trường nâng cao"}
+              </button>
+
+              {/* ADVANCED FIELDS */}
+              {showAdvanced && (
+                <div className="mt-4 space-y-4 bg-slate-800 p-4 rounded-lg border border-slate-600">
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Badge (VD: Hot, New)"
+                      value={formData.badge}
+                      onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
+                      className="px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white"
+                    />
+
+                    <input type="text" placeholder="Màu Badge (VD: red, blue)"
+                      value={formData.badgeColor}
+                      onChange={(e) => setFormData({ ...formData, badgeColor: e.target.value })}
+                      className="px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white"
+                    />
+
+                    <input type="number" placeholder="Rating (0-5)"
+                      value={formData.rating}
+                      onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                      className="px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white"
+                    />
+
+                    <input type="number" placeholder="Số đánh giá"
+                      value={formData.reviews}
+                      onChange={(e) => setFormData({ ...formData, reviews: e.target.value })}
+                      className="px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white"
+                    />
+
+                    <input type="number" placeholder="Đã bán"
+                      value={formData.sold}
+                      onChange={(e) => setFormData({ ...formData, sold: e.target.value })}
+                      className="px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white"
+                    />
+
+                    <input type="text" placeholder="Framework (VD: React, NextJS, Laravel)"
+                      value={formData.framework}
+                      onChange={(e) => setFormData({ ...formData, framework: e.target.value })}
+                      className="px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white"
+                    />
+                  </div>
+
+                  {/* FEATURES (JSON STRING) */}
+                  <textarea
+                    placeholder={`Features (JSON)\nVD: ["SSD 1TB", "RAM 32GB", "Intel i9"]`}
+                    value={formData.features}
+                    onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+                    rows="3"
+                    className="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-500 text-white resize-none"
+                  />
+                </div>
+              )}
+
+              {/* SUBMIT BUTTON */}
               <div className="flex gap-2 justify-end pt-2">
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="px-6 py-2 bg-slate-600 hover:bg-slate-500 text-white rounded-lg font-medium transition-all"
+                <button type="button" onClick={handleCancel}
+                  className="px-6 py-2 bg-slate-600 text-white rounded-lg"
                 >
                   Hủy
                 </button>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all hover:shadow-lg disabled:opacity-50 transform hover:scale-105"
+
+                <button type="submit" disabled={isLoading}
+                  className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
                 >
                   {isLoading ? 'Đang xử lý...' : editingId ? 'Cập nhật' : 'Thêm mới'}
                 </button>
