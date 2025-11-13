@@ -123,14 +123,15 @@ export const updateUser = (userId, userData) => async dispatch => {
     globalShowMessage?.('Cập nhật người dùng thành công!', 'success');
     dispatch(getListUsers());
   } catch (error) {
-    // console.error('Update user error:', error.response ? error.response.data : error.message);
-    dispatch({ type: types.UPDATE_USER_FAILURE, payload: error });
-    globalShowMessage?.(
-      'Cập nhật thất bại: ' + (error.response?.data?.detail || error.message),
-      'error'
-    );
+    const msg = error.response?.data?.detail || error.message || 'Lỗi không xác định';
+    dispatch({
+      type: types.UPDATE_USER_FAILURE,
+      payload: msg
+    });
+    globalShowMessage?.(`Cập nhật thất bại: ${msg}`, 'error');
   }
 };
+
 
 export const deleteUser = userId => async dispatch => {
   dispatch({ type: types.DELETE_USER_REQUEST });
