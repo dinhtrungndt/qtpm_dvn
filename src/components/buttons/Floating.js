@@ -1,10 +1,52 @@
-import { MessageCircle, Phone, Send, X } from "lucide-react";
-import { useState } from "react";
+import { LogIn, MessageCircle, Phone, Send, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { connectWebSocketChat, getChatHistory, sendMessage, setActiveChat } from '../../stores/redux/actions/chatActions';
 
 const Floating = () => {
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { messages } = useSelector((state) => state.chat);
+
   const [isOpen, setIsOpen] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  const [message, setMessage] = useState("");
+  const [msgContent, setMsgContent] = useState("");
+  const messagesEndRef = useRef(null);
+
+  const ADMIN_ID = 6;
+
+  useEffect(() => {
+    if (isAuthenticated && user?.id) {
+      dispatch(connectWebSocketChat(user.id));
+    }
+  }, [isAuthenticated, user, dispatch]);
+
+  useEffect(() => {
+    if (showChat && isAuthenticated) {
+      dispatch(setActiveChat({ id: ADMIN_ID }));
+      dispatch(getChatHistory(ADMIN_ID));
+    }
+  }, [showChat, isAuthenticated, dispatch]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    if (!msgContent.trim()) return;
+
+    sendMessage({
+      receiver_id: ADMIN_ID,
+      content: msgContent
+    });
+    setMsgContent("");
+  };
+
+  const handleOpenChat = () => {
+    setShowChat(!showChat);
+    setIsOpen(false);
+  };
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -18,44 +60,69 @@ const Floating = () => {
     window.location.href = "tel:+84889541507";
   };
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      console.log("Tin nhắn:", message);
-      alert("Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.");
-      setMessage("");
-      setShowChat(false);
-    }
-  };
-
   return (
     <>
       {/* Chat Box */}
       {showChat && (
-        <div className="fixed bottom-24 right-6 w-80 bg-white rounded-2xl shadow-2xl z-40 animate-slideUp">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-4 rounded-t-2xl flex justify-between items-center">
-            <h3 className="text-white font-semibold">Nhắn tin cho chúng tôi</h3>
-            <button
-              onClick={() => setShowChat(false)}
-              className="text-white hover:bg-white/20 rounded-full p-1 transition-colors"
-            >
+        <div className="fixed bottom-24 right-6 w-80 bg-white rounded-2xl shadow-2xl z-40 animate-slideUp flex flex-col overflow-hidden h-[450px]">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-4 flex justify-between items-center shrink-0">
+            <h3 className="text-white font-semibold flex items-center gap-2">
+              <MessageCircle size={18} /> Hỗ trợ trực tuyến
+            </h3>
+            <button onClick={() => setShowChat(false)} className="text-white hover:bg-white/20 rounded-full p-1 transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
-          <div className="p-4">
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Nhập tin nhắn của bạn..."
-              className="w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={handleSendMessage}
-              className="w-full mt-3 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors font-medium flex items-center justify-center gap-2"
-            >
-              <Send className="w-4 h-4" />
-              Gửi tin nhắn
-            </button>
+
+          {/* Content */}
+          <div className="flex-1 bg-gray-50 p-4 overflow-y-auto flex flex-col">
+            {!isAuthenticated ? (
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                <LogIn className="w-12 h-12 text-blue-300" />
+                <p className="text-gray-600 text-sm">Vui lòng đăng nhập để chat với nhân viên hỗ trợ.</p>
+                <Link to="/login" className="px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-medium hover:bg-blue-600">
+                  Đăng nhập ngay
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {messages.map((msg, idx) => {
+                  const isMe = msg.sender_id === user.id;
+                  return (
+                    <div key={idx} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[80%] px-3 py-2 rounded-xl text-sm ${isMe ? 'bg-blue-500 text-white rounded-br-none' : 'bg-white text-gray-800 shadow-sm rounded-bl-none'
+                        }`}>
+                        {msg.content}
+                      </div>
+                    </div>
+                  );
+                })}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
           </div>
+
+          {/* Input Area (Chỉ hiện khi đã login) */}
+          {isAuthenticated && (
+            <div className="p-3 bg-white border-t border-gray-100 shrink-0">
+              <div className="flex gap-2">
+                <input
+                  value={msgContent}
+                  onChange={(e) => setMsgContent(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="Nhập tin nhắn..."
+                  className="flex-1 px-4 py-2 bg-gray-100 border-none rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+                <button
+                  onClick={handleSendMessage}
+                  className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors flex-shrink-0"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -70,10 +137,7 @@ const Floating = () => {
         >
           {/* Message Button */}
           <button
-            onClick={() => {
-              setShowChat(!showChat);
-              setIsOpen(false);
-            }}
+            onClick={handleOpenChat}
             className="group relative bg-white hover:bg-blue-50 text-blue-500 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
             style={{ animationDelay: "0.1s" }}
           >

@@ -2,6 +2,7 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 import cartReducer from './reducers/cartReducer';
+import chatReducer from './reducers/chatReducer';
 import dashboardReducer from './reducers/dashboardReducer';
 import orderReducer from './reducers/orderReducer';
 import paymentsReducer from './reducers/paymentsReducer';
@@ -13,6 +14,7 @@ import userReducer from './reducers/userReducer';
 const rootReducer = combineReducers({
   theme: themeReducer,
   user: userReducer,
+  chat: chatReducer,
   dashboard: dashboardReducer,
   product: productReducer,
   cart: cartReducer,
