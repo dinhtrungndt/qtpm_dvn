@@ -1,7 +1,7 @@
 import { MessageCircle, MoreVertical, Search, Send } from 'lucide-react';
 import { useState } from 'react';
 
-const Chats_Care = () => {
+const Chats_Admin = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -45,7 +45,7 @@ const Chats_Care = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-[calc(100vh-64px)] bg-gray-100 overflow-hidden">
       {/* Sidebar - Danh sách người dùng */}
       <div className="w-full md:w-96 bg-white border-r border-gray-200 flex flex-col">
         {/* Header */}
@@ -69,7 +69,7 @@ const Chats_Care = () => {
         </div>
 
         {/* User List */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
           {filteredUsers.map((user) => (
             <div
               key={user.id}
@@ -139,7 +139,7 @@ const Chats_Care = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-gray-100 hover:scrollbar-thumb-blue-400">
               {(messages[selectedUser.id] || []).map((msg) => (
                 <div
                   key={msg.id}
@@ -216,9 +216,43 @@ const Chats_Care = () => {
             opacity: 1;
           }
         }
+
+        /* Custom Scrollbar Styles */
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: #f3f4f6;
+          border-radius: 10px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background: #d1d5db;
+          border-radius: 10px;
+          transition: background 0.3s;
+        }
+
+        .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+          background: #9ca3af;
+        }
+
+        .scrollbar-thumb-blue-300::-webkit-scrollbar-thumb {
+          background: #93c5fd;
+        }
+
+        .scrollbar-thumb-blue-300:hover::-webkit-scrollbar-thumb {
+          background: #60a5fa;
+        }
+
+        /* Firefox scrollbar */
+        .scrollbar-thin {
+          scrollbar-width: thin;
+          scrollbar-color: #d1d5db #f3f4f6;
+        }
       `}</style>
     </div>
   );
 };
 
-export default Chats_Care;
+export default Chats_Admin;

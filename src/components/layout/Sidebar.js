@@ -1,4 +1,4 @@
-import { Box, ChevronDown, Circle, FileCheck, FileText, HelpCircle, Layers, LayoutDashboard, Lock, MessageCircleHeart, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
+import { Box, ChevronDown, Circle, FileCheck, FileText, HelpCircle, Layers, LayoutDashboard, Lock, MessageCircleHeart, MessageSquareDiff, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -346,6 +346,17 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   {!isMini && <span className="text-sm">Chats</span>}
                 </div>
               </Link>
+              {/* Chats Admin */}
+              {
+                user?.role === 'admin' && (
+                  <Link to="/chats_admin" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <MessageSquareDiff className="h-4 w-4" />
+                      {!isMini && <span className="text-sm">Chats Admin</span>}
+                    </div>
+                  </Link>
+                )
+              }
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">

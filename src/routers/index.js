@@ -9,6 +9,7 @@ import FooterDashBoard from '../components/footer/FooterDashBoard';
 import DashboardHeader from '../components/header/Dashboard';
 import IntroduceStart from '../components/introduce/IntroduceStart';
 import AccountAdmin from '../components/layout/admin/accountAdmin';
+import Chats_Admin from '../components/layout/admin/chat_admin';
 import ManageProduct from '../components/layout/admin/manageProduct';
 import ManageUser from '../components/layout/admin/manageUser';
 import Lockscreen from '../components/layout/auth/lockscreen';
@@ -157,6 +158,7 @@ const Routers = () => {
         <Route path="/auth-v2-register" element={<PrivateRoute><RegisterPageAuthV2 /></PrivateRoute>} />
         <Route path="/lock-screen" element={<PrivateRoute><Lockscreen /></PrivateRoute>} />
         <Route path="/chats" element={<PrivateRoute><Chats_Care /></PrivateRoute>} />
+        <Route path="/chats_admin" element={<PrivateRoute><Chats_Admin /></PrivateRoute>} />
         <Route path="/docs/faq" element={<PrivateRoute><FAQ_Docs /></PrivateRoute>} />
         <Route path="/docs/license" element={<PrivateRoute><License_Docs /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
