@@ -1,4 +1,4 @@
-import { Box, ChevronDown, Circle, FileCheck, FileText, HelpCircle, Layers, LayoutDashboard, Lock, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
+import { Box, ChevronDown, Circle, FileCheck, FileText, HelpCircle, Layers, LayoutDashboard, Lock, MessageCircleHeart, Palette, Settings, ShoppingCart, Table, UserCog, Users, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -334,6 +334,18 @@ const DashboardMenu = ({ isOpen, onClose }) => {
                   </Link>
                 </div>
               </div>
+
+              {/* Customer Care */}
+              <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                {!isMini && <span className="text-sm">Customer Care</span>}
+              </div>
+              {/* Chats */}
+              <Link to="/chats" className="flex items-center justify-between px-4 py-2.5 text-gray-200 hover:bg-gray-700 transition-colors">
+                <div className="flex items-center gap-3">
+                  <MessageCircleHeart className="h-4 w-4" />
+                  {!isMini && <span className="text-sm">Chats</span>}
+                </div>
+              </Link>
 
               {/* Section Header */}
               <div className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">

@@ -16,6 +16,7 @@ import LoginPageAuthV1 from '../components/layout/auth/version1/LoginPageAuthV1'
 import RegisterPageAuthV1 from '../components/layout/auth/version1/RegisterPageAuthV1';
 import LoginPageAuthV2 from '../components/layout/auth/version2/LoginPageAuthV2';
 import RegisterPageAuthV2 from '../components/layout/auth/version2/RegisterPageAuthV2';
+import Chats_Care from '../components/layout/Chats_Care/Chats_Care';
 import DashboardV1 from '../components/layout/dashboard/dashboardV1';
 import DashboardV3 from '../components/layout/dashboard/dashboardV3';
 import FAQ_Docs from '../components/layout/docs/FAQ';
@@ -155,6 +156,7 @@ const Routers = () => {
         <Route path="/auth-v2-login" element={<PrivateRoute><LoginPageAuthV2 /></PrivateRoute>} />
         <Route path="/auth-v2-register" element={<PrivateRoute><RegisterPageAuthV2 /></PrivateRoute>} />
         <Route path="/lock-screen" element={<PrivateRoute><Lockscreen /></PrivateRoute>} />
+        <Route path="/chats" element={<PrivateRoute><Chats_Care /></PrivateRoute>} />
         <Route path="/docs/faq" element={<PrivateRoute><FAQ_Docs /></PrivateRoute>} />
         <Route path="/docs/license" element={<PrivateRoute><License_Docs /></PrivateRoute>} />
         <Route path="/history/orders" element={<PrivateRoute><HistoryOrder /></PrivateRoute>} />
