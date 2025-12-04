@@ -61,6 +61,7 @@ const Chats_Admin = () => {
 
   const filteredUsers = conversations.filter(u =>
     (u.full_name || u.username).toLowerCase().includes(searchTerm.toLowerCase())
+
   );
 
   return (

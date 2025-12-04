@@ -14,7 +14,7 @@ const Floating = () => {
   const [msgContent, setMsgContent] = useState("");
   const messagesEndRef = useRef(null);
 
-  const ADMIN_ID = 6;
+  const ADMIN_ID = 7;
 
   useEffect(() => {
     if (isAuthenticated && user?.id) {
