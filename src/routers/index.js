@@ -50,6 +50,7 @@ import DetailProduct from '../components/start/DetailProduct';
 import HomePageStart from '../pages/home/HomePageStart';
 import LoginPage from '../pages/user/LoginPage';
 import SignupPage from '../pages/user/SignupPage';
+import SocialAuthCallback from '../pages/user/SocialAuthCallback';
 import Unauthorized from '../utils/Unauthorized';
 import Updating from '../utils/updating';
 
@@ -127,6 +128,7 @@ const Routers = () => {
         {/* AUTH ROUTES */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/auth/social/callback" element={<SocialAuthCallback />} />
 
         {/* PRIVATE ROUTES */}
         <Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
