@@ -2,7 +2,7 @@ import { LogIn, MessageCircle, Phone, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { connectWebSocketChat, getChatHistory, sendMessage, setActiveChat } from '../../stores/redux/actions/chatActions';
+import { connectWebSocketChat, getChatHistory, sendMessage } from '../../stores/redux/actions/chatActions';
 
 const Floating = () => {
   const dispatch = useDispatch();
@@ -14,8 +14,6 @@ const Floating = () => {
   const [msgContent, setMsgContent] = useState("");
   const messagesEndRef = useRef(null);
 
-  const ADMIN_ID = 7;
-
   useEffect(() => {
     if (isAuthenticated && user?.id) {
       dispatch(connectWebSocketChat(user.id));
@@ -24,8 +22,8 @@ const Floating = () => {
 
   useEffect(() => {
     if (showChat && isAuthenticated) {
-      dispatch(setActiveChat({ id: ADMIN_ID }));
-      dispatch(getChatHistory(ADMIN_ID));
+      // Truyền ID 0 (hoặc null) để Backend hiểu là lấy lịch sử của chính user này với hệ thống
+      dispatch(getChatHistory(0));
     }
   }, [showChat, isAuthenticated, dispatch]);
 
@@ -36,8 +34,9 @@ const Floating = () => {
   const handleSendMessage = () => {
     if (!msgContent.trim()) return;
 
+    // Gửi receiver_id = null -> Backend sẽ hiểu là gửi cho Admin Group
     sendMessage({
-      receiver_id: ADMIN_ID,
+      receiver_id: null,
       content: msgContent
     });
     setMsgContent("");
@@ -126,16 +125,14 @@ const Floating = () => {
         </div>
       )}
 
-      {/* Floating Menu */}
+      {/* Floating Menu - Giữ nguyên không đổi */}
       <div className="fixed bottom-6 right-6 z-50">
-        {/* Sub buttons */}
         <div
           className={`absolute bottom-16 right-0 flex flex-col gap-3 transition-all duration-300 ${isOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-4 pointer-events-none"
             }`}
         >
-          {/* Message Button */}
           <button
             onClick={handleOpenChat}
             className="group relative bg-white hover:bg-blue-50 text-blue-500 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
@@ -147,7 +144,6 @@ const Floating = () => {
             </span>
           </button>
 
-          {/* Zalo Button */}
           <button
             onClick={handleZalo}
             className="group relative bg-white hover:bg-blue-50 text-blue-500 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
@@ -161,7 +157,6 @@ const Floating = () => {
             </span>
           </button>
 
-          {/* Call Button */}
           <button
             onClick={handleCall}
             className="group relative bg-white hover:bg-green-50 text-green-500 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
@@ -174,17 +169,13 @@ const Floating = () => {
           </button>
         </div>
 
-        {/* Main Button */}
         <button
           onClick={handleToggle}
           className={`relative bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 ${isOpen ? "rotate-45" : ""
             }`}
         >
-          {/* Ripple Effect */}
           <span className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-75"></span>
           <span className="absolute inset-0 rounded-full bg-blue-400 animate-pulse"></span>
-
-          {/* Icon */}
           {
             isOpen ? (
               <X className="w-6 h-6 relative z-10 transition-transform duration-300" />
@@ -200,55 +191,18 @@ const Floating = () => {
 
       <style>{`
         @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes wiggle {
           0%, 100% { transform: rotate(0deg); }
           25% { transform: rotate(-10deg); }
           75% { transform: rotate(10deg); }
         }
-
-        .animate-slideUp {
-          animation: slideUp 0.3s ease-out;
-        }
-
-        .animate-wiggle {
-          animation: wiggle 1s ease-in-out infinite;
-        }
-
-        @keyframes ping {
-          75%, 100% {
-            transform: scale(1.5);
-            opacity: 0;
-          }
-        }
-
-        .animate-ping {
-          animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.5;
-            transform: scale(1.1);
-          }
-        }
-
-        .animate-pulse {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
+        .animate-slideUp { animation: slideUp 0.3s ease-out; }
+        .animate-wiggle { animation: wiggle 1s ease-in-out infinite; }
+        .animate-ping { animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
       `}</style>
     </>
   );
