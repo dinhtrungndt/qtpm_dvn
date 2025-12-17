@@ -128,9 +128,9 @@ const RegisterPageAuthV1 = () => {
               />
               <span className="ml-2 text-gray-600 text-sm">
                 I agree to the{' '}
-                <LinK href="#" className="text-blue-600 hover:text-blue-800 font-medium hover:underline transition-colors">
+                <Link to="/terms" className="text-blue-600 hover:text-blue-800 font-medium hover:underline transition-colors">
                   terms
-                </LinK>
+                </Link>
               </span>
             </label>
 
