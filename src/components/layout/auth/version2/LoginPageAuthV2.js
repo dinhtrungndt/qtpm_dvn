@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const LoginPageAuthV2 = () => {
   const [email, setEmail] = useState('');
@@ -135,12 +136,12 @@ const LoginPageAuthV2 = () => {
 
             {/* Footer Links - Simple blue links */}
             <div className="mt-6 space-y-2">
-              <a href="#" className="block text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm">
+              <Link to="/forgot-password" className="block text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm">
                 I forgot my password
-              </a>
-              <a href="#" className="block text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm">
+              </Link>
+              <Link to="/register" className="block text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm">
                 Register a new membership
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronUp, Inbox, Loader, Menu, User, X } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const UI_General = () => {
@@ -330,7 +330,7 @@ const UI_General = () => {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-blue-900">
                 Một thông báo primary đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-blue-700">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-blue-700">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -338,7 +338,7 @@ const UI_General = () => {
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-4">
               <p className="text-gray-800">
                 Một thông báo secondary đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-gray-600">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-gray-600">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -346,7 +346,7 @@ const UI_General = () => {
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <p className="text-green-900">
                 Một thông báo success đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-green-700">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-green-700">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -354,7 +354,7 @@ const UI_General = () => {
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <p className="text-red-900">
                 Một thông báo danger đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-red-700">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-red-700">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -362,7 +362,7 @@ const UI_General = () => {
             <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4">
               <p className="text-yellow-900">
                 Một thông báo warning đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-yellow-700">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-yellow-700">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -370,7 +370,7 @@ const UI_General = () => {
             <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-4">
               <p className="text-cyan-900">
                 Một thông báo info đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-cyan-700">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-cyan-700">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -378,7 +378,7 @@ const UI_General = () => {
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
               <p className="text-gray-700">
                 Một thông báo light đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-gray-600">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-gray-600">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -386,7 +386,7 @@ const UI_General = () => {
             <div className="bg-gray-700 border border-gray-800 rounded-lg p-4">
               <p className="text-gray-100">
                 Một thông báo dark đơn giản với{' '}
-                <a href="#" className="font-semibold underline hover:text-white">liên kết ví dụ</a>.
+                <Link to="/link-example" className="font-semibold underline hover:text-white">liên kết ví dụ</Link>.
                 Hãy nhấp vào nó nếu bạn thích.
               </p>
             </div>
@@ -498,7 +498,7 @@ const UI_General = () => {
                 <button className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors font-medium">Info</button>
                 <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors font-medium">Light</button>
                 <button className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors font-medium">Dark</button>
-                <a href="#" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-block">Link</a>
+                <Link to="/link" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-block">Link</Link>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -584,9 +584,9 @@ const UI_General = () => {
                 </button>
                 {openDropdown === 'primary' && (
                   <div className="absolute top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-slide-down">
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</a>
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</a>
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Something else</a>
+                    <Link to="/action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</Link>
+                    <Link to="/another-action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</Link>
+                    <Link to="/something-else" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Something else</Link>
                   </div>
                 )}
               </div>
@@ -601,8 +601,8 @@ const UI_General = () => {
                 </button>
                 {openDropdown === 'secondary' && (
                   <div className="absolute top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-slide-down">
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</a>
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</a>
+                    <Link to="/action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</Link>
+                    <Link to="/another-action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</Link>
                   </div>
                 )}
               </div>
@@ -619,8 +619,8 @@ const UI_General = () => {
                 </button>
                 {openDropdown === 'danger' && (
                   <div className="absolute top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-slide-down">
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</a>
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</a>
+                    <Link to="action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</Link>
+                    <Link to="/another-action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</Link>
                   </div>
                 )}
               </div>
@@ -635,8 +635,8 @@ const UI_General = () => {
                 </button>
                 {openDropdown === 'warning' && (
                   <div className="absolute top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-slide-down">
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</a>
-                    <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</a>
+                    <Link to="/action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Action</Link>
+                    <Link to="/another-action" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Another action</Link>
                   </div>
                 )}
               </div>
@@ -652,21 +652,21 @@ const UI_General = () => {
 
           <div className="p-6">
             <div className="border border-gray-200 rounded-lg overflow-hidden">
-              <a href="#" className="block px-4 py-3 bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium">
+              <Link to="/the-current-link" className="block px-4 py-3 bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium">
                 The current link item
-              </a>
-              <a href="#" className="block px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
+              </Link>
+              <Link to="/a-second-link" className="block px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
                 A second link item
-              </a>
-              <a href="#" className="block px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
+              </Link>
+              <Link to="/a-third-link" className="block px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
                 A third link item
-              </a>
-              <a href="#" className="block px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
+              </Link>
+              <Link to="/a-fourth-link" className="block px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
                 A fourth link item
-              </a>
-              <a href="#" className="block px-4 py-3 bg-white text-gray-400 cursor-not-allowed border-t border-gray-200">
+              </Link>
+              <Link to="/a-disabled-link" className="block px-4 py-3 bg-white text-gray-400 cursor-not-allowed border-t border-gray-200">
                 A disabled link item
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -689,8 +689,8 @@ const UI_General = () => {
                     {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                   </button>
                   <div className="hidden lg:flex items-center gap-6">
-                    <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
-                    <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Link</a>
+                    <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</Link>
+                    <Link to="/link" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Link</Link>
                     <div className="relative">
                       <button className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors font-medium">
                         Dropdown
@@ -711,8 +711,8 @@ const UI_General = () => {
 
                 {isMenuOpen && (
                   <div className="lg:hidden mt-4 space-y-2 border-t border-gray-300 pt-4">
-                    <a href="#" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
-                    <a href="#" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium">Link</a>
+                    <Link to="/" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</Link>
+                    <Link to="/link" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium">Link</Link>
                     <button className="block py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium">Dropdown</button>
                     <span className="block py-2 text-gray-400 cursor-not-allowed font-medium">Disabled</span>
                     <div className="pt-2">
@@ -913,33 +913,33 @@ const UI_General = () => {
           <div className="p-6">
             <p className="text-gray-700 mb-4">
               Văn bản giữ chỗ để chứng minh một số{' '}
-              <a href="#" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
+              <Link to="/link-tooltip" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
                 liên kết nội tuyến
                 <span className="invisible group-hover:visible absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap">
                   Tooltip text
                 </span>
-              </a>
+              </Link>
               {' '}với tooltips. Đây bây giờ chỉ là chất độn, không gì giết người. Nội dung được đặt ở đây chỉ để bắt chước sự hiện diện của{' '}
-              <a href="#" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
+              <Link to="/link-real-text" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
                 văn bản thực
                 <span className="invisible group-hover:visible absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap">
                   More tooltip text
                 </span>
-              </a>
+              </Link>
               . Và tất cả những điều đó chỉ để cho bạn một ý tưởng về cách tooltips sẽ trông như thế nào khi được sử dụng trong các tình huống thực tế. Vì vậy, hy vọng bây giờ bạn đã thấy{' '}
-              <a href="#" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
+              <Link to="/link-another-tooltip" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
                 những tooltips này trên các liên kết
                 <span className="invisible group-hover:visible absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap">
                   Another tooltip
                 </span>
-              </a>
+              </Link>
               {' '}có thể hoạt động trong thực tế, một khi bạn sử dụng chúng trên{' '}
-              <a href="#" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
+              <Link to="/link-final-tooltip" className="text-blue-600 underline hover:text-blue-700 font-semibold group relative">
                 trang web hoặc dự án của riêng bạn
                 <span className="invisible group-hover:visible absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap">
                   Final tooltip
                 </span>
-              </a>
+              </Link>
               .
             </p>
           </div>

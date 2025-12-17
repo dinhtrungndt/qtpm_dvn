@@ -211,9 +211,9 @@ const DashboardV3 = () => {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">Khách Truy Cập Trực Tuyến</h3>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
+                <Link to="/report" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
                   Xem Báo Cáo
-                </a>
+                </Link>
               </div>
               <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                 <MoreVertical className="w-5 h-5 text-gray-400" />
@@ -254,9 +254,9 @@ const DashboardV3 = () => {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">Doanh Số</h3>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
+                <Link to="/report" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
                   Xem Báo Cáo
-                </a>
+                </Link>
               </div>
               <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                 <MoreVertical className="w-5 h-5 text-gray-400" />

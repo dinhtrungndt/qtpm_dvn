@@ -1,5 +1,4 @@
 import { Building2, Check, Facebook, FileCheck, Linkedin, Rocket, Target, Youtube } from 'lucide-react';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const About_DVN = () => {
@@ -130,9 +129,9 @@ const About_DVN = () => {
           <p className="text-gray-500 text-sm">© 2025 DVN Technology. All rights reserved.</p>
 
           <div className="flex justify-center gap-6 mt-4">
-            <a href="#" className="text-emerald-600 hover:text-emerald-700 transition"><Facebook size={24} /></a>
-            <a href="#" className="text-emerald-600 hover:text-emerald-700 transition"><Linkedin size={24} /></a>
-            <a href="#" className="text-emerald-600 hover:text-emerald-700 transition"><Youtube size={24} /></a>
+            <Link to="/facebook" className="text-emerald-600 hover:text-emerald-700 transition"><Facebook size={24} /></Link>
+            <Link to="/linkedin" className="text-emerald-600 hover:text-emerald-700 transition"><Linkedin size={24} /></Link>
+            <Link to="/youtube" className="text-emerald-600 hover:text-emerald-700 transition"><Youtube size={24} /></Link>
           </div>
         </div>
       </div>

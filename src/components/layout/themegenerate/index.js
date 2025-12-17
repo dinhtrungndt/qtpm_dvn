@@ -1,6 +1,7 @@
 import { ChevronDown, Minus, Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import { setFooterThemeActions, setNavbarThemeActions, setSidebarThemeActions } from '../../../stores/redux/actions/themeActions';
 
 const ThemeGenerate = () => {
@@ -246,9 +247,9 @@ const ThemeGenerate = () => {
               </h1>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+              <Link to="/" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
                 Trang chủ
-              </a>
+              </Link>
               <span>/</span>
               <span className="font-medium">Tùy chỉnh giao diện</span>
             </div>

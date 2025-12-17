@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const RegisterPageAuthV1 = () => {
   const [fullName, setFullName] = useState('');
@@ -127,9 +128,9 @@ const RegisterPageAuthV1 = () => {
               />
               <span className="ml-2 text-gray-600 text-sm">
                 I agree to the{' '}
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium hover:underline transition-colors">
+                <LinK href="#" className="text-blue-600 hover:text-blue-800 font-medium hover:underline transition-colors">
                   terms
-                </a>
+                </LinK>
               </span>
             </label>
 
@@ -181,12 +182,12 @@ const RegisterPageAuthV1 = () => {
 
           {/* Footer Link with icon */}
           <div className="mt-6 text-center">
-            <a href="#" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm font-medium group">
+            <Link to="/login" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm font-medium group">
               <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
               I already have a membership
-            </a>
+            </Link>
           </div>
         </div>
 

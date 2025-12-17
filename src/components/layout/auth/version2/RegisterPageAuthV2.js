@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const RegisterPageAuthV2 = () => {
   const [fullName, setFullName] = useState('');
@@ -107,9 +108,9 @@ const RegisterPageAuthV2 = () => {
                 />
                 <span className="ml-2 text-gray-700 text-sm">
                   I agree to the{' '}
-                  <a href="#" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors font-medium">
+                  <Link to="/terms" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors font-medium">
                     terms
-                  </a>
+                  </Link>
                 </span>
               </label>
 
@@ -161,9 +162,9 @@ const RegisterPageAuthV2 = () => {
 
             {/* Footer Link - Simple blue link */}
             <div className="mt-6">
-              <a href="#" className="block text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm">
+              <Link to="/login" className="block text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm">
                 I already have a membership
-              </a>
+              </Link>
             </div>
           </div>
         </div>
