@@ -134,25 +134,34 @@ npm start
 
 📂 Project Structure
 
-Brief overview of the system architecture:
+A clean and organized view of the system architecture:
 
-📦 project-root
- ┣ 📂 backend (FastAPI)
- ┃ ┣ 📂 app
- ┃ ┃ ┣ 📂 models        # SQLAlchemy Models (Users, Orders, Products, etc.)
- ┃ ┃ ┣ 📂 routers       # API Endpoints
- ┃ ┃ ┣ 📂 schemas       # Pydantic validation schemas
- ┃ ┃ ┣ 📂 services      # Business logic & Third-party integrations (MoMo)
- ┃ ┃ ┗ 📜 main.py       # FastAPI application entry point
- ┃ ┗ 📜 requirements.txt
- ┃
- ┗ 📂 frontend (React)
-   ┣ 📂 src
-   ┃ ┣ 📂 components    # Reusable UI components (AdminLTE styles)
-   ┃ ┣ 📂 pages         # Page views (Dashboard, Login, Cart)
-   ┃ ┣ 📂 stores        # Redux actions and reducers
-   ┃ ┗ 📜 App.js        # React Router setup & Route Guards
-   ┗ 📜 package.json
+📦 enterprise-management-system
+├── 📂 backend
+│   ├── 📂 app
+│   │   ├── 📂 crud          # Database operations (CRUD)
+│   │   ├── 📂 models        # SQLAlchemy models
+│   │   ├── 📂 routers       # FastAPI endpoints (users, products, orders, etc.)
+│   │   ├── 📂 schemas       # Pydantic validation schemas
+│   │   ├── 📂 services      # Business logic (File handling, Payments)
+│   │   ├── 📜 database.py   # Database connection setup
+│   │   ├── 📜 main.py       # FastAPI application entry point
+│   │   └── 📜 websocket.py  # WebSocket for real-time notifications
+│   ├── 📜 .env.example
+│   └── 📜 requirements.txt
+│
+└── 📂 frontend
+    ├── 📂 public
+    ├── 📂 src
+    │   ├── 📂 components    # Reusable UI (AdminLTE styles, Header, Footer)
+    │   ├── 📂 constants     # App constants, messages
+    │   ├── 📂 hooks         # Custom React hooks
+    │   ├── 📂 pages         # Page views (Auth, Dashboard, Shop)
+    │   ├── 📂 stores        # Redux setup (actions, reducers)
+    │   ├── 📂 utils         # Crypto, API config, Session management
+    │   ├── 📜 App.js        # Main React component
+    │   └── 📜 routers.js    # React Router setup & Private/Role Routes
+    └── 📜 package.json
 
 
 💡 System Architecture Highlight
