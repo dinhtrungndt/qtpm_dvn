@@ -5,11 +5,36 @@
 </p>
 
 <p align="center">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/React-20232A%3Fstyle%3Dfor-the-badge%26logo%3Dreact%26logoColor%3D61DAFB" alt="React" />
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Redux-593D88%3Fstyle%3Dfor-the-badge%26logo%3Dredux%26logoColor%3Dwhite" alt="Redux" />
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/FastAPI-009688%3Fstyle%3Dfor-the-badge%26logo%3Dfastapi%26logoColor%3Dwhite" alt="FastAPI" />
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Python-3776AB%3Fstyle%3Dfor-the-badge%26logo%3Dpython%26logoColor%3Dwhite" alt="Python" />
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Tailwind_CSS-38B2AC%3Fstyle%3Dfor-the-badge%26logo%3Dtailwind-css%26logoColor%3Dwhite" alt="Tailwind" />
+<img
+  src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/react/default.svg"
+  alt="React"
+  width="24"
+  height="24"
+/>
+<img
+  src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/redux/default.svg"
+  alt="Redux"
+  width="24"
+  height="24"
+/>
+    <img
+  src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/fastapi/default.svg"
+  alt="FastAPI"
+  width="24"
+  height="24"
+/>
+    <img
+  src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/python/default.svg"
+  alt="Python"
+  width="24"
+  height="24"
+/>
+    <img
+  src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tailwind-css/default.svg"
+  alt="Tailwind CSS"
+  width="24"
+  height="24"
+/>
 </p>
 
 📖 Overview
@@ -20,7 +45,12 @@ The admin interface is built with a highly responsive, AdminLTE-style dynamic la
 
 <div align="center">
 <!-- Thay link ảnh dưới đây bằng ảnh thực tế chụp màn hình dự án của bạn -->
-<img src="https://www.google.com/search?q=https://via.placeholder.com/800x400.png%3Ftext%3D[Image+of+Admin+Dashboard+Screenshot]" alt="Admin Dashboard" width="100%" />
+    <img
+  src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/adminer/default.svg"
+  alt="Adminer"
+  width="24"
+  height="24"
+/>
 </div>
 
 ✨ Key Features
